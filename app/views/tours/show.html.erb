@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @tour.name %>
+</p>
+
+<p>
+  <strong>Organizer:</strong>
+  <%= @tour.organizer.name %>
+</p>
+
+<p>
+  <strong>Day & Starting time:</strong>
+  <%= @tour.starting_at %>
+</p>
+
+<p>
+  <strong>Image:</strong>
+  <%= @tour.image %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @tour.description %>
+</p>
+
+<%= link_to 'Edit', edit_tour_path(@tour) %> |
+<%= link_to 'Home', root_path %>

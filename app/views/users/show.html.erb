@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Username:</strong>
+  <%= @user.name %>
+</p>
+
+<p>
+  <strong>E-mail:</strong>
+  <%= @user.email %>
+</p>
+
+<p>
+  <strong>Avatar URL:</strong>
+  <%= image_tag avatar_url(@user), size:"48" %>
+</p>
+
+<%= link_to 'Edit', edit_user_path(@user) %> |
+<%= link_to 'Back', users_path %>

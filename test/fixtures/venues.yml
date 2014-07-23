@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+cafe:
+  name: Cat Cafe
+  city: paris
+  cid: 12345
+  latitude: 12345.67
+  longitude: 12345.67
+
+restaurant:
+  name: Cat Restaurant
+  city: paris
+  cid: 54321
+  latitude: 54321.76
+  longitude: 54321.76

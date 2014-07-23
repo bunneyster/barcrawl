@@ -1,0 +1,17 @@
+<p id="notice"><%= notice %></p>
+
+<p>Hello, <%= @current_user.name %>!</p>
+
+<%= link_to "New Event", new_tour_path %> |
+<%= link_to "Log out", root_url, method: :delete %>
+
+<h1>My Events:</h1>
+<h2>Tours I'm hosting:</h2>
+
+<% Tour.where(organizer: @current_user).each do |tour| %>
+  <h3><%= tour.name %> | <%= tour.city.name %></h3>
+  <p>Starting at: <%= tour.starting_at %></p>
+  <%= link_to "Edit Me!", edit_tour_path(tour) %>
+<% end %>
+
+<h2>Invitations:</h2>

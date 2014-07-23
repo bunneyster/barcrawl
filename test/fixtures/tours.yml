@@ -1,0 +1,10 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+birthday:
+  name: "Peridot's Birthday"
+  organizer: peridot
+  city: paris
+  starting_at: 2015-06-29 21:23:31
+  image: "cake.jpg"
+  description: "Eat lots of cake."
+
