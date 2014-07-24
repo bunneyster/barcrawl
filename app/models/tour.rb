@@ -1,4 +1,6 @@
 class Tour < ActiveRecord::Base
+  include Obfuscate
+  
   belongs_to :organizer, class_name: :User
   validates :organizer, presence: true
   
@@ -16,5 +18,10 @@ class Tour < ActiveRecord::Base
   has_many :invitations
   
   # Users invited to this tour.
-  has_many :users, through: :invitations   
+  has_many :users, through: :invitations 
+  
+  # Use OpenSSL to encrypt the tour ID (see Obfuscate module)
+  def to_param
+    encrypt id
+  end  
 end

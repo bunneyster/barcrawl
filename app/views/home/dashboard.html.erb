@@ -11,7 +11,16 @@
 <% Tour.where(organizer: @current_user).each do |tour| %>
   <h3><%= tour.name %> | <%= tour.city.name %></h3>
   <p>Starting at: <%= tour.starting_at %></p>
-  <%= link_to "Edit Me!", edit_tour_path(tour) %>
+  <%= link_to "Edit basic information", edit_tour_path(tour) %> |
+  <%= link_to "Invite friends!", tour_path(tour) %>
 <% end %>
 
 <h2>Invitations:</h2>
+
+<h1>My friends:</h1>
+<%= link_to "Find friends", users_path %>
+<ol>
+<% Friendship.where(user_id: @current_user.id).each do |friendship| %>
+    <li><%= User.where(id: friendship.friend_id).first.name %></li>
+<% end %>
+</ol>

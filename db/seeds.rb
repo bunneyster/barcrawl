@@ -7,10 +7,22 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 User.delete_all
-User.create!(name: 'User Name',
-             email: 'asdf@asdf.com',
+User.create!(name: 'Allison',
+             email: 'a@asdf.com',
              password: 'asdf',
              password_confirmation: 'asdf')
+User.create!(name: 'Sam',
+             email: 's@asdf.com',
+             password: 'asdf',
+             password_confirmation: 'asdf')
+User.create!(name: 'Dan',
+             email: 'd@asdf.com',
+             password: 'asdf',
+             password_confirmation: 'asdf')
+User.create!(name: 'Firenze',
+             email: 'f@asdf.com',
+             password: 'asdf',
+             password_confirmation: 'asdf')             
              
 City.delete_all
 City.create!(name: 'Boston',
@@ -27,15 +39,15 @@ City.create!(name: 'Seoul',
              longitude: 126.98955)             
 
 Tour.delete_all
-Tour.create!(name: "User Name's Tour 1",
+Tour.create!(name: "Allison's Tour 1",
              city: City.where(name: 'Boston').first,
              starting_at: 1.week.from_now,
-             organizer: User.where(email: 'asdf@asdf.com').first)
-Tour.create!(name: "User Name's Tour 2",
+             organizer: User.where(email: 'a@asdf.com').first)
+Tour.create!(name: "Allison's Tour 2",
              city: City.where(name: 'New York').first,
              starting_at: 2.weeks.from_now,
-             organizer: User.where(email: 'asdf@asdf.com').first)
-Tour.create!(name: "User Name's Tour 3",
+             organizer: User.where(email: 'a@asdf.com').first)
+Tour.create!(name: "Sam's Tour 1",
              city: City.where(name: 'San Francisco').first,
              starting_at: 3.weeks.from_now,
-             organizer: User.where(email: 'asdf@asdf.com').first)       
+             organizer: User.where(email: 's@asdf.com').first)       

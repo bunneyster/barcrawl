@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
-  resources :cities
+
+  resources :friendships
 
   root 'home#home'
 
@@ -9,6 +10,8 @@ Rails.application.routes.draw do
     delete '/' => :destroy  # log out
   end
 
+  resources :cities
+  
   resources :tour_stops
 
   resources :tours
