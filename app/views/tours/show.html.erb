@@ -7,6 +7,7 @@
 
 <p>
   <strong>Organizer:</strong>
+  <%= image_tag avatar_url(@tour.organizer) %>
   <%= @tour.organizer.name %>
 </p>
 
@@ -27,7 +28,8 @@
 
 
 <%= link_to 'Edit', edit_tour_path(@tour) %> |
-<%= link_to 'Home', root_path %>
+<%= link_to 'Home', root_path %> |
+<%= link_to "Log out", root_url, method: :delete %>
 
 <%= render partial: "rsvp_button" %>
 
@@ -35,7 +37,7 @@
 <p>People attending:</p>
 <ol>
   <% Invitation.where(tour_id: @tour.id).each do |invitation| %>
-  <li><%= invitation.user.name %></li>
+  <li><%= image_tag avatar_url(invitation.user) %><%= invitation.user.name %></li>
   <% end %>
 </ol>
 

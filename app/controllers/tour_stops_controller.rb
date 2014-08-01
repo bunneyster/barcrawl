@@ -43,7 +43,7 @@ class TourStopsController < ApplicationController
   def update
     respond_to do |format|
       if @tour_stop.update(tour_stop_params)
-        format.html { redirect_to @tour_stop, notice: 'Tour stop was successfully updated.' }
+        format.html { redirect_to :back, notice: 'Tour stop was successfully updated.' }
         format.json { render :show, status: :ok, location: @tour_stop }
       else
         format.html { render :edit }
@@ -70,6 +70,6 @@ class TourStopsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def tour_stop_params
-      params.require(:tour_stop).permit(:tour_id, :venue_id)
+      params.require(:tour_stop).permit(:tour_id, :venue_id, :status)
     end
 end

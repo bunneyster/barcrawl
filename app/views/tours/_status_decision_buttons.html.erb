@@ -1,0 +1,8 @@
+<%= form_for tour_stop do |f| %>
+  <%= f.hidden_field :status, value: 'yes' %>
+  <%= f.submit "Accept" %>
+<% end %>
+<%= form_for tour_stop do |f| %>
+  <%= f.hidden_field :status, value: 'no' %>
+  <%= f.submit "Reject" %>
+<% end %>
