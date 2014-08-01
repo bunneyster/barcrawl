@@ -10,6 +10,5 @@ module CurrentUser
     
     def bounce_if_logged_out
       redirect_to root_url unless @current_user
-      # code
     end
 end

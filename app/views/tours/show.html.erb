@@ -26,6 +26,23 @@
 </p>
 
 
-
 <%= link_to 'Edit', edit_tour_path(@tour) %> |
 <%= link_to 'Home', root_path %>
+
+<%= render partial: "rsvp_button" %>
+
+
+<p>People attending:</p>
+<ol>
+  <% Invitation.where(tour_id: @tour.id).each do |invitation| %>
+  <li><%= invitation.user.name %></li>
+  <% end %>
+</ol>
+
+<p>Proposed venues:</p>
+<ol>
+  <%= render partial: "voting_line_item", collection: @tour.tour_stops, as: :tour_stop %>
+</ol>
+
+<!-- User can only propose tour stops if she has joined the event, or is the event organizer. -->
+<%= link_to 'Propose a tour stop', new_tour_stop_path(tour_id: @tour.id) %>

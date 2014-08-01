@@ -16,7 +16,7 @@
     <% @venues.each do |venue| %>
       <tr>
         <td><%= venue.name %></td>
-        <td><%= venue.city %></td>
+        <td><%= venue.city.name %></td>
         <td><%= venue.cid %></td>
         <td><%= venue.latitude %></td>
         <td><%= venue.longitude %></td>

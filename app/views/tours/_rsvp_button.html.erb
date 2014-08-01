@@ -1,0 +1,15 @@
+<% if @tour.invitation_for(@current_user).exists? %>
+  <%= form_for(@tour.invitation_for(@current_user).first!, method: :delete) do |f| %>
+    <%= f.hidden_field :tour_id %>
+    <div class="actions">
+      <%= f.submit 'Leave' %>
+    </div>
+  <% end %>
+<% else %>
+  <%= form_for(@tour.new_invitation) do |f| %>
+    <%= f.hidden_field :tour_id %>
+    <div class="actions">
+      <%= f.submit 'Join' %>
+    </div>
+  <% end %>
+<% end %>

@@ -11,11 +11,17 @@
 <% Tour.where(organizer: @current_user).each do |tour| %>
   <h3><%= tour.name %> | <%= tour.city.name %></h3>
   <p>Starting at: <%= tour.starting_at %></p>
-  <%= link_to "Edit basic information", edit_tour_path(tour) %> |
-  <%= link_to "Invite friends!", tour_path(tour) %>
+  <%= link_to "Edit Tour", edit_tour_path(tour) %> |
+  <%= link_to "View Tour", tour_path(tour) %>
 <% end %>
 
-<h2>Invitations:</h2>
+<h2>Tours I'm attending:</h2>
+
+<% Invitation.where(user: @current_user).each do |invitation| %>
+  <h3><%= invitation.tour.name %> | <%= invitation.tour.city.name %></h3>
+  <p>Starting at: <%= invitation.tour.starting_at %></p>
+  <%= link_to "View Tour", tour_path(invitation.tour)%>
+<% end %>
 
 <h1>My friends:</h1>
 <%= link_to "Find friends", users_path %>

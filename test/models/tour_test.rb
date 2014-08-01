@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class TourTest < ActiveSupport::TestCase
-  fixtures :users, :tours, :cities
+  fixtures :users, :tours, :cities, :invitations
   
   setup do
     @tour = Tour.new name: 'Valid Tour',
@@ -50,5 +50,14 @@ class TourTest < ActiveSupport::TestCase
     
     assert @tour.invalid?
     assert_match(/must be on or after/, @tour.errors[:starting_at].inspect)
+  end
+  
+  # test "primary key is a random base64 string"
+  
+  test "organizer must be invited to tour" do
+    assert_equal 0, @tour.users.count
+    @tour.save!
+    assert_equal 1, @tour.users.count
+    assert_equal users(:peridot), @tour.users.first!
   end
 end

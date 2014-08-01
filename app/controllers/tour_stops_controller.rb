@@ -14,7 +14,7 @@ class TourStopsController < ApplicationController
 
   # GET /tour_stops/new
   def new
-    @tour_stop = TourStop.new
+    @tour_stop = TourStop.new(tour: Tour.find(params[:tour_id]))
   end
 
   # GET /tour_stops/1/edit
@@ -25,10 +25,11 @@ class TourStopsController < ApplicationController
   # POST /tour_stops.json
   def create
     @tour_stop = TourStop.new(tour_stop_params)
+    @current_tour = Tour.find(tour_stop_params[:tour_id])
 
     respond_to do |format|
       if @tour_stop.save
-        format.html { redirect_to @tour_stop, notice: 'Tour stop was successfully created.' }
+        format.html { redirect_to tour_url(@current_tour), notice: 'Tour stop was successfully created.' }
         format.json { render :show, status: :created, location: @tour_stop }
       else
         format.html { render :new }

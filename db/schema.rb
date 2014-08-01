@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140724035522) do
+ActiveRecord::Schema.define(version: 20140801015138) do
 
   create_table "cities", force: true do |t|
     t.string   "name"
@@ -20,6 +20,16 @@ ActiveRecord::Schema.define(version: 20140724035522) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "comments", force: true do |t|
+    t.integer  "commenter_id", null: false
+    t.integer  "tour_stop_id", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "comments", ["commenter_id"], name: "index_comments_on_commenter_id"
+  add_index "comments", ["tour_stop_id"], name: "index_comments_on_tour_stop_id"
 
   create_table "friendships", force: true do |t|
     t.integer  "user_id"
@@ -33,7 +43,7 @@ ActiveRecord::Schema.define(version: 20140724035522) do
 
   create_table "invitations", force: true do |t|
     t.integer  "user_id"
-    t.integer  "tour_id"
+    t.string   "tour_id",    limit: 64
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -42,9 +52,9 @@ ActiveRecord::Schema.define(version: 20140724035522) do
   add_index "invitations", ["user_id"], name: "index_invitations_on_user_id"
 
   create_table "tour_stops", force: true do |t|
-    t.integer  "tour_id"
+    t.string   "tour_id",    limit: 64
     t.integer  "venue_id"
-    t.integer  "status",     default: 0
+    t.integer  "status",                default: 0
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -52,7 +62,8 @@ ActiveRecord::Schema.define(version: 20140724035522) do
   add_index "tour_stops", ["tour_id"], name: "index_tour_stops_on_tour_id"
   add_index "tour_stops", ["venue_id"], name: "index_tour_stops_on_venue_id"
 
-  create_table "tours", force: true do |t|
+  create_table "tours", id: false, force: true do |t|
+    t.string   "id",           limit: 64,  null: false
     t.string   "name",                     null: false
     t.integer  "organizer_id",             null: false
     t.integer  "city_id",                  null: false
@@ -62,6 +73,8 @@ ActiveRecord::Schema.define(version: 20140724035522) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "tours", ["id"], name: "index_tours_on_id", unique: true
 
   create_table "users", force: true do |t|
     t.string   "name",            limit: 28, null: false
@@ -83,5 +96,16 @@ ActiveRecord::Schema.define(version: 20140724035522) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "votes", force: true do |t|
+    t.integer  "voter_id",     null: false
+    t.integer  "tour_stop_id", null: false
+    t.integer  "score",        null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "votes", ["tour_stop_id"], name: "index_votes_on_tour_stop_id"
+  add_index "votes", ["voter_id"], name: "index_votes_on_voter_id"
 
 end

@@ -2,7 +2,7 @@ require 'test_helper'
 
 class TourStopsControllerTest < ActionController::TestCase
   setup do
-    @tour_stop = tour_stops(:one)
+    @tour_stop = tour_stops(:first)
   end
 
   test "should get index" do
@@ -11,8 +11,8 @@ class TourStopsControllerTest < ActionController::TestCase
     assert_not_nil assigns(:tour_stops)
   end
 
-  test "should get new" do
-    get :new
+  test "get to venue selection page from tour page" do
+    get :new, tour_id: @tour_stop.tour.id
     assert_response :success
   end
 
@@ -21,7 +21,7 @@ class TourStopsControllerTest < ActionController::TestCase
       post :create, tour_stop: { tour_id: @tour_stop.tour_id, venue_id: @tour_stop.venue_id }
     end
 
-    assert_redirected_to tour_stop_path(assigns(:tour_stop))
+    assert_redirected_to tour_path(assigns(:current_tour))
   end
 
   test "should show tour_stop" do

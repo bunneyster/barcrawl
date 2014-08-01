@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+up:
+  voter: peridot
+  tour_stop: one
+  score: 1
+
+down:
+  voter: peridot
+  tour_stop: two
+  score: -1

@@ -2,7 +2,9 @@ require 'test_helper'
 
 class FriendshipsControllerTest < ActionController::TestCase
   setup do
-    @friendship = friendships(:one)
+    @friendship = friendships(:s2d)
+    @user = users(:peridot)
+    login_as @user
   end
 
   test "should get index" do
@@ -18,10 +20,10 @@ class FriendshipsControllerTest < ActionController::TestCase
 
   test "should create friendship" do
     assert_difference('Friendship.count') do
-      post :create, friendship: { friend_id: @friendship.friend_id, user_id: @friendship.user_id }
+      post :create, friendship: { friend_id: @friendship.friend_id }
     end
 
-    assert_redirected_to friendship_path(assigns(:friendship))
+    assert_redirected_to root_url
   end
 
   test "should show friendship" do

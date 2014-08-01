@@ -1,5 +1,6 @@
 class Tour < ActiveRecord::Base
-  include Obfuscate
+  # Use a random URL-safe base64 string of length 64 as the primary key.
+  self.primary_key = :id
   
   belongs_to :organizer, class_name: :User
   validates :organizer, presence: true
@@ -12,16 +13,44 @@ class Tour < ActiveRecord::Base
   validates :starting_at, presence: true,
             timeliness: { on_or_after: lambda { DateTime.current } }
 
+  # Tour stops proposed/accepted to be included this tour.
   has_many :tour_stops, dependent: :destroy
+  
+  # Venues where the stops on this tour take place.
+  has_many :venues, through: :tour_stops
 
   # Invitations extended for this tour.  
   has_many :invitations
   
   # Users invited to this tour.
-  has_many :users, through: :invitations 
+  has_many :users, through: :invitations
   
-  # Use OpenSSL to encrypt the tour ID (see Obfuscate module)
+  before_validation :generate_id
+  
+  # After the tour record is first created, add the organizer to the tour.
+  after_create :invite_organizer_to_tour
+  
+  def invitation_for(user)
+    self.invitations.where(user: user)
+  end
+  
+  def new_invitation
+    Invitation.new(tour: Tour.find(self[:id]))
+  end
+      
   def to_param
-    encrypt id
-  end  
+    id
+  end
+  
+  # private
+  
+    def generate_id
+      self.id ||= SecureRandom.urlsafe_base64 48
+    end
+
+    
+    def invite_organizer_to_tour
+      Invitation.create(user: User.find(self[:organizer_id]),
+                        tour: Tour.find(self[:id]))
+    end
 end

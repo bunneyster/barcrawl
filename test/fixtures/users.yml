@@ -6,8 +6,20 @@ peridot:
   avatar_url: peridot.jpg
   password_digest: <%= BCrypt::Password.create('peridot') %>
 
-two:
-  name: MyString
-  email: MyString
-  avatar_url: MyString
-  password_digest: <%= BCrypt::Password.create('secret') %>
+allison:
+  name: Allison A
+  email: a@asdf.com
+  avatar_url: allison.jpg
+  password_digest: <%= BCrypt::Password.create('asdf') %>
+  
+sam:
+  name: Sam S
+  email: s@asdf.com
+  avatar_url: sam.jpg
+  password_digest: <%= BCrypt::Password.create('asdf') %>
+  
+dan:
+  name: Dan D
+  email: d@asdf.com
+  avatar_url: dan.jpg
+  password_digest: <%= BCrypt::Password.create('asdf') %>

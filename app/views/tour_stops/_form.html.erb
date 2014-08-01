@@ -11,15 +11,16 @@
     </div>
   <% end %>
 
+
+  <%= f.hidden_field :tour_id %>
+  
+  <!-- Show venues located in the tour's city, which haven't already been proposed. -->
   <div class="field">
-    <%= f.label :tour_id %><br>
-    <%= f.text_field :tour_id %>
-  </div>
-  <div class="field">
-    <%= f.label :venue_id %><br>
-    <%= f.text_field :venue_id %>
+    <%= f.label :venue, 'Venues:' %><br>
+    <%= f.collection_select :venue_id, Venue.where(city: @tour_stop.tour.city).order(:name) - @tour_stop.tour.venues, :id, :name, :include_blank => "Please select a venue..." %>
   </div>
   <div class="actions">
     <%= f.submit %>
   </div>
+  
 <% end %>

@@ -1,7 +1,5 @@
 Rails.application.routes.draw do
 
-  resources :friendships
-
   root 'home#home'
 
   controller :sessions do
@@ -9,6 +7,12 @@ Rails.application.routes.draw do
     post '/' => :create     # log in
     delete '/' => :destroy  # log out
   end
+  
+  post 'votes/tally' => 'votes#tally'
+  
+  resources :votes
+  
+  resources :invitations
 
   resources :cities
   
@@ -19,6 +23,8 @@ Rails.application.routes.draw do
   resources :users
 
   resources :venues
+  
+  resources :friendships
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

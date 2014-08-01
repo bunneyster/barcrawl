@@ -1,9 +1,9 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-first:
-  tour: birthday 
-  venue: cafe
+one:
+  commenter_id: 
+  tour_stop_id: 
 
-second:
-  tour: birthday 
-  venue: restaurant
+two:
+  commenter_id: 
+  tour_stop_id: 

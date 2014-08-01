@@ -2,12 +2,12 @@
 
 <p>
   <strong>Tour:</strong>
-  <%= @tour_stop.tour %>
+  <%= @tour_stop.tour.name %>
 </p>
 
 <p>
   <strong>Venue:</strong>
-  <%= @tour_stop.venue %>
+  <%= @tour_stop.venue.name %>
 </p>
 
 <%= link_to 'Edit', edit_tour_stop_path(@tour_stop) %> |
