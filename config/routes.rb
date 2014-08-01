@@ -8,9 +8,10 @@ Rails.application.routes.draw do
     delete '/' => :destroy  # log out
   end
   
-  post 'votes/tally' => 'votes#tally'
-  
+  resources :comments
+      
   resources :votes
+  post 'votes/tally' => 'votes#tally'
   
   resources :invitations
 

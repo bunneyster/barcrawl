@@ -22,8 +22,9 @@ ActiveRecord::Schema.define(version: 20140801015138) do
   end
 
   create_table "comments", force: true do |t|
-    t.integer  "commenter_id", null: false
-    t.integer  "tour_stop_id", null: false
+    t.integer  "commenter_id",             null: false
+    t.integer  "tour_stop_id",             null: false
+    t.text     "text",         limit: 300, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -63,13 +64,13 @@ ActiveRecord::Schema.define(version: 20140801015138) do
   add_index "tour_stops", ["venue_id"], name: "index_tour_stops_on_venue_id"
 
   create_table "tours", id: false, force: true do |t|
-    t.string   "id",           limit: 64,  null: false
-    t.string   "name",                     null: false
-    t.integer  "organizer_id",             null: false
-    t.integer  "city_id",                  null: false
-    t.datetime "starting_at",              null: false
+    t.string   "id",           limit: 64,   null: false
+    t.string   "name",         limit: 128,  null: false
+    t.integer  "organizer_id",              null: false
+    t.integer  "city_id",                   null: false
+    t.datetime "starting_at",               null: false
     t.string   "image"
-    t.text     "description",  limit: 300
+    t.text     "description",  limit: 1000
     t.datetime "created_at"
     t.datetime "updated_at"
   end

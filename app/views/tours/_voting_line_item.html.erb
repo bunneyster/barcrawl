@@ -1,6 +1,20 @@
 <li>
 <%= tour_stop.total_score %>
 <%= tour_stop.venue.name %>
-<%= button_to "^", votes_tally_path(tour_stop_id: tour_stop.id, score: 1) %>
-<%= button_to "v", votes_tally_path(tour_stop_id: tour_stop.id, score: -1) %>
+<%= button_to "^", votes_tally_path(tour_stop_id: tour_stop.to_param, score: 1) %>
+<%= button_to "v", votes_tally_path(tour_stop_id: tour_stop.to_param, score: -1) %>
+<%= link_to "Post a comment!", new_comment_path(tour_stop_id: tour_stop.to_param) %>
+  <div class="comment">
+    <%= render partial: "comment", collection: tour_stop.comments, as: :comment %>
+  </div>  
 </li>
+
+
+<!--
+<%= form_tag new_comment_path, method: :get do %>
+  <%= hidden_field_tag :tour_stop_id, tour_stop.to_param %>
+  <%= button_tag do %>
+    Post a comment
+  <% end %>
+<% end %>
+-->

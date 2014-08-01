@@ -8,9 +8,9 @@ class InvitationsController < ApplicationController
     
     respond_to do |format|
       if @invitation.save
-        format.html { redirect_to root_url, notice: 'Successfully joined the tour!' }
+        format.html { redirect_to :back, notice: 'Successfully joined the tour!' }
       else
-        format.html { redirect_to :back }
+        format.html { redirect_to :back, notice: 'Oh no! Could not join the tour.' }
       end
     end
   end

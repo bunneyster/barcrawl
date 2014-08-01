@@ -37,15 +37,6 @@ class VotesController < ApplicationController
       end
     end
   end
-
-=begin
-  def destroy
-    @vote.destroy
-    respond_to do |format|
-      format.html { redirect_to :back }
-    end
-  end
-=end
   
   private
   

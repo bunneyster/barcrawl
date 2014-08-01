@@ -10,6 +10,9 @@ class TourStop < ActiveRecord::Base
   # Votes that have been cast for/against this tour stop's proposed venue.
   has_many :votes
   
+  # Comments posted regarding this tour stop.
+  has_many :comments
+  
   # Whether this tour stop will be included in the finalized tour itinerary.
   enum status: { maybe: 0, yes: 1, no: 2 }
   

@@ -13,6 +13,8 @@ class Tour < ActiveRecord::Base
   validates :starting_at, presence: true,
             timeliness: { on_or_after: lambda { DateTime.current } }
 
+  validates :description, length: { maximum: 1000 }
+  
   # Tour stops proposed/accepted to be included this tour.
   has_many :tour_stops, dependent: :destroy
   
