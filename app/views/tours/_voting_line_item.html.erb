@@ -1,21 +1,23 @@
-<li>
-  <%= tour_stop.total_score %>
-  <%= tour_stop.venue.name %>
-  <%= tour_stop.status %>
-  <%= button_to "^", votes_tally_path(tour_stop_id: tour_stop.to_param, score: 1) %>
-  <%= button_to "v", votes_tally_path(tour_stop_id: tour_stop.to_param, score: -1) %>
-  
-  <%= hidden_div_if(!(@current_user === @tour.organizer)) do %>
-    <%= render partial: "status_decision_buttons", locals: {tour_stop: tour_stop} %>
-  <% end %>
-  
-  <%= link_to "Post a comment!", new_comment_path(tour_stop_id: tour_stop.to_param) %>
-  
-  <div class="comment">
-    <%= render partial: "comment", collection: tour_stop.comments, as: :comment %>
-  </div>  
-</li>
-
+<!-- Hide venue proposal if it has not been accepted in the finalized itinerary. -->
+<%= hidden_div_if(@tour.status === "finalized" && tour_stop.status != "yes") do %>
+  <li>
+    <%= tour_stop.total_score %>
+    <%= tour_stop.venue.name %>
+    <%= tour_stop.status %>
+    <%= button_to "^", votes_tally_path(tour_stop_id: tour_stop.to_param, score: 1) %>
+    <%= button_to "v", votes_tally_path(tour_stop_id: tour_stop.to_param, score: -1) %>
+    
+    <%= hidden_div_if(!(@current_user === @tour.organizer)) do %>
+      <%= render partial: "status_decision_buttons", locals: {tour_stop: tour_stop} %>
+    <% end %>
+    
+    <%= link_to "Post a comment!", new_comment_path(tour_stop_id: tour_stop.to_param) %>
+    
+    <div class="comment">
+      <%= render partial: "comment", collection: tour_stop.comments, as: :comment %>
+    </div>  
+  </li>
+<% end %>
 
 <!--
 <%= form_tag new_comment_path, method: :get do %>

@@ -32,6 +32,9 @@ class Tour < ActiveRecord::Base
   # After the tour record is first created, add the organizer to the tour.
   after_create :invite_organizer_to_tour
   
+  # Whether this tour has been finalized by the organizer.
+  enum status: { pending: 0, finalized: 1 }
+  
   def invitation_for(user)
     self.invitations.where(user: user)
   end

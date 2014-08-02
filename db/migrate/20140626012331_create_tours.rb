@@ -8,6 +8,7 @@ class CreateTours < ActiveRecord::Migration
       t.datetime :starting_at, null: false
       t.string :image
       t.text :description, limit: 1000
+      t.column :status, :integer, default: 0
       
       t.index :id, unique: true
 
