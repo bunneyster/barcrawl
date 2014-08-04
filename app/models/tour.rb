@@ -42,6 +42,10 @@ class Tour < ActiveRecord::Base
   def new_invitation
     Invitation.new(tour: Tour.find(self[:id]))
   end
+  
+  def organized_by?(user)
+    user === self.organizer
+  end
       
   def to_param
     id

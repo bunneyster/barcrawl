@@ -1,9 +1,9 @@
+<%= link_to 'Home', root_path %> |
+<%= link_to "Log out", root_url, method: :delete %>
+
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Name:</strong>
-  <%= @tour.name %>
-</p>
+<h1><%= @tour.name %></h1>
 
 <p>
   <strong>Organizer:</strong>
@@ -12,7 +12,7 @@
 </p>
 
 <p>
-  <strong>Day & Starting time:</strong>
+  <strong>Begins:</strong>
   <%= @tour.starting_at %>
 </p>
 
@@ -27,11 +27,40 @@
 </p>
 
 
-<%= link_to 'Edit', edit_tour_path(@tour) %> |
-<%= link_to 'Home', root_path %> |
-<%= link_to "Log out", root_url, method: :delete %>
 
-<%= render partial: "rsvp_button" %>
+<%= hidden_div_if(!@tour.organized_by?(@current_user)) do %>
+  <%= @tour.status %> | <%= link_to 'Edit', edit_tour_path(@tour) %>
+<% end %>
+
+
+
+<%= hidden_div_if(@tour.organized_by?(@current_user)) do %>
+  <%= render partial: "rsvp_button" %>
+<% end %>
+
+
+
+<!-- User can only propose tour stops for a pending tour if she has an invitation to the event. -->
+<%= hidden_div_if(!((@tour.status === "pending") && (@tour.invitation_for(@current_user).exists?))) do %>
+  <%= link_to 'Propose a tour stop', new_tour_stop_path(tour_id: @tour.to_param) %>
+<% end %>
+
+
+
+<p>Proposed venues:</p>
+<ol>
+  <%= render partial: "voting_line_item", collection: @tour.tour_stops, as: :tour_stop %>
+</ol>
+
+
+
+<%= hidden_div_if(!@tour.organized_by?(@current_user) || @tour.status === "finalized") do %>
+  <%= form_for @tour do |f| %>
+    <%= f.hidden_field :status, value: 'finalized' %>
+    <%= f.submit "Finalize itinerary" %>
+  <% end %>
+<% end %>
+
 
 
 <p>People attending:</p>
@@ -40,24 +69,3 @@
   <li><%= image_tag avatar_url(invitation.user) %><%= invitation.user.name %></li>
   <% end %>
 </ol>
-
-<%= hidden_div_if(@current_user != @tour.organizer) do %>
-  <%= @tour.status %>
-<% end %>
-
-<p>Proposed venues:</p>
-<ol>
-  <%= render partial: "voting_line_item", collection: @tour.tour_stops, as: :tour_stop %>
-</ol>
-
-<!-- User can only propose tour stops for a pending tour if she has an invitation to the event. -->
-<%= hidden_div_if(!((@tour.status === "pending") && (@tour.users.where(id: @current_user.id).exists?))) do %>
-  <%= link_to 'Propose a tour stop', new_tour_stop_path(tour_id: @tour.to_param) %>
-<% end %>
-
-<%= hidden_div_if(@current_user != @tour.organizer || @tour.status === "finalized") do %>
-  <%= form_for @tour do |f| %>
-    <%= f.hidden_field :status, value: 'finalized' %>
-    <%= f.submit "Finalize itinerary" %>
-  <% end %>
-<% end %>
