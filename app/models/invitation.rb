@@ -12,6 +12,6 @@ class Invitation < ActiveRecord::Base
   private
   
     def ensure_user_has_not_already_joined_tour
-      !(Invitation.where(user: @current_user, tour: @tour).exists?)
+      !(Invitation.where(user: self.user, tour: self.tour).exists?)
     end
 end

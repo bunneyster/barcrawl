@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class ToursControllerTest < ActionController::TestCase
-  fixtures :tours, :users, :cities
   
   setup do
     @tour = tours(:birthday)

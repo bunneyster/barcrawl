@@ -4,15 +4,15 @@ birthday:
   name: "Peridot's Birthday"
   organizer: peridot
   city: paris
-  starting_at: 2015-06-29 21:23:31
+  starting_at: <%= 1.week.from_now.to_s(:db) $>
   image: "cake.jpg"
   description: "Eat lots of cake."
   
 newyear:
-  name: "New Year's 2015"
+  name: "New Year's"
   organizer: sam
   city: boston
-  starting_at: 2014-12-31 18:30:00
+  starting_at: <%= 1.month.from_now.to_s(:db) $>
   image: "party.jpg"
   description: "Let's watch the ball drop."
 
@@ -20,6 +20,6 @@ anniversary:
   name: "Bean Bag Celebrations"
   organizer: allison
   city: boston
-  starting_at: 2015-03-06 20:00:00
+  starting_at: <%= 1.year.from_now.to_s(:db) $>
   image: "wine.jpg"
   description: "We found love in a hopeless place."

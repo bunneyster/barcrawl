@@ -6,4 +6,5 @@ class Comment < ActiveRecord::Base
   validates :tour_stop, presence: true
   
   validates :text, presence: true, length: 1..300
+
 end

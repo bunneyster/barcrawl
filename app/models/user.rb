@@ -6,7 +6,9 @@ class User < ActiveRecord::Base
   has_many :tours, through: :invitations
   
   validates :email, uniqueness: true
-  validates :name, :email, presence: true
+  validates :email, length: 1..38
+  
+  validates :name, length: 1..28
   
   # Validates presence of password on create, confirmation of password
   has_secure_password

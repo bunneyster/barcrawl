@@ -1,8 +1,7 @@
 require 'test_helper'
 
 class TourTest < ActiveSupport::TestCase
-  fixtures :users, :tours, :cities, :invitations
-  
+    
   setup do
     @tour = Tour.new name: 'Valid Tour',
                      organizer: users(:peridot),
@@ -44,6 +43,10 @@ class TourTest < ActiveSupport::TestCase
     assert_match(/can't be blank/, @tour.errors[:starting_at].inspect)
   end
   
+  test "tour default status is pending" do
+    assert_match(/pending/, @tour.status)
+  end
+  
   test "starting time must be in the future" do
     last_month = 1.month.ago
     @tour.starting_at = last_month
@@ -52,12 +55,30 @@ class TourTest < ActiveSupport::TestCase
     assert_match(/must be on or after/, @tour.errors[:starting_at].inspect)
   end
   
-  # test "primary key is a random base64 string"
-  
   test "organizer must be invited to tour" do
     assert_equal 0, @tour.users.count
     @tour.save!
     assert_equal 1, @tour.users.count
     assert_equal users(:peridot), @tour.users.first!
+  end
+  
+  test "tour id is longer than 60 characters" do
+    @tour.save!
+    
+    assert_operator @tour.id.length, :>=, 60
+  end
+  
+  test "tour name must not exceed 128 characters" do
+    @tour.name = "awesome" * 19
+    
+    assert @tour.invalid?
+    assert_match(/too long/, @tour.errors[:name].inspect)
+  end
+  
+  test "description must not exceed 1000 characters" do
+    @tour.description = "party" * 201
+    
+    assert @tour.invalid?
+    assert_match(/too long/, @tour.errors[:description].inspect)
   end
 end

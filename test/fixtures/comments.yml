@@ -1,9 +1,13 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  commenter_id: 
-  tour_stop_id: 
+hello:
+  commenter: peridot
+  tour_stop: first
+  text: "Hello."
+  created_at: <%= 10.minutes.ago.to_s(:db) %>
 
-two:
-  commenter_id: 
-  tour_stop_id: 
+goodbye:
+  commenter: allison
+  tour_stop: first
+  text: "Goodbye."
+  created_at: <%= 20.minutes.ago.to_s(:db) %>

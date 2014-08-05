@@ -1,9 +1,9 @@
 class CreateCities < ActiveRecord::Migration
   def change
     create_table :cities do |t|
-      t.string :name
-      t.float :latitude
-      t.float :longitude
+      t.string :name, null: false
+      t.float :latitude, null: false
+      t.float :longitude, null: false
 
       t.timestamps
     end

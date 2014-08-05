@@ -1,6 +1,6 @@
 class CommentsController < ApplicationController
   before_action :set_comment, only: [:destroy]
-  before_action :set_tour, only: [:create]
+  before_action :set_tour, only: [:create, :destroy]
   
   # GET /comments
   def index
@@ -27,7 +27,7 @@ class CommentsController < ApplicationController
      
     respond_to do |format|
       if @comment.save
-        format.html { redirect_to @tour, notice: 'Commnent successfully posted!' }
+        format.html { redirect_to @tour, notice: 'Comment successfully posted!' }
       else
         format.html { render :new }
       end
@@ -43,7 +43,7 @@ class CommentsController < ApplicationController
   def destroy
     @comment.destroy
     respond_to do |format|
-      format.html {redirect_to :back, notice: "Comment successfully deleted." }
+      format.html {redirect_to @tour, notice: "Comment successfully deleted." }
     end
   end
   

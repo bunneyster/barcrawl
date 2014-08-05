@@ -5,7 +5,8 @@ class CreateComments < ActiveRecord::Migration
       t.references :tour_stop, index: true, null: false
       t.text :text, null: false, limit: 300
 
-      t.timestamps
+      t.datetime :created_at, null: false
+      t.datetime :updated_at
     end
   end
 end

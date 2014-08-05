@@ -14,9 +14,9 @@
 ActiveRecord::Schema.define(version: 20140801015138) do
 
   create_table "cities", force: true do |t|
-    t.string   "name"
-    t.float    "latitude"
-    t.float    "longitude"
+    t.string   "name",       null: false
+    t.float    "latitude",   null: false
+    t.float    "longitude",  null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -25,7 +25,7 @@ ActiveRecord::Schema.define(version: 20140801015138) do
     t.integer  "commenter_id",             null: false
     t.integer  "tour_stop_id",             null: false
     t.text     "text",         limit: 300, null: false
-    t.datetime "created_at"
+    t.datetime "created_at",               null: false
     t.datetime "updated_at"
   end
 
@@ -33,8 +33,8 @@ ActiveRecord::Schema.define(version: 20140801015138) do
   add_index "comments", ["tour_stop_id"], name: "index_comments_on_tour_stop_id"
 
   create_table "friendships", force: true do |t|
-    t.integer  "user_id"
-    t.integer  "friend_id"
+    t.integer  "user_id",    null: false
+    t.integer  "friend_id",  null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -43,8 +43,8 @@ ActiveRecord::Schema.define(version: 20140801015138) do
   add_index "friendships", ["user_id"], name: "index_friendships_on_user_id"
 
   create_table "invitations", force: true do |t|
-    t.integer  "user_id"
-    t.string   "tour_id",    limit: 64
+    t.integer  "user_id",               null: false
+    t.string   "tour_id",    limit: 64, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -53,9 +53,9 @@ ActiveRecord::Schema.define(version: 20140801015138) do
   add_index "invitations", ["user_id"], name: "index_invitations_on_user_id"
 
   create_table "tour_stops", force: true do |t|
-    t.string   "tour_id",    limit: 64
-    t.integer  "venue_id"
-    t.integer  "status",                default: 0
+    t.string   "tour_id",    limit: 64,             null: false
+    t.integer  "venue_id",                          null: false
+    t.integer  "status",                default: 0, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -90,11 +90,11 @@ ActiveRecord::Schema.define(version: 20140801015138) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true
 
   create_table "venues", force: true do |t|
-    t.string   "name"
-    t.integer  "city_id"
-    t.integer  "cid"
-    t.float    "latitude"
-    t.float    "longitude"
+    t.string   "name",       null: false
+    t.integer  "city_id",    null: false
+    t.integer  "cid",        null: false
+    t.float    "latitude",   null: false
+    t.float    "longitude",  null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

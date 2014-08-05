@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
-  fixtures :users
   
   setup do
     @user = User.new email: 'newuser@gmail.com',
@@ -26,14 +25,42 @@ class UserTest < ActiveSupport::TestCase
     @user.name = nil
     
     assert @user.invalid?
-    assert_match(/can't be blank/, @user.errors[:name].inspect)
+    assert_match(/too short/, @user.errors[:name].inspect)
+  end
+  
+  test "user name must have more than 1 character" do
+    @user.name = ""
+    
+    assert @user.invalid?
+    assert_match(/too short/, @user.errors[:name].inspect)
+  end
+  
+  test "user name must not have more than 28 characters" do
+    @user.name = "Anna" * 8
+    
+    assert @user.invalid?
+    assert_match(/too long/, @user.errors[:name].inspect)
   end
   
   test "user must have email" do
     @user.email = nil
     
     assert @user.invalid?
-    assert_match(/can't be blank/, @user.errors[:email].inspect)
+    assert_match(/too short/, @user.errors[:email].inspect)
+  end
+  
+  test "user email must have more than 1 character" do
+    @user.email = ""
+    
+    assert @user.invalid?
+    assert_match(/too short/, @user.errors[:email].inspect)
+  end
+  
+  test "user email must not have more than 38 characters" do
+    @user.email = "anna" * 8 + "@test.com"
+    
+    assert @user.invalid?
+    assert_match(/too long/, @user.errors[:email].inspect)
   end
   
   test "user must confirm password" do
