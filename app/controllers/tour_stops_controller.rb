@@ -1,5 +1,6 @@
 class TourStopsController < ApplicationController
   before_action :set_tour_stop, only: [:show, :edit, :update, :destroy]
+  before_action :set_tour, only: [:create, :update]
 
   # GET /tour_stops
   # GET /tour_stops.json
@@ -25,11 +26,10 @@ class TourStopsController < ApplicationController
   # POST /tour_stops.json
   def create
     @tour_stop = TourStop.new(tour_stop_params)
-    @current_tour = Tour.find(tour_stop_params[:tour_id])
 
     respond_to do |format|
       if @tour_stop.save
-        format.html { redirect_to tour_url(@current_tour), notice: 'Tour stop was successfully created.' }
+        format.html { redirect_to @tour, notice: 'Tour stop was successfully created.' }
         format.json { render :show, status: :created, location: @tour_stop }
       else
         format.html { render :new }
@@ -43,7 +43,7 @@ class TourStopsController < ApplicationController
   def update
     respond_to do |format|
       if @tour_stop.update(tour_stop_params)
-        format.html { redirect_to :back, notice: 'Tour stop was successfully updated.' }
+        format.html { redirect_to @tour, notice: 'Tour stop was successfully updated.' }
         format.json { render :show, status: :ok, location: @tour_stop }
       else
         format.html { render :edit }
@@ -64,6 +64,10 @@ class TourStopsController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
+    def set_tour
+      @tour = Tour.find(tour_stop_params[:tour_id])
+    end
+    
     def set_tour_stop
       @tour_stop = TourStop.find(params[:id])
     end

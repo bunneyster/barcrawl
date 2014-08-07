@@ -21,9 +21,9 @@ class ToursControllerTest < ActionController::TestCase
 
   test "should create tour" do
     assert_difference('Tour.count') do
-      post :create, tour: { name: '2014 Graduation',
-                            city_id: @tour.city_id,
-                            starting_at: @tour.starting_at }
+      post :create, tour: { name: 'New Tour',
+                            city_id: cities(:paris).id,
+                            starting_at: 1.week.from_now }
     end
     
     assert_match(/Tour successfully created!/, flash[:notice].inspect)
@@ -41,7 +41,7 @@ class ToursControllerTest < ActionController::TestCase
   end
 
   test "should update tour" do
-    patch :update, id: @tour, tour: { description: @tour.description, image: @tour.image, name: @tour.name, starting_at: @tour.starting_at }
+    patch :update, id: @tour, tour: { description: @tour.description }
     assert_redirected_to tour_path(assigns(:tour))
   end
 

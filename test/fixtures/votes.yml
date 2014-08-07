@@ -2,10 +2,10 @@
 
 up:
   voter: peridot
-  tour_stop: one
+  tour_stop: first
   score: 1
 
 down:
   voter: peridot
-  tour_stop: two
+  tour_stop: first
   score: -1

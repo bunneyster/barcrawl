@@ -18,12 +18,19 @@ class FriendshipsControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  test "should create friendship" do
+  test "should only create friendship if not already friends" do
+    assert_not Friendship.where(user: @user, friend: users(:sam)).exists?
+        
     assert_difference('Friendship.count') do
-      post :create, friendship: { friend_id: @friendship.friend_id }
+      post :create, friend_id: users(:sam).id
     end
 
+    assert_match(/successfully created/, flash[:notice].inspect)
     assert_redirected_to root_url
+    
+    assert_no_difference('Friendship.count') do
+      post :create, friend_id: users(:sam).id
+    end
   end
 
   test "should show friendship" do
@@ -37,7 +44,10 @@ class FriendshipsControllerTest < ActionController::TestCase
   end
 
   test "should update friendship" do
-    patch :update, id: @friendship, friendship: { friend_id: @friendship.friend_id, user_id: @friendship.user_id }
+    patch :update, id: @friendship, friendship: { friend_id: @friendship.friend_id,
+                                                  user_id: @friendship.user_id }
+    
+    assert_match(/successfully updated/, flash[:notice].inspect)
     assert_redirected_to friendship_path(assigns(:friendship))
   end
 
@@ -46,6 +56,17 @@ class FriendshipsControllerTest < ActionController::TestCase
       delete :destroy, id: @friendship
     end
 
+    assert_match(/successfully destroyed/, flash[:notice].inspect)
     assert_redirected_to friendships_path
+  end
+  
+  test "should be logged in to add friend" do
+    logout
+    
+    assert_no_difference('Friendship.count') do
+      post :create, friend_id: users(:sam).id
+    end
+    
+    assert_redirected_to root_url
   end
 end

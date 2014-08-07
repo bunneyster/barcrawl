@@ -26,15 +26,15 @@ class FriendshipsController < ApplicationController
   # POST /friendships.json
   def create
     # @friendship = Friendship.new(friendship_params)
-    @friendship = @current_user.friendships.build(
-                    friend_id: params[:friend_id])
+    @friendship = @current_user.friendships.build(friend_id: params[:friend_id])
+    # @friendship = Friendship.new(user: @current_user, friend: User.find(friendship_params[:friend_id]))
 
     respond_to do |format|
       if @friendship.save
         format.html { redirect_to root_url, notice: 'Friendship was successfully created.' }
         format.json { render :show, status: :created, location: @friendship }
       else
-        format.html { render :new }
+        format.html { redirect_to root_url, notice: "Sorry you can't be their friend." }
         format.json { render json: @friendship.errors, status: :unprocessable_entity }
       end
     end
@@ -72,6 +72,6 @@ class FriendshipsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def friendship_params
-      params.require(:friendship).permit(:user_id, :friend_id)
+      params.require(:friendship).permit(:friend_id)
     end
 end

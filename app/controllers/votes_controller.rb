@@ -1,6 +1,8 @@
 class VotesController < ApplicationController
   before_action :set_tour_stop, only: [:tally]
+  before_action :set_tour, only: [:tally]
   before_action :set_vote, only: [:destroy]
+  before_action :bounce_if_logged_out
   
   # POST /votes/dispatch
   def tally
@@ -17,7 +19,7 @@ class VotesController < ApplicationController
     # Second click on same button
     when 2
       previous.destroy
-      redirect_to :back
+      redirect_to @tour
     # Second click on other button
     when 0
       previous.destroy
@@ -31,18 +33,21 @@ class VotesController < ApplicationController
     
     respond_to do |format|
       if @vote.save
-        format.html { redirect_to :back }
+        format.html { redirect_to @tour }
       else
-        format.html { redirect_to :back }
+        format.html { redirect_to @tour }
       end
     end
   end
   
   private
-  
     
     def set_tour_stop
       @tour_stop = TourStop.find(params[:tour_stop_id])
+    end    
+  
+    def set_tour
+      @tour = Tour.find(@tour_stop.tour.to_param)
     end
     
     def set_vote

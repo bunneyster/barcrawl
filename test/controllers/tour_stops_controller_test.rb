@@ -21,7 +21,7 @@ class TourStopsControllerTest < ActionController::TestCase
       post :create, tour_stop: { tour_id: @tour_stop.tour_id, venue_id: @tour_stop.venue_id }
     end
 
-    assert_redirected_to tour_path(assigns(:current_tour))
+    assert_redirected_to tour_path(assigns(:tour))
   end
 
   test "should show tour_stop" do
@@ -36,7 +36,7 @@ class TourStopsControllerTest < ActionController::TestCase
 
   test "should update tour_stop" do
     patch :update, id: @tour_stop, tour_stop: { tour_id: @tour_stop.tour_id, venue_id: @tour_stop.venue_id }
-    assert_redirected_to tour_stop_path(assigns(:tour_stop))
+    assert_redirected_to tour_path(assigns(:tour))
   end
 
   test "should destroy tour_stop" do
