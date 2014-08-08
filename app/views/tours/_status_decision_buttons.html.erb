@@ -1,8 +1,14 @@
-<%= form_for tour_stop do |f| %>
-  <%= f.hidden_field :status, value: 'yes' %>
-  <%= f.submit "Accept" %>
+<%= hidden_div_if(tour_stop.status === 'yes') do %>
+  <%= form_for tour_stop do |f| %>
+    <%= f.hidden_field :tour_id %>
+    <%= f.hidden_field :status, value: 'yes' %>
+    <%= f.submit "Accept" %>
+  <% end %>
 <% end %>
-<%= form_for tour_stop do |f| %>
-  <%= f.hidden_field :status, value: 'no' %>
-  <%= f.submit "Reject" %>
+<%= hidden_div_if(tour_stop.status === 'no') do %>
+  <%= form_for tour_stop do |f| %>
+    <%= f.hidden_field :tour_id %>
+    <%= f.hidden_field :status, value: 'no' %>
+    <%= f.submit "Reject" %>
+  <% end %>
 <% end %>

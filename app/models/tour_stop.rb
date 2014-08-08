@@ -16,6 +16,8 @@ class TourStop < ActiveRecord::Base
   # Whether this tour stop will be included in the finalized tour itinerary.
   enum status: { maybe: 0, yes: 1, no: 2 }
   
+  
+      
   def votes_from(user)
     TourStop.find(self[:id]).votes.where(voter: user)
   end

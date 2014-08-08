@@ -3,10 +3,7 @@ require 'test_helper'
 class VotesControllerTest < ActionController::TestCase
   
   setup do
-    @upvote = votes(:up)
-    @downvote = votes(:down)
-    
-    @tour_stop = @upvote.tour_stop
+    @tour_stop = tour_stops(:first)
     @user = users(:sam)
     login_as @user
   end

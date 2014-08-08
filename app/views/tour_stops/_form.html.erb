@@ -1,26 +1,11 @@
-<%= form_for(@tour_stop) do |f| %>
-  <% if @tour_stop.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@tour_stop.errors.count, "error") %> prohibited this tour_stop from being saved:</h2>
-
-      <ul>
-      <% @tour_stop.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+<!-- Show venues located in the tour's city, which haven't already been proposed. -->
+<% Venue.unproposed_for(@tour_stop).each do |venue| %>
+  <%= form_for(@tour_stop) do |f| %> 
+    <%= f.hidden_field :tour_id %>
+    <%= f.hidden_field :venue_id, value: venue.to_param %>
+    
+    <div class="actions">
+      <%= f.submit venue.name %>
     </div>
   <% end %>
-
-
-  <%= f.hidden_field :tour_id %>
-  
-  <!-- Show venues located in the tour's city, which haven't already been proposed. -->
-  <div class="field">
-    <%= f.label :venue, 'Venues:' %><br>
-    <%= f.collection_select :venue_id, Venue.where(city: @tour_stop.tour.city).order(:name) - @tour_stop.tour.venues, :id, :name, :include_blank => "Please select a venue..." %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-  
 <% end %>

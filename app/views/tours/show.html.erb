@@ -46,20 +46,25 @@
 <% end %>
 
 
+<%= hidden_div_if(@tour.status === "finalized") do %>
+  <h3>Proposed venues:</h3>
+  <ol id="venues-maybe">
+    <%= render partial: "voting_line_item", collection: @tour.tour_stops.where(status: 0).sort_by(&:total_score).reverse, as: :tour_stop %>
+  </ol>
+  <h3>Rejected venues:</h3>
+  <ol id="venues-no">
+    <%= render partial: "voting_line_item", collection: @tour.tour_stops.where(status: 2).sort_by(&:total_score).reverse, as: :tour_stop %>
+  </ol>
+<% end %>
 
-<p>Proposed venues:</p>
-<ol>
-  <%= render partial: "voting_line_item", collection: @tour.tour_stops, as: :tour_stop %>
+<h3>Accepted venues:</h3>
+<ol id="venues-yes">
+  <%= render partial: "voting_line_item", collection: @tour.tour_stops.where(status: 1).sort_by(&:total_score).reverse, as: :tour_stop %>
 </ol>
 
 
 
-<%= hidden_div_if(!@tour.organized_by?(@current_user) || @tour.status === "finalized") do %>
-  <%= form_for @tour do |f| %>
-    <%= f.hidden_field :status, value: 'finalized' %>
-    <%= f.submit "Finalize itinerary" %>
-  <% end %>
-<% end %>
+<%= render partial: "finalization_button" %>
 
 
 
