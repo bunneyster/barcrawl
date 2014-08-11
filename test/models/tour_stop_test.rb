@@ -3,7 +3,7 @@ require 'test_helper'
 class TourStopTest < ActiveSupport::TestCase
   
   setup do
-    @tour_stop = TourStop.new tour: tours(:birthday),
+    @tour_stop = TourStop.new tour: tours(:newyear),
                               venue: venues(:cafe)
   end
   

@@ -16,11 +16,20 @@ class TourStopsControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  test "should create tour_stop" do
+  test "should create tour stop only if venue has not already been proposed" do
+    assert TourStop.where(tour: @tour_stop.tour, venue: @tour_stop.venue).exists?
+    
+    assert_no_difference('TourStop.count') do
+      post :create, tour_stop: { tour_id: @tour_stop.tour_id, venue_id: @tour_stop.venue_id }
+    end
+
+    @tour_stop.destroy
+        
     assert_difference('TourStop.count') do
       post :create, tour_stop: { tour_id: @tour_stop.tour_id, venue_id: @tour_stop.venue_id }
     end
 
+    assert_match(/successfully created/, flash[:notice].inspect)
     assert_redirected_to tour_path(assigns(:tour))
   end
 

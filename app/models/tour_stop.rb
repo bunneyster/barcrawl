@@ -7,6 +7,8 @@ class TourStop < ActiveRecord::Base
   belongs_to :venue
   validates :venue, presence: true
   
+  validate :does_not_already_exist, on: :create
+  
   # Votes that have been cast for/against this tour stop's proposed venue.
   has_many :votes
   
@@ -15,8 +17,6 @@ class TourStop < ActiveRecord::Base
   
   # Whether this tour stop will be included in the finalized tour itinerary.
   enum status: { maybe: 0, yes: 1, no: 2 }
-  
-  
       
   def votes_from(user)
     TourStop.find(self[:id]).votes.where(voter: user)
@@ -25,4 +25,15 @@ class TourStop < ActiveRecord::Base
   def total_score
     TourStop.find(self[:id]).votes.inject(0) {|sum, vote| sum + vote.score }
   end
+  
+  private
+  
+    def does_not_already_exist
+      if TourStop.where(tour: self.tour, venue: self.venue).empty?
+        return true
+      else
+        errors.add(:base, 'This venue has already been proposed.')
+        return false
+      end
+    end
 end

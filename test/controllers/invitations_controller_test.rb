@@ -17,7 +17,7 @@ class InvitationsControllerTest < ActionController::TestCase
       post :create, invitation: { tour_id: @tour.to_param }
     end
 
-    assert_match(/joined the tour/, flash[:notice])
+    assert_match(/joined the tour/, flash[:notice].inspect)
     assert_redirected_to @tour
   end
   
@@ -31,7 +31,7 @@ class InvitationsControllerTest < ActionController::TestCase
       delete :destroy, id: @invitation, invitation: {tour_id: @tour.to_param}
     end
     
-    assert_match(/left the tour/, flash[:notice])
+    assert_match(/left the tour/, flash[:notice].inspect)
     assert_redirected_to @tour
   end
   
