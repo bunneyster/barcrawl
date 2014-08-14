@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title><%= content_for?(:title) ? yield(:title) : "foundation-rails" %></title>
+    <title><%= content_for?(:title) ? yield(:title) : "Barcrawl" %></title>
 
     <%= stylesheet_link_tag    "application" %>
     <%= javascript_include_tag "vendor/modernizr" %>
@@ -12,6 +12,31 @@
   </head>
 
   <body>
+    <nav class="top-bar" data-topbar>
+      <ul class="title-area">
+        <li class="name">
+          <h1><%= link_to 'Barcrawl', root_path %></h1>
+        </li>
+      </ul>
+      
+      <section class="top-bar-section">
+        <!-- Left Nav Section -->
+        <ul class="left">
+          <li><%= link_to "New Event", new_tour_path %></li>
+        </ul>
+        <!-- Right Nav Section -->
+        <ul class="right">
+          <li><%= link_to "Log out", root_url, method: :delete %></li>
+          <li class="has-dropbdown">
+            <a href="#"><Right Button Dropdown>:)</a>
+            <ul class="dropdown">
+              <li><a href="#">First link in dropdown</a></li>
+            </ul>
+          </li>
+        </ul>
+
+      </section>
+    </nav>
 
     <%= yield %>
     <%= javascript_include_tag "application" %>
@@ -20,3 +45,8 @@
 
 
 
+<!--
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+-->

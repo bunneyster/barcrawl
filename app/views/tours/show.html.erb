@@ -1,76 +1,107 @@
-<%= link_to 'Home', root_path %> |
-<%= link_to "Log out", root_url, method: :delete %>
-
 <p id="notice"><%= notice %></p>
 
-<h1><%= @tour.name %></h1>
-
-<p>
-  <strong>Organizer:</strong>
-  <%= image_tag avatar_url(@tour.organizer) %>
-  <%= @tour.organizer.name %>
-</p>
-
-<p>
-  <strong>Begins:</strong>
-  <%= @tour.starting_at %>
-</p>
-
-<p>
-  <strong>Image:</strong>
-  <%= @tour.image %>
-</p>
-
-<p>
-  <strong>Description:</strong>
-  <%= @tour.description %>
-</p>
-
-
-
-<%= hidden_div_if(!@tour.organized_by?(@current_user)) do %>
-  <%= @tour.status %> | <%= link_to 'Edit', edit_tour_path(@tour) %>
-<% end %>
-
-
-
-<%= hidden_div_if(@tour.organized_by?(@current_user)) do %>
-  <%= render partial: "rsvp_button" %>
-<% end %>
-
-
-
-<!-- User can only propose tour stops for a pending tour if she has an invitation to the event. -->
-<%= hidden_div_if(!((@tour.status === "pending") && (@tour.invitation_for(@current_user).exists?))) do %>
-  <%= link_to 'Propose a tour stop', new_tour_stop_path(tour_id: @tour.to_param) %>
-<% end %>
-
-
-<%= hidden_div_if(@tour.status === "finalized") do %>
-  <h3>Proposed venues:</h3>
-  <ol id="venues-maybe">
-    <%= render partial: "voting_line_item", collection: @tour.tour_stops.where(status: 0).sort_by(&:total_score).reverse, as: :tour_stop %>
-  </ol>
-  <h3>Rejected venues:</h3>
-  <ol id="venues-no">
-    <%= render partial: "voting_line_item", collection: @tour.tour_stops.where(status: 2).sort_by(&:total_score).reverse, as: :tour_stop %>
-  </ol>
-<% end %>
-
-<h3>Accepted venues:</h3>
-<ol id="venues-yes">
-  <%= render partial: "voting_line_item", collection: @tour.tour_stops.where(status: 1).sort_by(&:total_score).reverse, as: :tour_stop %>
-</ol>
+<hgroup>
+  <div class="row">
+    <div class="large-8 columns">
+      <h1><%= @tour.name%></h1>
+    </div>
+    <div class="large-2 columns">
+      <ul class="inline-list">
+        <% if @tour.status === 'pending' && @tour.invitation_for(@current_user).exists? %>
+          <li>
+            <%= link_to new_tour_stop_path(tour_id: @tour.to_param) do %>
+              <%= fa_icon :'plus-circle 2x fw' %>
+            <% end %>
+          </li>
+        <% end %>
+        <% if @tour.organized_by?(@current_user) %>
+          <li>
+            <%= link_to edit_tour_path(@tour) do %>
+              <%= fa_icon :'edit 2x fw' %>
+            <% end %>
+          </li>
+          <li><%= render partial: "finalization_button" %></li>
+        <% else %>
+          <li><%= render partial: "rsvp_button" %></li>
+        <% end %>
+      </ul>
+    </div>
+    <div class="large-2 columns">
+      by<h3><%= image_tag avatar_url(@tour.organizer) %> <%= @tour.organizer.name %></h3>
+    </div>
+  </div>
+  <div class="row">
+    <div class="large-10 columns">
+      <h3><%= @tour.starting_at.strftime("%A, %d %B %Y @ %l:%M %p") %></h3>
+    </div>
+  </div>
+  <div class="row">
+    <div class="large-10 columns">
+      <p id="description"><%= @tour.description %></p>
+    </div>
+    <% if @tour.status === 'pending' && @tour.invitation_for(@current_user).exists? %>
+      <div class="large-2 columns">
+        <ul>
+          <li>
+            <%= link_to new_tour_stop_path(tour_id: @tour.to_param) do %>
+              <%= fa_icon :'plus-circle 5x fw' %>
+            <% end %>
+          </li>
+        </ul>
+      </div>
+    <% end %>
+  </div>
+</hgroup>
 
 
 
-<%= render partial: "finalization_button" %>
+<div class="row">
+  <div class="large-10 columns">
+    <div data-magellan-expedition="fixed">
+      <dl class="sub-nav">
+        <dt>Venues:</dt>
+        <dd data-magellan-arrival="proposed"><a href="#proposed">Proposed</a></dd>
+        <dd data-magellan-arrival="accepted"><a href="#accepted">Accepted</a></dd>
+        <dd data-magellan-arrival="rejected"><a href="#rejected">Rejected</a></dd>
+      </dl>
+    </div>
+    <hr />
+    <section id="proposed">
+      <h4 data-magellan-destination="proposed">Proposed venues:</h4>
+      <ol>
+        <%= render partial: "voting_line_item", 
+                   collection: @tour.tour_stops.where(status: 0).sort_by(&:total_score).reverse, 
+                   as: :tour_stop %>
+      </ol>
+    </section>
+    <hr />
+    <section id="accepted">
+      <h4 data-magellan-destination="accepted">Accepted venues:</h4>
+      <ol>
+        <%= render partial: "voting_line_item", 
+                   collection: @tour.tour_stops.where(status: 1).sort_by(&:total_score).reverse, 
+                   as: :tour_stop %>
+      </ol>
+    </section>
+    <hr />
+    <section id="rejected">
+      <h4 data-magellan-destination="rejected">Rejected venues:</h4>
+      <ol>
+        <%= render partial: "voting_line_item", 
+                   collection: @tour.tour_stops.where(status: 2).sort_by(&:total_score).reverse, 
+                   as: :tour_stop %>
+      </ol>
+    </section>
+  </div>
+  
+  <div class="large-2 columns">
+    <h4>Guests:</h4>
+    <ul>
+      <% Invitation.where(tour_id: @tour.id).each do |invitation| %>
+        <li><%= image_tag avatar_url(invitation.user) %> <%= invitation.user.name %></li>
+      <% end %>
+    </ul>
+  </div>
+</div>
 
 
-
-<p>People attending:</p>
-<ol>
-  <% Invitation.where(tour_id: @tour.id).each do |invitation| %>
-  <li><%= image_tag avatar_url(invitation.user) %><%= invitation.user.name %></li>
-  <% end %>
-</ol>

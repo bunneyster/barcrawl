@@ -2,13 +2,19 @@
   <%= form_for tour_stop do |f| %>
     <%= f.hidden_field :tour_id %>
     <%= f.hidden_field :status, value: 'yes' %>
-    <%= f.submit "Accept" %>
+    <%= f.button type: :submit, class: 'borderless-button' do %>
+      <%= fa_icon :'check' %>
+    <% end %>
   <% end %>
 <% end %>
 <%= hidden_div_if(tour_stop.status === 'no') do %>
   <%= form_for tour_stop do |f| %>
     <%= f.hidden_field :tour_id %>
     <%= f.hidden_field :status, value: 'no' %>
-    <%= f.submit "Reject" %>
+    <%= f.button type: :submit, class: 'borderless-button' do %>
+      <%= fa_icon :'times' %>
+    <% end %>
   <% end %>
 <% end %>
+
+

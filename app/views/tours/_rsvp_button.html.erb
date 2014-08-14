@@ -1,15 +1,15 @@
 <% if @tour.invitation_for(@current_user).exists? %>
   <%= form_for(@tour.invitation_for(@current_user).first!, method: :delete) do |f| %>
     <%= f.hidden_field :tour_id %>
-    <div class="actions">
-      <%= f.submit 'Leave' %>
-    </div>
+    <%= f.button type: :submit, class: 'borderless-button' do %>
+      <%= fa_icon :'sign-out 2x fw' %>
+    <% end %>
   <% end %>
 <% else %>
   <%= form_for(@tour.new_invitation) do |f| %>
     <%= f.hidden_field :tour_id %>
-    <div class="actions">
-      <%= f.submit 'Join' %>
-    </div>
+    <%= f.button type: :submit, class: 'borderless-button' do %>
+      <%= fa_icon :'sign-in 2x fw' %>
+    <% end %>
   <% end %>
 <% end %>

@@ -1,12 +1,13 @@
-<%= hidden_div_if(!@tour.organized_by?(@current_user) || @tour.status === "finalized") do %>
-  <%= form_for @tour do |f| %>
+<%= form_for @tour do |f| %>
+  <% if @tour.status === "pending" %>
     <%= f.hidden_field :status, value: 'finalized' %>
-    <%= f.submit "Finalize itinerary" %>
-  <% end %>
-<% end %>
-<%= hidden_div_if(!@tour.organized_by?(@current_user) || @tour.status === "pending") do %>
-  <%= form_for @tour do |f| %>
+    <%= f.button type: :submit, class: 'borderless-button' do %>
+      <%= fa_icon :'lock 2x fw' %>
+    <% end %>
+  <% else %>
     <%= f.hidden_field :status, value: 'pending' %>
-    <%= f.submit "Revise itinerary" %>
-  <% end %>
+    <%= f.button type: :submit, class: 'borderless-button' do %>
+      <%= fa_icon :'unlock 2x fw' %>
+    <% end %>
+  <% end %>    
 <% end %>

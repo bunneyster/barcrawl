@@ -2,40 +2,30 @@
   <p id="notice"><%= flash[:alert] %></p>
 <% end %>
 
-<%= form_for(@tour) do |f| %>
-  <% if @tour.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@tour.errors.count, "error") %> prohibited this tour from being saved:</h2>
+<%= form_for @tour, builder: FoundationFormBuilder::Icons do |f| %>
+  <%= f.text_field :name,
+          placeholder: 'My New Tour', autofocus: true, required: true,
+          label: { icon: fa_icon('child'), title: 'Tour name'} %>
+          
+  <%= f.collection_select :city_id, City.order(:name), :id, :name,
+          include_blank: 'Which city are we touring?', required: true,
+          label: { icon: fa_icon('map-marker'), title: 'City' } %>
 
-      <ul>
-      <% @tour.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+  <%= f.datetime_local_field :starting_at,
+          required: true,
+          label: { icon: fa_icon('calendar'), title: 'Starting time' } %>
+          
+  <%= f.text_field :image,
+          placeholder: '(Optional) images.google.com/potato.png',
+          label: { icon: fa_icon('file-image-o'), title: 'Image' }%>
+          
+  <%= f.text_area :description,
+          placeholder: '(Optional) Leave a description of your event!',
+          label: { icon: fa_icon('quote-left'), title: 'Description' } %>
 
-  <div class="field">
-    <%= f.label :name, 'Title:' %><br>
-    <%= f.text_field :name, placeholder: 'My Tour' %>
-  </div>
-  <div>
-    <%= f.label :city, 'City:' %><br>
-    <%= f.collection_select :city_id, City.order(:name), :id, :name, :include_blank => "Please select a city..." %>
-  </div>
-  <div class="field">
-    <%= f.label :starting_at, 'Day & Starting Time:' %><br>
-    <%= f.datetime_select :starting_at %>
-  </div>
-  <div class="field">
-    <%= f.label :image %><br>
-    <%= f.text_field :image %>
-  </div>
-  <div class="field">
-    <%= f.label :description %><br>
-    <%= f.text_area :description, placeholder: 'Fun times ahead!' %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
+  <div class="row">
+    <%= button_tag class: 'large button expand' do %>
+      <%= fa_icon :save %> Save Tour
+    <% end %>
   </div>
 <% end %>

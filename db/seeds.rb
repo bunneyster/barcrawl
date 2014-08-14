@@ -4,6 +4,18 @@ Tour.delete_all
 Invitation.delete_all
 Venue.delete_all
 
+text1 = "WRONG. Your ears you keep and I'll tell you why. So that every shriek 
+         of every child at seeing your hideousness will be yours to cherish. 
+         Every babe that weeps at your approach, every woman who cries out, 
+         \"Dear God! What is that thing,\" will echo in your perfect ears. That 
+         is what to the pain means. It means I leave you in anguish, wallowing 
+         in freakish misery forever."
+         
+text2 = "You truly love each other and so you might have been truly happy. 
+         Not one couple in a century has that chance, no matter what the story 
+         books say. And so I think no man in a century will suffer as greatly 
+         as you will."
+
 a = User.create!(name: 'Allison',
                  email: 'a@asdf.com',
                  password: 'asdf',
@@ -19,7 +31,39 @@ d = User.create!(name: 'Dan',
 f = User.create!(name: 'Firenze',
                  email: 'f@asdf.com',
                  password: 'asdf',
-                 password_confirmation: 'asdf')             
+                 password_confirmation: 'asdf')       
+q = User.create!(name: 'Quinn',
+                 email: 'q@asdf.com',
+                 password: 'asdf',
+                 password_confirmation: 'asdf')  
+w = User.create!(name: 'Westley',
+                 email: 'w@asdf.com',
+                 password: 'asdf',
+                 password_confirmation: 'asdf')   
+e = User.create!(name: 'Erik',
+                 email: 'e@asdf.com',
+                 password: 'asdf',
+                 password_confirmation: 'asdf')
+r = User.create!(name: 'Ryan',
+                 email: 'r@asdf.com',
+                 password: 'asdf',
+                 password_confirmation: 'asdf')
+z = User.create!(name: 'Zeinab',
+                 email: 'z@asdf.com',
+                 password: 'asdf',
+                 password_confirmation: 'asdf')
+x = User.create!(name: 'Xeno',
+                 email: 'x@asdf.com',
+                 password: 'asdf',
+                 password_confirmation: 'asdf')       
+c = User.create!(name: 'Cat',
+                 email: 'c@asdf.com',
+                 password: 'asdf',
+                 password_confirmation: 'asdf')  
+v = User.create!(name: 'Viola',
+                 email: 'v@asdf.com',
+                 password: 'asdf',
+                 password_confirmation: 'asdf')                      
              
 bos = City.create!(name: 'Boston',
                    latitude: 42.3133735,
@@ -37,11 +81,13 @@ sel = City.create!(name: 'Seoul',
 a_tour1 = Tour.create!(name: "Allison's Tour 1",
                        city: bos,
                        starting_at: 1.week.from_now,
-                       organizer: a)
+                       organizer: a,
+                       description: text1)
 a_tour2 = Tour.create!(name: "Allison's Tour 2",
                        city: nyc,
                        starting_at: 2.weeks.from_now,
-                       organizer: a)
+                       organizer: a,
+                       description: text2)
 a_tour3 = Tour.create!(name: "Allison's Tour 3",
                        city: sfo,
                        starting_at: 3.weeks.from_now,
@@ -59,8 +105,12 @@ d_tour1 = Tour.create!(name: "Dan's Tour 1",
                        starting_at: 3.weeks.from_now,
                        organizer: d)    
 
-Invitation.create!(user: f,
-                   tour: a_tour1 )
+User.where('name != "Allison"').each do |user|
+  Invitation.create!(user: user,
+                     tour: a_tour1)
+end
+
+
 
 Venue.create!(name: "Cuchi Cuchi",
               city: bos,
@@ -112,3 +162,5 @@ Venue.create!(name: "Zeitgeist",
               cid: 10750210652604664525,
               latitude: 37.770107,
               longitude: -122.422114)
+              
+              

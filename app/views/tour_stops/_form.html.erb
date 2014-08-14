@@ -1,11 +1,15 @@
 <!-- Show venues located in the tour's city, which haven't already been proposed. -->
-<% Venue.unproposed_for(@tour_stop).each do |venue| %>
-  <%= form_for(@tour_stop) do |f| %> 
-    <%= f.hidden_field :tour_id %>
-    <%= f.hidden_field :venue_id, value: venue.to_param %>
-    
-    <div class="actions">
-      <%= f.submit venue.name %>
-    </div>
+<ul class="large-block-grid-4">
+  <% Venue.unproposed_for(@tour_stop).each do |venue| %>
+    <li>
+      <%= form_for(@tour_stop) do |f| %> 
+        <%= f.hidden_field :tour_id %>
+        <%= f.hidden_field :venue_id, value: venue.to_param %>
+        
+        <div class="actions">
+          <%= f.submit venue.name, class: "large radius button" %>
+        </div>
+      <% end %>
+    </li>
   <% end %>
-<% end %>
+</ul>
