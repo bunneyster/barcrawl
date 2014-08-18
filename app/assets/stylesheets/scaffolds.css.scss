@@ -20,12 +20,13 @@ pre {
 
 a {
   color: #000;
+  
   &:visited {
-    color: #666;
+    //color: #666;
   }
   &:hover {
-    color: #fff;
-    background-color: #000;
+    color: #666; //#fff;
+    background-color: inherit; //#000;
   }
 }
 
@@ -66,4 +67,44 @@ div {
     font-size: 12px;
     list-style: square;
   }
+}
+
+ul, ol {
+  list-style-type: none;
+}
+
+li .fa {
+  margin: 0 0.2rem;
+}
+
+.form-title, .content {
+  margin-top: 0.2rem;
+  margin-bottom: 1.25rem;
+}
+
+.action {
+  margin-top: 1.25rem;
+}
+
+button.borderless-button, a.borderless-button {
+  background: none;
+  border: none;
+  display: inline;
+  padding: 0;
+  margin: 0;
+  color: inherit;
+  
+  &[disabled] {
+    background: none;
+        
+    .fa {
+      color: #e7e7e7;  
+    }
+  }
+}
+
+$my-red: #ae0045;
+
+.red {
+  color: $my-red;
 }

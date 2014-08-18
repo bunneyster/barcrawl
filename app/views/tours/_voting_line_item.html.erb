@@ -1,47 +1,39 @@
 <li>
-  <article class="row">
-    <section class="venue row">
-      <div class="large-2 columns">
-        <div class="row">
-          <%= link_to votes_tally_path(tour_stop_id: tour_stop.to_param, score: 1) do %>
-            <%= fa_icon :'chevron-up fw' %>
-          <% end %>
-        </div>
-        <div class="row"><%= tour_stop.total_score %></div>
-        <div class="row">
-          <%= link_to votes_tally_path(tour_stop_id: tour_stop.to_param, score: -1) do %>
-            <%= fa_icon :'chevron-down fw' %>
-          <% end %>
-        </div>
+  <section class="main row" data-equalizer>
+    <div class="controls large-1 columns" data-equalizer-watch>
+      <div>
+        <%= button_to votes_tally_path(tour_stop_id: tour_stop.to_param, score: 1), class: 'borderless-button' do %>
+          <%= fa_icon :'chevron-up lg fw' %>
+        <% end %>
       </div>
-      <div class="large-8 columns">
-        <div class="row"><%= tour_stop.venue.name %></div>
+      <h3><%= tour_stop.total_score %></h3>
+      <div>
+        <%= button_to votes_tally_path(tour_stop_id: tour_stop.to_param, score: -1), class: 'borderless-button' do %>
+          <%= fa_icon :'chevron-down lg fw' %>
+        <% end %>
       </div>
-      <div class="large-2 columns">
+    </div><!-- End of voting controls -->
+    
+    <div class="post large-11 columns" data-equalizer-watch>
+      <h3>
+        <span><%= tour_stop.venue.name %></span>
         <% if @tour.organized_by?(@current_user) && @tour.status === "pending" %>
           <%= render partial: "status_decision_buttons", locals: {tour_stop: tour_stop} %>
         <% end %>
-      </div>
-    </section>
-    <section class="comments row">
+      </h3>
+    </div><!-- End of venue description -->
+  </section><!-- End of main proposal section -->
+  
+  <section class="comments row">
+    <div class="large-11 large-offset-1 columns">
       <%= render partial: "comment", collection: tour_stop.comments, as: :comment %>
       <% if @tour.status === "pending" %>
-        <%= link_to new_comment_path(tour_stop_id: tour_stop.to_param) do %>
-          <%= fa_icon :'comment-o' %>
-        <% end %>
+        <article>
+          <%= link_to new_comment_path(tour_stop_id: tour_stop.to_param), class: 'borderless-button' do %>
+            <%= fa_icon :'comment-o' %>
+          <% end %>
+        </article>
       <% end %>
-    </section>
-  </article>
+    </div>
+  </section><!-- End of comments section -->
 </li>
-
-<!--
-<%= form_tag new_comment_path, method: :get do %>
-  <%= hidden_field_tag :tour_stop_id, tour_stop.to_param %>
-  <%= button_tag do %>
-    Post a comment
-  <% end %>
-<% end %>
--->
-
-
-<!--<%= button_to "Accept", tour_stop_path(tour_stop, status: "yes"), method: :patch %>-->

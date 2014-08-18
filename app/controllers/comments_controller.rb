@@ -1,6 +1,6 @@
 class CommentsController < ApplicationController
   before_action :set_comment, only: [:show, :edit, :update, :destroy]
-  before_action :set_tour, only: [:create, :update, :destroy]
+  before_action :set_tour, only: [:destroy]
   before_action :bounce_if_logged_out
   
   # GET /comments
@@ -25,6 +25,8 @@ class CommentsController < ApplicationController
   def create
     @comment = Comment.new(comment_params)
     @comment.commenter = @current_user
+    
+    @tour = TourStop.find(comment_params[:tour_stop_id]).tour
      
     respond_to do |format|
       if @comment.save
@@ -38,6 +40,8 @@ class CommentsController < ApplicationController
 
   # PATCH/PUT /comments/1
   def update
+    @tour = TourStop.find(comment_params[:tour_stop_id]).tour
+    
     respond_to do |format|
       if @comment.update(comment_params)
         format.html { redirect_to @tour, notice: 'Comment was successfully updated.' }
@@ -60,7 +64,7 @@ class CommentsController < ApplicationController
   private
   
     def set_tour
-      @tour = TourStop.find(comment_params[:tour_stop_id]).tour
+      @tour = TourStop.find(params[:tour_stop_id]).tour
     end
   
     def set_comment

@@ -1,0 +1,22 @@
+<% if flash[:alert] %>
+  <p id="notice"><%= flash[:alert] %></p>
+<% end %>
+
+<h1 class="form-title row">Welcome!</h1>
+<%= form_for Session.new, url: root_path, builder: FoundationFormBuilder do |f| %>
+  <%= f.text_field :email, autofocus: true, required: true,
+          placeholder: "johndoe@gmail.com", label: 'E-mail' %>
+          
+  <%= f.password_field :password, required: true,
+          placeholder: "much secrets", label: 'Password' %>
+          
+  <div class="action row">
+    <%= button_tag class: 'large button expand' do %>
+      <%= fa_icon :'sign-in' %> Enter
+    <% end %>
+  </div>
+<% end %>
+
+<p class="row">
+  <%= link_to "New User?", new_user_path %>
+</p>

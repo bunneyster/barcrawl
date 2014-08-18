@@ -1,19 +1,21 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Name:</strong>
-  <%= @city.name %>
-</p>
+<hgroup class="row text-center">
+  <h2 class="red large-4 columns"><%=h "<Name>" %></h2>
+  <h2 class="red large-4 columns"><%=h "<Latitude>" %></h2>
+  <h2 class="red large-4 columns"><%=h "<Longitude>" %></h2>
+</hgroup>
 
-<p>
-  <strong>Latitude:</strong>
-  <%= @city.latitude %>
-</p>
+<article class="row text-center content">
+  <h4 class="large-4 columns"><%= @city.name %></h4>
+  <h4 class="large-4 columns"><%= @city.latitude %></h4>
+  <h4 class="large-4 columns"><%= @city.longitude %></h4>
+</article>
 
-<p>
-  <strong>Longitude:</strong>
-  <%= @city.longitude %>
-</p>
-
-<%= link_to 'Edit', edit_city_path(@city) %> |
-<%= link_to 'Back', cities_path %>
+<div class="row">
+  <div class="large-6 large-centered columns">
+    <%= link_to cities_path, class: 'large secondary button expand' do %>
+      <%= fa_icon :undo %> Back
+    <% end %>
+  </div>
+</div>

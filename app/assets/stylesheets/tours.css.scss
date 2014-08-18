@@ -8,27 +8,112 @@ body {
 }
 */
 
-button.borderless-button {
-  background: none;
-  border: none;
-  display: inline;
-  padding: 0;
-  margin: 0;
-  color: inherit;
+
+hgroup ul>li {
+  display: inline-block;
+  vertical-align: baseline;
+  margin-right: 0.5rem;
+  
+  &#tour-name {
+    margin-right: 3rem;
+  }
+  
+  h1, button {
+    display: inline;
+  }
 }
 
-
-[data-magellan-expedition]>dl.sub-nav {
+[data-magellan-expedition] dl.sub-nav {
   padding: 10px 10px 10px 0;
   margin-left: 0;
   
   dt, dd {
     margin-left: 0.9rem;
     margin-bottom: 0;
+    font-weight: 300;
     
     &:not(.active):hover a {
       border-radius: 3px;
       background-color: inherit;
     }
+    
+    .button {
+      margin: 0;
+      // position: fixed;
+      // right: 10px;
+      font-weight: 300;
+    }
   }
 }
+
+section.main.row {
+  margin-bottom: 0.5rem;
+}
+
+.controls {
+  text-align: center;
+  
+  h3 {
+    margin: 0;
+  }
+
+  button {
+    margin: 0 auto;
+  }
+}
+
+.post {
+  span {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 1rem;
+    
+    .fa-check {
+      color: #43AC6A;
+    }
+    
+    .fa-times {
+      color: #f04124;
+    }
+  }
+  
+  form {
+    display: inline;
+  }
+}
+
+
+
+// TODO: set color fade for font awesome icon buttons
+.fa {
+  &:hover {
+  }
+}
+
+.comments {
+  article {
+    padding: 0.5rem;
+    
+    &:nth-child(odd) {
+      background-color: #f2f2f2;
+    }
+    
+    .comment-commenter {
+      color: #07c;
+      margin-right: 0.5rem;
+    }
+    
+    .comment-time {
+      color: #999;
+      margin-right: 0.2rem;
+    }
+  }
+  
+  form, form>div {
+    display: inline;
+  }
+  
+  
+}
+
+

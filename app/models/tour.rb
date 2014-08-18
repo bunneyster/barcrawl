@@ -35,16 +35,26 @@ class Tour < ActiveRecord::Base
   # Whether this tour has been finalized by the organizer.
   enum status: { pending: 0, finalized: 1 }
   
+  def self.open_to(user)
+    includes(:invitations).references(:invitations)
+      .where("invitations.user_id = ?", user.to_param)
+      .where.not(organizer: user)
+  end
+  
+  def self.organized_by(user)
+    Tour.where(organizer: user).all
+  end
+   
+  def organized_by?(user)
+    user === self.organizer
+  end
+  
   def invitation_for(user)
     self.invitations.where(user: user)
   end
   
   def new_invitation
     Invitation.new(tour: Tour.find(self[:id]))
-  end
-  
-  def organized_by?(user)
-    user === self.organizer
   end
       
   def to_param

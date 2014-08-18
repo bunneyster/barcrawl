@@ -1,5 +1,5 @@
 class FriendshipsController < ApplicationController
-  before_action :set_friendship, only: [:show, :edit, :update, :destroy]
+  before_action :set_friendship, only: [:show, :edit, :destroy]
   before_action :bounce_if_logged_out
 
   # GET /friendships
@@ -25,9 +25,7 @@ class FriendshipsController < ApplicationController
   # POST /friendships
   # POST /friendships.json
   def create
-    # @friendship = Friendship.new(friendship_params)
     @friendship = @current_user.friendships.build(friend_id: params[:friend_id])
-    # @friendship = Friendship.new(user: @current_user, friend: User.find(friendship_params[:friend_id]))
 
     respond_to do |format|
       if @friendship.save
@@ -40,26 +38,12 @@ class FriendshipsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /friendships/1
-  # PATCH/PUT /friendships/1.json
-  def update
-    respond_to do |format|
-      if @friendship.update(friendship_params)
-        format.html { redirect_to @friendship, notice: 'Friendship was successfully updated.' }
-        format.json { render :show, status: :ok, location: @friendship }
-      else
-        format.html { render :edit }
-        format.json { render json: @friendship.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
   # DELETE /friendships/1
   # DELETE /friendships/1.json
   def destroy
     @friendship.destroy
     respond_to do |format|
-      format.html { redirect_to friendships_url, notice: 'Friendship was successfully destroyed.' }
+      format.html { redirect_to root_url, notice: 'Friendship was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

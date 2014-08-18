@@ -7,8 +7,6 @@ class Venue < ActiveRecord::Base
   validates :name, :city, :cid, :latitude, :longitude, presence: true
   validates :name, :cid, uniqueness: true
   
-  # <%= f.label :venue, 'Venues:' %><br>
-  # <%= f.collection_select :venue_id, Venue.unproposed_for(@tour_stop), :id, :name, :include_blank => "Please select a venue..." %>
   def self.unproposed_for(tour_stop)
     local_venues = Venue.where(city: tour_stop.tour.city).order(:name)
     proposed_venues = tour_stop.tour.venues

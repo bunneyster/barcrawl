@@ -1,17 +1,16 @@
 Rails.application.routes.draw do
 
-  root 'home#home'
+  root 'sessions#new'
 
   controller :sessions do
-    # get '/' handled by HomeController
+    get '/' => :new         # welcome/dashboard
     post '/' => :create     # log in
     delete '/' => :destroy  # log out
   end
   
-  resources :comments
-      
-  resources :votes
-  post 'votes/tally' => 'votes#tally'
+  resources :tours
+
+  resources :users
   
   resources :invitations
 
@@ -19,11 +18,12 @@ Rails.application.routes.draw do
   
   resources :tour_stops
 
-  resources :tours
-
-  resources :users
-
   resources :venues
+  
+  resources :comments
+      
+  resources :votes
+  post 'votes/tally' => 'votes#tally'
   
   resources :friendships
 

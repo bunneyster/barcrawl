@@ -1,29 +1,16 @@
-<%= form_for(@city) do |f| %>
-  <% if @city.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@city.errors.count, "error") %> prohibited this city from being saved:</h2>
+<%= form_for @city, builder: FoundationFormBuilder do |f| %>
+  <%= f.text_field :name, autofocus: true, required: true,
+          placeholder: "Vienna", label: 'Name' %>
 
-      <ul>
-      <% @city.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+  <%= f.text_field :latitude, required: true,
+          placeholder: "48.2206849", label: 'Latitude' %>
+          
+  <%= f.text_field :longitude, required: true,
+          placeholder: "16.3800599", label: 'Longitude' %>          
 
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
-  </div>
-  <div class="field">
-    <%= f.label :latitude %><br>
-    <%= f.text_field :latitude %>
-  </div>
-  <div class="field">
-    <%= f.label :longitude %><br>
-    <%= f.text_field :longitude %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
+  <div class="action row">
+    <%= button_tag class: 'large button expand' do %>
+      <%= fa_icon :save %> Add city
+    <% end %>
   </div>
 <% end %>

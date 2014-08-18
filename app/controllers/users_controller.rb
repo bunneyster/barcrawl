@@ -28,7 +28,8 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
-        session[:user_id] = @user.id
+        # set :user_id field HERE, if new account
+        session[:user_id] = @user.to_param
         format.html { redirect_to root_url, notice: "Welcome, #{@user.name}!" }
         format.json { render :show, status: :created, location: @user }
       else

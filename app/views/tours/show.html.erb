@@ -2,28 +2,19 @@
 
 <hgroup>
   <div class="row">
-    <div class="large-8 columns">
-      <h1><%= @tour.name%></h1>
-    </div>
-    <div class="large-2 columns">
-      <ul class="inline-list">
-        <% if @tour.status === 'pending' && @tour.invitation_for(@current_user).exists? %>
-          <li>
-            <%= link_to new_tour_stop_path(tour_id: @tour.to_param) do %>
-              <%= fa_icon :'plus-circle 2x fw' %>
-            <% end %>
-          </li>
-        <% end %>
+    <div class="large-10 columns">
+      <ul>
+        <li id="tour-name"><h1><%= @tour.name%></h1></li>
         <% if @tour.organized_by?(@current_user) %>
           <li>
-            <%= link_to edit_tour_path(@tour) do %>
-              <%= fa_icon :'edit 2x fw' %>
+            <%= link_to edit_tour_path(@tour), class: 'borderless-button' do %>
+              <%= fa_icon :'pencil 2x fw' %>
             <% end %>
           </li>
           <li><%= render partial: "finalization_button" %></li>
         <% else %>
           <li><%= render partial: "rsvp_button" %></li>
-        <% end %>
+        <% end %>        
       </ul>
     </div>
     <div class="large-2 columns">
@@ -39,17 +30,6 @@
     <div class="large-10 columns">
       <p id="description"><%= @tour.description %></p>
     </div>
-    <% if @tour.status === 'pending' && @tour.invitation_for(@current_user).exists? %>
-      <div class="large-2 columns">
-        <ul>
-          <li>
-            <%= link_to new_tour_stop_path(tour_id: @tour.to_param) do %>
-              <%= fa_icon :'plus-circle 5x fw' %>
-            <% end %>
-          </li>
-        </ul>
-      </div>
-    <% end %>
   </div>
 </hgroup>
 
@@ -63,6 +43,12 @@
         <dd data-magellan-arrival="proposed"><a href="#proposed">Proposed</a></dd>
         <dd data-magellan-arrival="accepted"><a href="#accepted">Accepted</a></dd>
         <dd data-magellan-arrival="rejected"><a href="#rejected">Rejected</a></dd>
+        <% if @tour.status === 'pending' && @tour.invitation_for(@current_user).exists? %>
+          <dd><%= link_to new_tour_stop_path(tour_id: @tour.to_param), class: 'success radius button' do %>
+                <%= fa_icon :'plus-circle' %> Add a tour stop
+              <% end %>
+          </dd>
+        <% end %>
       </dl>
     </div>
     <hr />

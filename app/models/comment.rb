@@ -10,5 +10,6 @@ class Comment < ActiveRecord::Base
   def tour
     self.tour_stop.tour
   end
+  
 
 end

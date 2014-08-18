@@ -1,16 +1,24 @@
 # This class handles logging in and logging out.
 class SessionsController < ApplicationController
   
-  # GET / handled by HomeController
+  # GET /
   def new
+    # with user logged in
+    if @current_user
+      render "dashboard"
+    # without user logged in
+    else
+      render "welcome"
+    end
   end
 
   # POST / (login)
   def create
-    user = User.find_by(email: params[:email])
-    if user and user.authenticate(params[:password])
-      session[:user_id] = user.id
-      # set_current_user
+    user = User.find_by(email: session_params[:email])
+    
+    if user and user.authenticate(session_params[:password])
+      # set :user_id field HERE, if account exists
+      session[:user_id] = user.to_param
       flash[:alert] = "Welcome back #{user.name}!"
       redirect_to root_url
     else
@@ -25,4 +33,10 @@ class SessionsController < ApplicationController
     flash[:alert] = "Logged out."
     redirect_to root_url
   end
+  
+  private
+  
+    def session_params
+      params.require(:session).permit(:email, :password)
+    end
 end

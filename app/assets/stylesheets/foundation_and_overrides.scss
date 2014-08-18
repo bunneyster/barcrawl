@@ -1058,8 +1058,8 @@ $sub-nav-padding: rem-calc(3 16);
 
 
 // We use these to control the active item styles
-$sub-nav-active-font-weight: $font-weight-normal;
-$sub-nav-active-bg: $my-color;
+$sub-nav-active-font-weight: 200; // $font-weight-normal;
+$sub-nav-active-bg: $primary-color;
 // hover over clicked link
 $sub-nav-active-bg-hover: scale-color($sub-nav-active-bg, $lightness: -14%);
 // font of clicked link
@@ -1212,7 +1212,7 @@ $sub-nav-active-cursor: default;
 // $include-html-top-bar-classes: $include-html-classes;
 
 // Background color for the top bar
-$topbar-bg-color: $my-color;
+$topbar-bg-color: #333;
 // $topbar-bg: $topbar-bg-color;
 
 // Height and margin

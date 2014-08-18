@@ -1,20 +1,28 @@
-<%= hidden_div_if(tour_stop.status === 'yes') do %>
+<span class="status-decision-buttons">
   <%= form_for tour_stop do |f| %>
     <%= f.hidden_field :tour_id %>
     <%= f.hidden_field :status, value: 'yes' %>
-    <%= f.button type: :submit, class: 'borderless-button' do %>
-      <%= fa_icon :'check' %>
+    <% if tour_stop.status === 'yes' %>
+      <%= f.button type: :submit, disabled: true, class: 'borderless-button' do %>
+        <%= fa_icon :'check 2x fw' %>
+      <% end %>
+    <% else %>
+      <%= f.button type: :submit, class: 'borderless-button' do %>
+        <%= fa_icon :'check 2x fw' %>
+      <% end %>
     <% end %>
   <% end %>
-<% end %>
-<%= hidden_div_if(tour_stop.status === 'no') do %>
   <%= form_for tour_stop do |f| %>
     <%= f.hidden_field :tour_id %>
     <%= f.hidden_field :status, value: 'no' %>
-    <%= f.button type: :submit, class: 'borderless-button' do %>
-      <%= fa_icon :'times' %>
+    <% if tour_stop.status === 'no' %>
+      <%= f.button type: :submit, disabled: true, class: 'borderless-button' do %>
+        <%= fa_icon :'times 2x fw' %>
+      <% end %>
+    <% else %>
+      <%= f.button type: :submit, class: 'borderless-button' do %>
+        <%= fa_icon :'times 2x fw' %>
+      <% end %>
     <% end %>
   <% end %>
-<% end %>
-
-
+</span>
