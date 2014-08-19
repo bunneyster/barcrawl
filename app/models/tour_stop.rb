@@ -17,13 +17,25 @@ class TourStop < ActiveRecord::Base
   
   # Whether this tour stop will be included in the finalized tour itinerary.
   enum status: { maybe: 0, yes: 1, no: 2 }
-      
+  
+  # Use in VotesController to determine tour stop's total score.    
   def votes_from(user)
-    TourStop.find(self[:id]).votes.where(voter: user)
+    self.votes.where(voter: user)
   end
   
+  def upvoted_by(user)
+    vote = self.votes_from(user).first 
+    vote.score > 0 if vote
+  end
+  
+  def downvoted_by(user)
+    vote = self.votes_from(user).first 
+    vote.score < 0 if vote
+  end
+  
+  # Use in 'voting_line_item' to display tour stop's total score.
   def total_score
-    TourStop.find(self[:id]).votes.inject(0) {|sum, vote| sum + vote.score }
+    self.votes.inject(0) {|sum, vote| sum + vote.score }
   end
   
   private

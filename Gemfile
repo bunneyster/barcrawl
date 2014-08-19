@@ -42,6 +42,9 @@ gem 'bcrypt', '~> 3.1.7'
 # Use debugger
 # gem 'debugger', group: [:development, :test]
 
+# Importing / exporting data from other sites.
+gem 'mechanize', group: [:tools]
+
 # Complete validation of dates, times and datetimes for Rails 3.x and ActiveModel.
 gem 'validates_timeliness', '>= 3.0.14',
     git: 'https://github.com/johncarney/validates_timeliness.git',

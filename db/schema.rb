@@ -90,14 +90,19 @@ ActiveRecord::Schema.define(version: 20140801015138) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true
 
   create_table "venues", force: true do |t|
-    t.string   "name",       null: false
-    t.integer  "city_id",    null: false
-    t.integer  "cid",        null: false
-    t.float    "latitude",   null: false
-    t.float    "longitude",  null: false
+    t.string   "name",                                 null: false
+    t.integer  "city_id",                              null: false
+    t.float    "latitude",                             null: false
+    t.float    "longitude",                            null: false
+    t.decimal  "stars",        precision: 2, scale: 1, null: false
+    t.integer  "rating_count",                         null: false
+    t.string   "image_url",                            null: false
+    t.string   "yelp_id",                              null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "venues", ["yelp_id"], name: "index_venues_on_yelp_id", unique: true
 
   create_table "votes", force: true do |t|
     t.integer  "voter_id",     null: false

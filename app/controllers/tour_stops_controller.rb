@@ -26,9 +26,12 @@ class TourStopsController < ApplicationController
   # POST /tour_stops.json
   def create
     @tour_stop = TourStop.new(tour_stop_params)
+    @vote = Vote.new(voter: @current_user,
+                     tour_stop: @tour_stop,
+                     score: 1)
 
     respond_to do |format|
-      if @tour_stop.save
+      if @tour_stop.save and @vote.save
         format.html { redirect_to @tour, notice: 'Tour stop was successfully created.' }
         format.json { render :show, status: :created, location: @tour_stop }
       else

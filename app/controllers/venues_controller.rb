@@ -4,7 +4,7 @@ class VenuesController < ApplicationController
   # GET /venues
   # GET /venues.json
   def index
-    @venues = Venue.all
+    @venues = Venue.includes(:city).all
   end
 
   # GET /venues/1
@@ -28,7 +28,7 @@ class VenuesController < ApplicationController
 
     respond_to do |format|
       if @venue.save
-        format.html { redirect_to @venue, notice: 'Venue was successfully created.' }
+        format.html { redirect_to venues_url, notice: 'Venue was successfully created.' }
         format.json { render :show, status: :created, location: @venue }
       else
         format.html { render :new }
@@ -69,6 +69,6 @@ class VenuesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def venue_params
-      params.require(:venue).permit(:name, :city_id, :cid, :latitude, :longitude)
+      params.require(:venue).permit(:name, :city_id, :latitude, :longitude, :image_url, :stars, :rating_count, :yelp_id)
     end
 end

@@ -17,7 +17,31 @@
   </div>
   <div class="field">
     <%= f.label :city %><br>
-    <%= f.text_field :city %>
+    <%= f.collection_select :city_id, City.all, :id, :name %>
+  </div>
+  <div class="field">
+    <%= f.label :latitude %><br>
+    <%= f.text_field :latitude %>
+  </div>
+  <div class="field">
+    <%= f.label :longitude %><br>
+    <%= f.text_field :longitude %>
+  </div>
+  <div class="field">
+    <%= f.label :image_url %><br>
+    <%= f.text_field :image_url %>
+  </div>
+  <div class="field">
+    <%= f.label :stars %><br>
+    <%= f.select :stars, [1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0] %>
+  </div>
+  <div class="field">
+    <%= f.label :rating_count %><br>
+    <%= f.text_field :rating_count %>
+  </div>
+  <div class="field">
+    <%= f.label :yelp_id %><br>
+    <%= f.text_field :yelp_id %>
   </div>
   <div class="actions">
     <%= f.submit %>

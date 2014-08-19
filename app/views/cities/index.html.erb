@@ -3,14 +3,16 @@
 </div>
 
 <hgroup class="row text-center">
-  <h2 class="red large-3 columns"><%=h "<Name>" %></h2>
-  <h2 class="red large-3 columns"><%=h "<Latitude>" %></h2>
-  <h2 class="red large-3 columns end"><%=h "<Longitude>" %></h2>
+  <div class="row">
+    <h2 class="red large-3 columns"><%=h "<Name>" %></h2>
+    <h2 class="red large-3 columns"><%=h "<Latitude>" %></h2>
+    <h2 class="red large-3 columns end"><%=h "<Longitude>" %></h2>
+  </div>
 </hgroup>
 
 <ol class="row text-center content">
   <% @cities.each do |city| %>
-    <li>
+    <li class="row">
       <h5 class="large-3 columns"><%= city.name %></h5>
       <h5 class="large-3 columns"><%= city.latitude %></h5>
       <h5 class="large-3 columns"><%= city.longitude %></h5>
