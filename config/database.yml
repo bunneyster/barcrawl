@@ -20,7 +20,9 @@ test:
   <<: *default
   database: db/test.sqlite3
 
-# Heroku sets up the production database.
-# production:
-#   <<: *default
-#   database: db/production.sqlite3
+production:
+  adapter: postgresql
+  encoding: unicode
+  database: puborbar
+  pool: 5
+  username: <%= ENV['USER'] %>
