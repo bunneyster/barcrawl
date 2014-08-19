@@ -38,7 +38,8 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'rack-cache'
 
 # Use unicorn as the app server
-# gem 'unicorn'
+gem 'unicorn'
+gem 'foreman', group: :tools
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
@@ -47,7 +48,7 @@ gem 'rack-cache'
 # gem 'debugger', group: [:development, :test]
 
 # Importing / exporting data from other sites.
-gem 'mechanize', group: [:tools]
+gem 'mechanize', group: :tools
 
 # Complete validation of dates, times and datetimes for Rails 3.x and ActiveModel.
 gem 'validates_timeliness', '>= 3.0.14',
