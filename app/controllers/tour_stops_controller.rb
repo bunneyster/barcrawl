@@ -15,7 +15,13 @@ class TourStopsController < ApplicationController
 
   # GET /tour_stops/new
   def new
-    @tour_stop = TourStop.new(tour: Tour.find(params[:tour_id]))
+    @venue_search = VenueSearch.new(tour: Tour.find(params[:tour_id]))
+  end
+  
+  # POST /tours_stops/search
+  def search
+    @venue_search = VenueSearch.new(venue_search_params)
+    @tour_stop = TourStop.new(tour: @venue_search.tour)
   end
 
   # GET /tour_stops/1/edit
@@ -66,7 +72,6 @@ class TourStopsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_tour
       @tour = Tour.find(tour_stop_params[:tour_id])
     end
@@ -74,8 +79,11 @@ class TourStopsController < ApplicationController
     def set_tour_stop
       @tour_stop = TourStop.find(params[:id])
     end
+    
+    def venue_search_params
+      params.require(:venue_search).permit(:tour_id, :query)
+    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
     def tour_stop_params
       params.require(:tour_stop).permit(:tour_id, :venue_id, :status)
     end

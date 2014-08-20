@@ -19,14 +19,16 @@
         </li>
       </ul>
       
-      <section class="top-bar-section">
-        <ul class="left">
-          <li><%= link_to "New Event", new_tour_path %></li>
-        </ul>
-        <ul class="right">
-          <li><%= link_to "Log out", root_url, method: :delete %></li>
-        </ul>
-      </section>
+      <% if @current_user %>
+        <section class="top-bar-section">
+          <ul class="left">
+            <li><%= link_to "New Event", new_tour_path %></li>
+          </ul>
+          <ul class="right">
+            <li><%= link_to "Log out", root_url, method: :delete %></li>
+          </ul>
+        </section>
+      <% end %>
     </nav>
 
     <%= yield %>

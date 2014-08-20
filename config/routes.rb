@@ -16,7 +16,11 @@ Rails.application.routes.draw do
 
   resources :cities
   
-  resources :tour_stops
+  resources :tour_stops do
+    collection do
+      post :search
+    end
+  end
 
   resources :venues
   

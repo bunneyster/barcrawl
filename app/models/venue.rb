@@ -12,10 +12,8 @@ class Venue < ActiveRecord::Base
   validates :yelp_id, uniqueness: true
   validates :yelp_id, presence: true
   
-  def self.unproposed_for(tour_stop)
-    local_venues = Venue.where(city: tour_stop.tour.city).order(:name)
-    proposed_venues = tour_stop.tour.venues
-    local_venues - proposed_venues
+  def self.unproposed_for(tour)
+    Venue.where(city: tour.city).where.not(id: tour.venues)
   end
     
   private

@@ -112,3 +112,67 @@ button.borderless-button, a.borderless-button {
 .red {
   color: $my-red;
 }
+
+#search-bar {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+.venue-list {
+  display: table;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  $venue-list-item-height: 64px;
+  
+  border-collapse: separate;
+  border-spacing: 0 5px;
+  
+  > li {
+    display: table-row;
+    margin: 0;
+    padding: 0;
+
+    height: $venue-list-item-height;
+    
+    &:hover {
+      background-color: #e5f9ff;
+    }
+    
+    div.venue-image {
+      display: table-cell;
+      width: $venue-list-item-height;
+      > img {
+        display: block;
+        width: $venue-list-item-height;
+        height: $venue-list-item-height;        
+      }
+    }
+    
+    div.venue-data {
+      display: table-cell;
+      padding: 0 0.5rem;
+      vertical-align: top;
+      
+      span.venue-name {
+        display: block;
+        padding: 0.5rem 0 0 0;
+        font-size: 16px;  
+      }      
+    }
+    
+    div.venue-add {
+      display: table-cell;
+      width: $venue-list-item-height;
+      
+      button {
+        display: block;
+        float: right;
+        margin: 0;
+        padding: 0;
+        width: $venue-list-item-height;
+        height: $venue-list-item-height;
+      }
+    }
+  }
+}

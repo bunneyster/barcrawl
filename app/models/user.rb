@@ -13,13 +13,4 @@ class User < ActiveRecord::Base
   # Validates presence of password on create, confirmation of password
   has_secure_password
   
-=begin
-  scope :friends_with, ->(other) do
-    other = other.id if other.is_a?( User )
-    where('(friendships.user_id = users.id AND friendships.friend_id = ?) OR
-           (friendships.user_id = ? AND friendships.friend_id = users.id)',
-           other, other ).includes( :frienships )
-  end
-=end
-  
 end

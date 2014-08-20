@@ -6,7 +6,7 @@ module UsersHelper
     else
       default_url = 'identicon'   # E.g. "#{root_url}images/guest.png", retro
       gravatar_id = Digest::MD5.hexdigest(user.email.downcase)
-      "http://gravatar.com/avatar/#{gravatar_id}.png?s=48&d=#{default_url}"
+      "//gravatar.com/avatar/#{gravatar_id}.png?s=48&d=#{default_url}"
     end
   end
 end
