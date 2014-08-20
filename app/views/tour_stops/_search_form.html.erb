@@ -1,0 +1,16 @@
+<div class="row" id="search-bar">
+  <div class="large-8 columns large-centered">
+    <%= form_for @venue_search, url: search_tour_stops_path do |f| %>
+      <%= f.hidden_field :tour_id %>
+      
+      <div class="row collapse">
+        <div class="large-10 columns">
+          <%= f.search_field :query, placeholder: 'Paris Baguette', autofocus: true, required: true %>
+        </div>
+        <div class="large-2 columns">
+          <%= f.button 'Search', type: :submit, class: 'button postfix' %>
+        </div>
+      </div>      
+    <% end %>
+  </div>
+</div>
