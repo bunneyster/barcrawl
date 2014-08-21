@@ -4,7 +4,7 @@
     <% @venue_search.results.first(20).each do |venue| %>
       <li>
         <div class="venue-image">
-          <%= image_tag venue.image_url %>
+          <%= image_tag venue_thumbnail_url(venue) %>
         </div>
         <div class="venue-data">
           <span class="venue-name">

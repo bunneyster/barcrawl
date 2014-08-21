@@ -14,4 +14,11 @@ module VenuesHelper
       }.join('').html_safe
     end
   end
+  
+  # URL for the venue's thumbnail image.
+  #
+  # This converts URLs provided by the Yelp API into protocol-relative URLs.
+  def venue_thumbnail_url(venue)
+    venue.image_url.sub(/^https?\:/, '')   
+  end
 end

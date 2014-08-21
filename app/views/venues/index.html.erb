@@ -14,7 +14,7 @@
 <ol class="row text-center content">
   <% @venues.each do |venue| %>
     <li class="row" data-equalizer>
-      <div class="large-4 columns text-left" data-equalizer-watch><h5><%= image_tag venue.image_url %> <%= venue.name %></h5></div>
+      <div class="large-4 columns text-left" data-equalizer-watch><h5><%= image_tag venue_thumbnail_url(venue) %> <%= venue.name %></h5></div>
       <div class="large-2 columns" data-equalizer-watch><h5><%= venue.city.name %></h5></div>
       <div class="large-3 columns" data-equalizer-watch><h5><%= venue.latitude %>, <%= venue.longitude %></h5></div>
       <div class="large-2 columns" data-equalizer-watch><h5><%= venue.stars %> / <%= venue.rating_count %></h5></div>
