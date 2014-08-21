@@ -12,7 +12,7 @@ class VenueSearch
   end
   
   def results
-    Venue.unproposed_for(tour).where(['name LIKE ?', "%#{query}%"])
+    Venue.unproposed_for(tour).where(Venue.arel_table[:name].matches("%#{query}%"))
   end
   
 end
