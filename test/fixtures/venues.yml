@@ -3,13 +3,20 @@
 cafe:
   name: Cat Cafe
   city: paris
-  cid: 12345
-  latitude: 12345.67
-  longitude: 12345.67
+  latitude: 48.8588589
+  longitude: 2.3470599
+  stars: 5.0
+  rating_count: 257
+  image_url: http://s3-media3.fl.yelpcdn.com/bphoto/DOzV324yi-p78Xd8KXO4Ww/90s.jpg
+  yelp_id: cat-cafe-paris
 
 restaurant:
   name: Cat Restaurant
   city: paris
-  cid: 54321
-  latitude: 54321.76
-  longitude: 54321.76
+  latitude: 48.8588589
+  longitude: 2.3470599
+  stars: 4.5
+  rating_count: 300
+  image_url: http://s3-media1.fl.yelpcdn.com/bphoto/dIixcGN7yYLyGVG39T0W8A/90s.jpg
+  yelp_id: cat-restaurant-paris
+  
