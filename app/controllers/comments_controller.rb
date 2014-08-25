@@ -3,15 +3,6 @@ class CommentsController < ApplicationController
   before_action :set_tour, only: [:destroy]
   before_action :bounce_if_logged_out
   
-  # GET /comments
-  def index
-    @comments = Comment.all
-  end
-
-  # GET /comments/1
-  def show
-  end
-
   # GET /comments/new
   def new
     @comment = Comment.new(tour_stop: TourStop.find(params[:tour_stop_id]))

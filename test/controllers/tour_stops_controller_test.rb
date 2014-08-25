@@ -37,9 +37,7 @@ class TourStopsControllerTest < ActionController::TestCase
     
     assert_equal 1, assigns(:tour_stop).total_score
     assert_redirected_to tour_path(assigns(:tour))
-  end
-  
-  
+  end  
 
   test "should update tour stop" do
     patch :update, id: @tour_stop, tour_stop: { tour_id: @tour.to_param, 

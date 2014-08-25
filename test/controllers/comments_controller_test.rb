@@ -8,11 +8,6 @@ class CommentsControllerTest < ActionController::TestCase
     @user = users(:peridot)
     login_as @user
   end
-    
-  test "should get index" do
-    get :index
-    assert_response :success
-  end
 
   test "should get new" do
     get :new, tour_stop_id: @tour_stop.to_param
@@ -29,31 +24,33 @@ class CommentsControllerTest < ActionController::TestCase
     assert_redirected_to tour_path(assigns(:tour))
   end
 
-  test "should show comment" do
-    get :show, id: @comment
-    assert_response :success
-  end
-
   test "should get edit" do
     get :edit, id: @comment
     assert_response :success
   end
   
   test "should update comment" do
+    assert_match(/Hello./, @comment.text)
     patch :update, id: @comment, comment: { tour_stop_id: @tour_stop.to_param,
-                                            text: 'udpated text' }
-    
+                                            text: 'Hello World.' }
+    assert_match(/World./, assigns(:comment).text)
     assert_match(/successfully updated/, flash[:notice].inspect)
     assert_redirected_to tour_path(assigns(:tour))
   end
 
   test "should destroy comment" do
     assert_difference('Comment.count', -1) do
-      delete :destroy, id: @comment, comment: { tour_stop_id: @tour_stop.to_param }
+      delete :destroy, id: @comment, tour_stop_id: @tour_stop.to_param
     end
 
     assert_match(/Comment successfully deleted/, flash[:notice].inspect)
     assert_redirected_to tour_path(assigns(:tour))
+  end
+  
+  test "must be logged in to post comments" do
+    logout
+    get :new, tour_stop_id: @tour_stop.to_param
+    assert_redirected_to root_url
   end
 
 end
