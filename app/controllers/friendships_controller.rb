@@ -1,26 +1,6 @@
 class FriendshipsController < ApplicationController
-  before_action :set_friendship, only: [:show, :edit, :destroy]
+  before_action :set_friendship, only: [:destroy]
   before_action :bounce_if_logged_out
-
-  # GET /friendships
-  # GET /friendships.json
-  def index
-    @friendships = Friendship.all
-  end
-
-  # GET /friendships/1
-  # GET /friendships/1.json
-  def show
-  end
-
-  # GET /friendships/new
-  def new
-    @friendship = Friendship.new
-  end
-
-  # GET /friendships/1/edit
-  def edit
-  end
 
   # POST /friendships
   # POST /friendships.json
