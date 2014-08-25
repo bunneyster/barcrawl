@@ -96,7 +96,7 @@ button.borderless-button, a.borderless-button {
   margin: 0;
   color: inherit;
   
-  .red {
+  &.red {
     color: $my-red;
   }
   
