@@ -5,6 +5,8 @@ class User < ActiveRecord::Base
   has_many :invitations
   has_many :tours, through: :invitations
   
+  has_many :votes
+  
   validates :email, uniqueness: true
   validates :email, length: 1..38
   

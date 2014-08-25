@@ -10,7 +10,7 @@ class TourStop < ActiveRecord::Base
   validate :does_not_already_exist, on: :create
   
   # Votes that have been cast for/against this tour stop's proposed venue.
-  has_many :votes
+  has_many :votes, dependent: :destroy
   
   # Comments posted regarding this tour stop.
   has_many :comments

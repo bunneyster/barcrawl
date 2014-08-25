@@ -1,17 +1,7 @@
 class TourStopsController < ApplicationController
   before_action :set_tour_stop, only: [:show, :edit, :update, :destroy]
   before_action :set_tour, only: [:create, :update]
-
-  # GET /tour_stops
-  # GET /tour_stops.json
-  def index
-    @tour_stops = TourStop.all
-  end
-
-  # GET /tour_stops/1
-  # GET /tour_stops/1.json
-  def show
-  end
+  before_action :bounce_if_logged_out
 
   # GET /tour_stops/new
   def new
@@ -24,10 +14,6 @@ class TourStopsController < ApplicationController
     @tour_stop = TourStop.new(tour: @venue_search.tour)
   end
 
-  # GET /tour_stops/1/edit
-  def edit
-  end
-
   # POST /tour_stops
   # POST /tour_stops.json
   def create
@@ -35,13 +21,13 @@ class TourStopsController < ApplicationController
     @vote = Vote.new(voter: @current_user,
                      tour_stop: @tour_stop,
                      score: 1)
-
+    
     respond_to do |format|
       if @tour_stop.save and @vote.save
         format.html { redirect_to @tour, notice: 'Tour stop was successfully created.' }
-        format.json { render :show, status: :created, location: @tour_stop }
+        format.json { render :search, status: :created, location: @tour_stop }
       else
-        format.html { render :new }
+        format.html { redirect_to search_tour_stops_url, notice: 'Venue has already been proposed.' }
         format.json { render json: @tour_stop.errors, status: :unprocessable_entity }
       end
     end
@@ -53,23 +39,14 @@ class TourStopsController < ApplicationController
     respond_to do |format|
       if @tour_stop.update(tour_stop_params)
         format.html { redirect_to @tour, notice: 'Tour stop was successfully updated.' }
-        format.json { render :show, status: :ok, location: @tour_stop }
+        format.json { render :search, status: :ok, location: @tour_stop }
       else
-        format.html { render :edit }
+        format.html { render :search }
         format.json { render json: @tour_stop.errors, status: :unprocessable_entity }
       end
     end
   end
 
-  # DELETE /tour_stops/1
-  # DELETE /tour_stops/1.json
-  def destroy
-    @tour_stop.destroy
-    respond_to do |format|
-      format.html { redirect_to tour_stops_url, notice: 'Tour stop was successfully destroyed.' }
-      format.json { head :no_content }
-    end
-  end
 
   private
     def set_tour
