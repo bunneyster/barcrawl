@@ -17,14 +17,8 @@
         <td><%= user.email %></td>
         <td><%= image_tag avatar_url(user), size:"48" %></td>
         <td><%= link_to 'Add friend', friendships_path(friend_id: user.to_param), method: :post %></td>
-        <td><%= link_to 'Show', user %></td>
-        <td><%= link_to 'Edit', edit_user_path(user) %></td>
-        <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
-<br>
-
-<%= link_to 'New User', new_user_path %>
