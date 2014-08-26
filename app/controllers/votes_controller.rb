@@ -19,7 +19,7 @@ class VotesController < ApplicationController
     # Second click on same button
     when 2
       previous.destroy
-      redirect_to @tour
+      redirect_to @tour, notice: 'Vote undone.'
     # Second click on other button
     when 0
       previous.destroy
@@ -33,9 +33,9 @@ class VotesController < ApplicationController
     
     respond_to do |format|
       if @vote.save
-        format.html { redirect_to @tour }
+        format.html { redirect_to @tour, notice: 'Successfully voted!' }
       else
-        format.html { redirect_to @tour }
+        format.html { redirect_to @tour, notice: 'Could not vote.' }
       end
     end
   end
