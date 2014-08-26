@@ -4,7 +4,7 @@ class VenuesController < ApplicationController
   # GET /venues
   # GET /venues.json
   def index
-    @venues = Venue.includes(:city).all
+    @venues = Venue.order(:name).page params[:page]
   end
 
   # GET /venues/1

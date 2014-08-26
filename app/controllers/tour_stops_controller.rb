@@ -11,6 +11,7 @@ class TourStopsController < ApplicationController
   # POST /tours_stops/search
   def search
     @venue_search = VenueSearch.new(venue_search_params)
+    @venue_search_results = VenueSearch.new(venue_search_params).results.page params[:page]
     @tour_stop = TourStop.new(tour: @venue_search.tour)
   end
 

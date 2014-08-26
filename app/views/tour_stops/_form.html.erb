@@ -1,7 +1,7 @@
 <!-- Show 20 venues located in the tour's city, which haven't already been proposed. -->
 <div class="content row">
   <ul class="venue-list large-12 columns">
-    <% @venue_search.results.first(20).each do |venue| %>
+    <% @venue_search_results.each do |venue| %>
       <li>
         <div class="venue-image">
           <%= image_tag venue_thumbnail_url(venue) %>
@@ -31,8 +31,14 @@
   
 <div class="row">
   <div class="large-6 large-centered columns">
-    <%= link_to tour_path(@tour_stop.tour), class: 'large secondary button expand' do %>
+    <%= link_to tour_path(@tour_stop.tour), class: 'secondary button left-side' do %>
       <%= fa_icon :undo %> Cancel
     <% end %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="large-10 large-centered columns text-center">
+    <%= paginate @venue_search_results %>
   </div>
 </div>

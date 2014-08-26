@@ -1,0 +1,11 @@
+$my-red: #ae0045;
+
+nav.pagination {
+  padding: 3rem;
+  font-size: 18px;
+  
+  span.current {
+    color: $my-red;
+    font-weight: bold;
+  }
+}

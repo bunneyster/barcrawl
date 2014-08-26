@@ -8,9 +8,13 @@ Rails.application.routes.draw do
     delete '/' => :destroy  # log out
   end
   
-  resources :tours
+  concern :paginatable do
+    get '(page/:page)', :action => :index, :on => :collection, :as => ''
+  end
+    
+  resources :tours, :concerns => :paginatable
 
-  resources :users
+  resources :users, :concerns => :paginatable
   
   resources :invitations
 
@@ -19,9 +23,10 @@ Rails.application.routes.draw do
   resources :tour_stops do
     collection do
       post :search
+      get '(search/page/:page)', :action => :search, :as => ''
     end
   end
-
+    
   resources :venues
   
   resources :comments

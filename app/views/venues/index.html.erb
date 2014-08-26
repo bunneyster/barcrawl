@@ -4,7 +4,7 @@
 
 <hgroup class="row text-center">
   <div class="row">
-    <div class="large-4 columns text-left"><h3 class="red"><%=h "<Img><Name>" %></h3></div>
+    <div class="large-4 columns text-left"><h3 class="red"><%=h "<Img> | <Name>" %></h3></div>
     <div class="large-2 columns"><h3 class="red"><%=h "<City>" %></h3></div>
     <div class="large-3 columns"><h3 class="red"><%=h "<Lat, Long>" %></h3></div>
     <div class="large-2 columns end"><h3 class="red"><%=h "<Rating>" %></h3></div>
@@ -33,10 +33,16 @@
 </ol>
 
 <div class="row">
-  <div class="large-6 large-centered columns">
-    <%= link_to new_venue_path, class: 'large success button expand' do %>
-      <%= fa_icon :plus %> Add a new venue
+  <div class="large-6 large-centered columns text-center">
+    <%= link_to new_venue_path, class: 'success button right-side' do %>
+      <%= fa_icon :plus %> Add new venue
     <% end %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="large-10 large-centered columns text-center">
+    <%= paginate @venues %>
   </div>
 </div>
 

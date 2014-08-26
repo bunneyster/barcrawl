@@ -55,6 +55,9 @@ gem 'validates_timeliness', '>= 3.0.14',
     git: 'https://github.com/johncarney/validates_timeliness.git',
     ref: 'remove-deprecated-setup-method'
 
+# Paginator
+gem 'kaminari'
+
 group :development do
   gem "better_errors"
   gem "binding_of_caller"
