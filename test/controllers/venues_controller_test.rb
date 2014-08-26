@@ -22,12 +22,15 @@ class VenuesControllerTest < ActionController::TestCase
     assert_difference('Venue.count') do
       post :create, venue: { name: 'Pasta Palace',
                              city_id: @venue.city_id,
-                             cid: 24680,
                              latitude: @venue.latitude,
-                             longitude: @venue.longitude }
+                             longitude: @venue.longitude,
+                             stars: @venue.stars,
+                             rating_count: @venue.rating_count,
+                             image_url: @venue.image_url,
+                             yelp_id: 'pasta-palace' }
     end
 
-    assert_redirected_to venue_path(assigns(:venue))
+    assert_redirected_to venues_path
   end
 
   test "should show venue" do
@@ -46,12 +49,12 @@ class VenuesControllerTest < ActionController::TestCase
   end
 
   test "venue should only be destroyed if not referenced by tour stops" do
-    assert_no_difference('Venue.count', -1) do
+    assert TourStop.where(venue: @venue).exists?
+    assert_no_difference('Venue.count') do
       delete :destroy, id: @venue
     end
     
-    TourStop.where(venue: @venue).destroy_all
-    
+    TourStop.where(venue: @venue).destroy_all    
     assert_difference('Venue.count', -1) do
       delete :destroy, id: @venue
     end    
