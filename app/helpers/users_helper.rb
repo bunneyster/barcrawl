@@ -1,12 +1,23 @@
 module UsersHelper
-  # Check out omniauth for carrying over profile data from Facebook/Twitter/etc.
-  def avatar_url(user)
-    if user.avatar_url.present?
-      user.avatar_url
-    else
-      default_url = 'identicon'   # E.g. "#{root_url}images/guest.png", retro
-      gravatar_id = Digest::MD5.hexdigest(user.email.downcase)
-      "//gravatar.com/avatar/#{gravatar_id}.png?s=48&d=#{default_url}"
+  
+  def avatar_tag(user, size)
+    size_map = { "small" => 18, "medium" => 27, "large" => 36, "x-large" => 72 }
+    
+    gravatar_id = Digest::MD5.hexdigest(user.email.downcase)
+    gravatar_size = size_map[size]
+    default_style = 'identicon'
+    
+    image_url = user.avatar_url ||
+        "//gravatar.com/avatar/#{gravatar_id}?" +
+        "s=#{gravatar_size}&d=#{default_style}"
+    
+    image_tag(image_url, class: "avatar-#{size}")
+  end
+  
+  def avatar_and_name_tag(user, size)    
+    content_tag :div, class: "user-avatar-#{size}" do
+      avatar_tag(user, size) + content_tag("span", user.name)
     end
   end
+  
 end

@@ -12,7 +12,7 @@
 
 <p>
   <strong>Avatar URL:</strong>
-  <%= image_tag avatar_url(@user), size:"48" %>
+  <%= avatar_tag @user, "x-large" %>
 </p>
 
 <%= link_to 'Edit', edit_user_path(@user) %> |

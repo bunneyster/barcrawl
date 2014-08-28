@@ -19,7 +19,7 @@
         <h5><%= tour.name %></h5>
       </div>
       <div class="large-2 columns text-left" data-equalizer-watch>
-        <h5><%= image_tag avatar_url(tour.organizer) %> <%= tour.organizer.name %></h5>
+        <h5><%= avatar_and_name_tag tour.organizer, "medium" %></h5>
       </div>
       <div class="large-2 columns" data-equalizer-watch>
         <h5><%= tour.city.name %></h5>

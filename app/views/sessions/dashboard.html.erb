@@ -34,7 +34,7 @@
   </hgroup>
   <ol>
   <% Friendship.where(user_id: @current_user.id).each do |friendship| %>
-      <li><%= image_tag avatar_url(User.find(friendship.friend_id)) %><%= User.find(friendship.friend_id).name %></li>
+      <li><%= avatar_and_name_tag User.find(friendship.friend_id), "medium" %></li>
   <% end %>
   </ol>
 </section>

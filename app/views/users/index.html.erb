@@ -15,7 +15,7 @@
       <tr>
         <td><%= user.name %></td>
         <td><%= user.email %></td>
-        <td><%= image_tag avatar_url(user), size:"48" %></td>
+        <td><%= avatar_tag user, "small" %></td>
         <td><%= link_to 'Add friend', friendships_path(friend_id: user.to_param), method: :post %></td>
       </tr>
     <% end %>

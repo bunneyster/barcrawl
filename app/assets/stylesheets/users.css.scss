@@ -1,3 +1,56 @@
-// Place all the styles related to the Users controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+div.user-avatar-small {
+  font-size: 12px;
+  img {
+    margin: 0.25rem;
+    width: 18px;
+    height: 18px;
+  }
+}
+
+div.user-avatar-medium {
+  font-size: 18px;
+  img {
+    margin: 0.25rem;
+    width: 27px;
+    height: 27px;
+  }
+}
+
+div.user-avatar-large {
+  font-size: 24px;
+  img {
+    margin: 0.25rem;
+    width: 36px;
+    height: 36px;
+  }
+}
+
+div.user-avatar-x-large {
+  font-size: 48px;
+  img {
+    margin: 0.25rem;
+    width: 72px;
+    height: 72px;
+  }
+}
+
+
+img.avatar-small {
+  width: 18px;
+  height: 18px;
+}
+
+img.avatar-medium {
+  width: 27px;
+  height: 27px;
+}
+
+img.avatar-large {
+  width: 36px;
+  height: 36px;
+}
+
+img.avatar-x-large {
+  width: 72px;
+  height: 72px;
+}

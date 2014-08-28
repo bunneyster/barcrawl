@@ -1,0 +1,7 @@
+$my-orange: #ff5e00;
+
+i {
+  &.fa-star, &.fa-star-o, &.fa-star-half-o {
+    color: $my-orange;
+  }
+}

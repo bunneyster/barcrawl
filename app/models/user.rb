@@ -15,4 +15,8 @@ class User < ActiveRecord::Base
   # Validates presence of password on create, confirmation of password
   has_secure_password
   
+  def avatar_url=(new_avatar_url)
+    new_avatar_url = nil if new_avatar_url.blank?
+    super new_avatar_url
+  end
 end
