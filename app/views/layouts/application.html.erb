@@ -7,7 +7,7 @@
     <title><%= content_for?(:title) ? yield(:title) : "Puborbar" %></title>
 
     <%= stylesheet_link_tag    "application" %>
-<%= render 'layouts/google_analytics' %>
+    <%= render 'layouts/google_analytics' %>
     <%= javascript_include_tag "vendor/modernizr" %>
     <%= csrf_meta_tags %>
     <%= favicon_link_tag %>
@@ -26,8 +26,15 @@
           <ul class="left">
             <li><%= link_to "New Event", new_tour_path %></li>
           </ul>
-          <ul class="right">
-            <li><%= link_to "Log out", root_url, method: :delete %></li>
+          <ul class="right user-menu">
+            <li class="has-dropdown">
+              <!--<%= avatar_and_name_tag @current_user, "small" %>-->
+              <a><%= avatar_and_name_tag @current_user, "small" %></a>
+              <ul class="dropdown">
+                <li><%= link_to "Account Settings", "#" %></li>
+                <li><%= link_to "Log out", root_url, method: :delete %></li>
+              </ul>
+            </li>
           </ul>
         </section>
       <% end %>

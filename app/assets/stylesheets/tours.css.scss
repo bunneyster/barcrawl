@@ -9,19 +9,19 @@ body {
 */
 
 
-hgroup ul>li {
-  display: inline-block;
-  vertical-align: baseline;
-  margin-right: 0.5rem;
-  
-  &#tour-name {
-    margin-right: 3rem;
-  }
-  
-  h1, button {
-    display: inline;
-  }
-}
+// hgroup ul>li {
+  // display: inline-block;
+  // vertical-align: baseline;
+  // margin-right: 0.5rem;
+//   
+  // &#tour-name {
+    // margin-right: 3rem;
+  // }
+//   
+  // h1, button {
+    // display: inline;
+  // }
+// }
 
 [data-magellan-expedition] dl.sub-nav {
   padding: 10px 10px 10px 0;
@@ -114,8 +114,4 @@ section.main.row {
   }
   
   
-}
-
-ul#tour-title {
-  margin-left: 0;
 }

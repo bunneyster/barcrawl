@@ -3,22 +3,20 @@
 <hgroup>
   <div class="row">
     <div class="large-9 columns">
-      <ul id="tour-title">
-        <li id="tour-name"><h1><%= @tour.name%></h1></li>
+      <h1>
+        <%= @tour.name%>
         <% if @tour.organized_by?(@current_user) %>
-          <li>
             <%= link_to edit_tour_path(@tour), class: 'borderless-button' do %>
-              <%= fa_icon :'pencil 2x fw' %>
+              <%= fa_icon :'pencil' %>
             <% end %>
-          </li>
-          <li><%= render partial: "finalization_button" %></li>
+            <%= render partial: "finalization_button" %>
         <% else %>
-          <li><%= render partial: "rsvp_button" %></li>
-        <% end %>        
-      </ul>
+            <%= render partial: "rsvp_button" %>
+        <% end %> 
+      </h1>
     </div>
     <div class="large-3 columns">
-      by<h3><%= avatar_and_name_tag @tour.organizer, "large" %></h3>
+      by<%= avatar_and_name_tag @tour.organizer, "large" %>
     </div>
   </div>
   <div class="row">
