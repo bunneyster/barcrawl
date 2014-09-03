@@ -12,6 +12,8 @@ class User < ActiveRecord::Base
   
   validates :name, length: 1..28
   
+  validates :admin, inclusion: { in: [true, false] }
+    
   # Validates presence of password on create, confirmation of password
   has_secure_password
   

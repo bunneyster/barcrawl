@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140801015138) do
+ActiveRecord::Schema.define(version: 20140902221502) do
 
   create_table "cities", force: true do |t|
     t.string   "name",       null: false
@@ -79,12 +79,13 @@ ActiveRecord::Schema.define(version: 20140801015138) do
   add_index "tours", ["id"], name: "index_tours_on_id", unique: true
 
   create_table "users", force: true do |t|
-    t.string   "name",            limit: 28, null: false
-    t.string   "email",           limit: 38, null: false
+    t.string   "name",            limit: 28,                 null: false
+    t.string   "email",           limit: 38,                 null: false
     t.string   "avatar_url"
-    t.string   "password_digest",            null: false
+    t.string   "password_digest",                            null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "admin",                      default: false, null: false
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
