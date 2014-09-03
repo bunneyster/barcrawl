@@ -1,7 +1,7 @@
 module UsersHelper
   
   def avatar_tag(user, size)
-    size_map = { "small" => 18, "medium" => 27, "large" => 36, "x-large" => 72 }
+    size_map = { "small" => 30, "medium" => 40, "large" => 50, "x-large" => 120 }
     
     gravatar_id = Digest::MD5.hexdigest(user.email.downcase)
     gravatar_size = size_map[size]
