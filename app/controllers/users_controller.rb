@@ -20,6 +20,10 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
+    unless @current_user == @user || @current_user.admin?
+      redirect_to root_url, notice: "You cannot access this person's profile."
+      return
+    end
   end
 
   # POST /users
@@ -43,6 +47,11 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1
   # PATCH/PUT /users/1.json
   def update
+    unless @current_user == @user || @current_user.admin?
+      redirect_to root_url, notice: "You cannot access this person's profile."
+      return
+    end
+    
     respond_to do |format|
       if @user.update(user_params)
         format.html { redirect_to @user, notice: 'Account updated.' }
@@ -57,9 +66,14 @@ class UsersController < ApplicationController
   # DELETE /users/1
   # DELETE /users/1.json
   def destroy
+    unless @current_user == @user || @current_user.admin?
+      redirect_to root_url, notice: "You cannot access this person's profile."
+      return
+    end
+    
     @user.destroy
     respond_to do |format|
-      format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
+      format.html { redirect_to root_url, notice: 'User was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

@@ -1,17 +1,21 @@
 class VotesController < ApplicationController
   before_action :set_tour_stop, only: [:tally]
-  before_action :set_tour, only: [:tally]
-  before_action :set_vote, only: [:destroy]
   before_action :bounce_if_logged_out
   
   # POST /votes/dispatch
   def tally
+    if !@current_user.invited_to?(@tour_stop.tour)
+      redirect_to tour_path(@tour_stop.tour), notice: 'Join the tour to vote!'
+      return
+    end
+    
     if @tour_stop.votes_from(@current_user).first
       previous = @tour_stop.votes_from(@current_user).first
       sum = previous.score + vote_params[:score].to_i
     else
       sum = vote_params[:score].to_i
     end
+    
     case sum.abs
     # First click
     when 1
@@ -19,7 +23,7 @@ class VotesController < ApplicationController
     # Second click on same button
     when 2
       previous.destroy
-      redirect_to @tour, notice: 'Vote undone.'
+      redirect_to @tour_stop.tour, notice: 'Vote undone.'
     # Second click on other button
     when 0
       previous.destroy
@@ -33,9 +37,9 @@ class VotesController < ApplicationController
     
     respond_to do |format|
       if @vote.save
-        format.html { redirect_to @tour, notice: 'Successfully voted!' }
+        format.html { redirect_to @tour_stop.tour, notice: 'Successfully voted!' }
       else
-        format.html { redirect_to @tour, notice: 'Could not vote.' }
+        format.html { redirect_to @tour_stop.tour, notice: 'Could not vote.' }
       end
     end
   end
@@ -45,14 +49,6 @@ class VotesController < ApplicationController
     def set_tour_stop
       @tour_stop = TourStop.find(params[:tour_stop_id])
     end    
-  
-    def set_tour
-      @tour = Tour.find(@tour_stop.tour.to_param)
-    end
-    
-    def set_vote
-      @vote = Vote.find(params[:id])
-    end
     
     def vote_params
       params.permit(:tour_stop_id, :score)

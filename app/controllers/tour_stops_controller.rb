@@ -1,5 +1,5 @@
 class TourStopsController < ApplicationController
-  before_action :set_tour_stop, only: [:show, :edit, :update, :destroy]
+  before_action :set_tour_stop, only: [:show, :edit, :update]
   before_action :bounce_if_logged_out
 
   # GET /tour_stops/new
@@ -18,8 +18,8 @@ class TourStopsController < ApplicationController
   # POST /tour_stops.json
   def create
     @tour_stop = TourStop.new(tour_stop_params)
-    unless @tour_stop.tour.organized_by?(@current_user)
-      redirect_to root_url
+    unless @current_user.invited_to?(@tour_stop.tour)
+      redirect_to root_url, notice: 'Join the tour to propose venues!'
       return
     end
     

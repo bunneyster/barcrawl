@@ -21,6 +21,10 @@ class ToursController < ApplicationController
 
   # GET /tours/1/edit
   def edit
+    unless @tour.organized_by?(@current_user)
+      redirect_to root_url, notice: 'You are not the organizer. Step away.'
+      return
+    end
   end
 
   # POST /tours
@@ -43,6 +47,11 @@ class ToursController < ApplicationController
   # PATCH/PUT /tours/1
   # PATCH/PUT /tours/1.json
   def update
+    unless @tour.organized_by?(@current_user)
+      redirect_to root_url, notice: 'You are not the organizer. Step away.'
+      return
+    end
+    
     respond_to do |format|
       if @tour.update(tour_params)
         format.html { redirect_to @tour, notice: 'Tour was successfully updated.' }
@@ -54,15 +63,6 @@ class ToursController < ApplicationController
     end
   end
 
-  # DELETE /tours/1
-  # DELETE /tours/1.json
-  def destroy
-    @tour.destroy
-    respond_to do |format|
-      format.html { redirect_to tours_url, notice: 'Tour was successfully destroyed.' }
-      format.json { head :no_content }
-    end
-  end
 
   private
     # Use callbacks to share common setup or constraints between actions.

@@ -5,9 +5,15 @@ class VenuesControllerTest < ActionController::TestCase
     
   setup do
     @venue = venues(:cafe)
+    @not_admin = users(:peridot)
+    @admin = users(:admin)
+    login_as @admin
   end
 
-  test "should get index" do
+  test "non-admin users can view index" do
+    logout
+    login_as @not_admin
+    
     get :index
     assert_response :success
     assert_not_nil assigns(:venues)
@@ -33,7 +39,10 @@ class VenuesControllerTest < ActionController::TestCase
     assert_redirected_to venues_path
   end
 
-  test "should show venue" do
+  test "non-admin users can view venues" do
+    logout
+    login_as @not_admin
+    
     get :show, id: @venue
     assert_response :success
   end

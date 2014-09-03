@@ -3,6 +3,8 @@ require 'test_helper'
 class CitiesControllerTest < ActionController::TestCase
   setup do
     @city = cities(:paris)
+    @admin = users(:admin)
+    login_as @admin
   end
 
   test "should get index" do
@@ -45,5 +47,16 @@ class CitiesControllerTest < ActionController::TestCase
     end
 
     assert_redirected_to cities_path
+  end
+  
+  test "non-admins cannot access or modify city data" do
+    not_admin = users(:sam)
+    logout
+    login_as not_admin
+    
+    assert_not not_admin.admin?
+    get :new
+    assert_match(/must be an admin/, flash[:notice].inspect)
+    assert_redirected_to root_url
   end
 end

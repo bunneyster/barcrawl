@@ -5,17 +5,17 @@ class TourStopsControllerTest < ActionController::TestCase
     @tour_stop = tour_stops(:first)
     @tour = @tour_stop.tour
     @venue = @tour_stop.venue
-    @user = users(:peridot)
+    @user = users(:sam)
     login_as @user
   end
 
   test "get to venue search page from tour page" do
-    get :new, tour_id: @tour_stop.tour.to_param
+    get :new, tour_id: @tour.to_param
     assert_response :success
   end
   
   test "re-proposing a venue returns to venue search results" do
-    assert TourStop.where(tour: @tour, venue: @tour_stop.venue).exists?
+    assert @user.invited_to?(@tour)
     
     assert_no_difference('TourStop.count') do
       post :create, tour_stop: { tour_id: @tour.to_param,
@@ -26,6 +26,7 @@ class TourStopsControllerTest < ActionController::TestCase
   end
 
   test "proposing a new venue creates a tour stop with total score 1" do
+    assert @user.invited_to?(@tour)
     @tour_stop.destroy
     assert_not TourStop.where(tour: @tour, venue: @tour_stop.venue).exists?
        
@@ -33,21 +34,48 @@ class TourStopsControllerTest < ActionController::TestCase
       post :create, tour_stop: { tour_id: @tour.to_param, 
                                  venue_id: @venue.to_param }
     end
-    assert_match(/successfully created/, flash[:notice].inspect)
-    
+    assert_match(/successfully created/, flash[:notice].inspect)    
     assert_equal 1, assigns(:tour_stop).total_score
-    assert_redirected_to tour_path(assigns(:tour))
+    assert_redirected_to tour_path(assigns(:tour_stop).tour)
   end  
-
-  test "should update tour stop" do
-    patch :update, id: @tour_stop, tour_stop: { tour_id: @tour.to_param, 
-                                                venue_id: @venue.to_param }
-    assert_redirected_to tour_path(assigns(:tour))
-  end
   
   test "must be logged in to search for venues" do
     logout
     get :new, tour_id: @tour.to_param    
+    assert_redirected_to root_url
+  end
+  
+  test "uninvited users cannot propose venues" do 
+    user = users(:dan)
+    logout
+    login_as user
+    
+    assert_not user.invited_to?(@tour)
+    assert_no_difference('TourStop.count') do
+      post :create, tour_stop: { tour_id: @tour.to_param, 
+                                 venue_id: @venue.to_param }
+    end
+    assert_match(/Join the tour to propose/, flash[:notice].inspect)
+    assert_redirected_to root_url
+  end
+  
+  test "tour organizer can accept/reject tour stops" do
+    user = @tour.organizer
+    logout
+    login_as user
+    
+    patch :update, id: @tour_stop, tour_stop: { status: 'yes' }
+    assert_equal 'yes', assigns(:tour_stop).status
+    assert_match(/successfully updated/, flash[:notice].inspect)
+    assert_redirected_to tour_path(assigns(:tour_stop).tour)
+  end
+  
+  test "non-organizer invitees cannot accept/reject tour stops" do
+    assert_not @tour.organized_by?(@user)
+    assert @user.invited_to?(@tour)    
+    patch :update, id: @tour_stop, tour_stop: { status: 'no' }
+    assert_equal 'maybe', assigns(:tour_stop).status
+    assert_match(/not the organizer/, flash[:notice].inspect)
     assert_redirected_to root_url
   end
 end

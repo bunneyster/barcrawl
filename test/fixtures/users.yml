@@ -23,3 +23,10 @@ dan:
   email: d@asdf.com
   avatar_url: dan.jpg
   password_digest: <%= BCrypt::Password.create('asdf') %>
+  
+admin:
+  name: Admin
+  email: admin@asdf.com
+  avatar_url: nil
+  password_digest: <%= BCrypt::Password.create('asdf') %>
+  admin: true

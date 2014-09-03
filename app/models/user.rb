@@ -21,4 +21,8 @@ class User < ActiveRecord::Base
     new_avatar_url = nil if new_avatar_url.blank?
     super new_avatar_url
   end
+  
+  def invited_to?(tour)
+    tour.users.where(id: id).exists?
+  end
 end
