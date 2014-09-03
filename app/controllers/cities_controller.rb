@@ -1,5 +1,6 @@
 class CitiesController < ApplicationController
   before_action :set_city, only: [:show, :edit, :update, :destroy]
+  before_action :bounce_if_not_admin, only: [:index, :new, :edit, :create, :update, :destroy]
 
   # GET /cities
   # GET /cities.json

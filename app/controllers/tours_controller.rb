@@ -1,6 +1,7 @@
 class ToursController < ApplicationController
   before_action :set_tour, only: [:show, :edit, :update, :destroy]
   before_action :bounce_if_logged_out
+  before_action :bounce_if_not_admin, only: [:index, :destroy]
 
   # GET /tours
   # GET /tours.json

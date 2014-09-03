@@ -1,5 +1,7 @@
 class VenuesController < ApplicationController
   before_action :set_venue, only: [:show, :edit, :update, :destroy]
+  before_action :bounce_if_logged_out
+  before_action :bounce_if_not_admin, except: [:index, :show]
 
   # GET /venues
   # GET /venues.json
