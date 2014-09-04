@@ -62,5 +62,15 @@ class VotesControllerTest < ActionController::TestCase
     assert_match(/Join the tour to vote/, flash[:notice].inspect)
     assert_redirected_to tour_path(assigns(:tour_stop).tour)
   end
+  
+  test "invalid vote scores are cancelled" do
+    assert @user.invited_to?(@tour_stop.tour)
+    assert_no_difference ['@tour_stop.votes_from(@user).count', '@tour_stop.reload.total_score'] do
+      post :tally, tour_stop_id: @tour_stop, score: 20
+    end
+    
+    assert_match(/Stop/, flash[:notice].inspect)
+    assert_redirected_to tour_path(assigns(:tour_stop).tour)
+  end
 
 end

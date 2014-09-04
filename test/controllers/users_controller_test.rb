@@ -48,7 +48,7 @@ class UsersControllerTest < ActionController::TestCase
     assert_response :success
   end
   
-  test "non-admin user cannot get someone else's profile edit page" do
+  test "non-admins cannot get someone else's profile edit page" do
     login_as @not_me
     get :edit, id: @me
     assert_match(/cannot access/, flash[:notice].inspect)
@@ -77,7 +77,7 @@ class UsersControllerTest < ActionController::TestCase
     assert_redirected_to user_path(assigns(:user))
   end
   
-  test "non-admin user cannot update someone else's profile" do
+  test "non-admins cannot update someone else's profile" do
     login_as @not_me
     patch :update, id: @me, user: { email: @me.email,
                                       name: @me.name, 
@@ -106,7 +106,7 @@ class UsersControllerTest < ActionController::TestCase
     assert_redirected_to root_url
   end
   
-  test "non-admin user cannot destroy someone else's profile" do
+  test "non-admins cannot destroy someone else's profile" do
     login_as @not_me
     assert_no_difference('User.count', -1) do
       delete :destroy, id: @me

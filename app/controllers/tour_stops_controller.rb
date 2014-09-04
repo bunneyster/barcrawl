@@ -4,7 +4,9 @@ class TourStopsController < ApplicationController
 
   # GET /tour_stops/new
   def new
-    @venue_search = VenueSearch.new(tour: Tour.find(params[:tour_id]))
+    @tour = Tour.find(params[:tour_id])
+    return bounce_if_uninvited unless @current_user.invited_to? @tour
+    @venue_search = VenueSearch.new(tour: @tour)
   end
   
   # POST /tours_stops/search
@@ -18,10 +20,7 @@ class TourStopsController < ApplicationController
   # POST /tour_stops.json
   def create
     @tour_stop = TourStop.new(tour_stop_params)
-    unless @current_user.invited_to?(@tour_stop.tour)
-      redirect_to root_url, notice: 'Join the tour to propose venues!'
-      return
-    end
+    return bounce_if_uninvited unless @current_user.invited_to? @tour_stop.tour
     
     @vote = Vote.new(voter: @current_user,
                      tour_stop: @tour_stop,
@@ -68,7 +67,7 @@ class TourStopsController < ApplicationController
     end
 
     def tour_stop_params
-      params.require(:tour_stop).permit(:tour_id, :venue_id, :status)
+      params.require(:tour_stop).permit(:tour_id, :venue_id)
     end
 
     def tour_stop_update_params

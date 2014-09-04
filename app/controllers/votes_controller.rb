@@ -4,6 +4,11 @@ class VotesController < ApplicationController
   
   # POST /votes/dispatch
   def tally
+    if vote_params[:score].to_i.abs != 1
+      redirect_to @tour_stop.tour, notice: "Stop. You can't vote like that."
+      return
+    end 
+    
     if !@current_user.invited_to?(@tour_stop.tour)
       redirect_to tour_path(@tour_stop.tour), notice: 'Join the tour to vote!'
       return

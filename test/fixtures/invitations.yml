@@ -1,4 +1,6 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+p2birthday:
+  user: peridot
+  tour: birthday
 
 a2birthday:
   user: allison

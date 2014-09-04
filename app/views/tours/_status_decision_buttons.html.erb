@@ -1,6 +1,5 @@
 <span class="status-decision-buttons">
   <%= form_for tour_stop do |f| %>
-    <!-- <%= f.hidden_field :tour_id %> -->
     <%= f.hidden_field :status, value: 'yes' %>
     <% if tour_stop.status === 'yes' %>
       <%= f.button type: :submit, disabled: true, class: 'borderless-button' do %>
@@ -13,7 +12,6 @@
     <% end %>
   <% end %>
   <%= form_for tour_stop do |f| %>
-    <!-- <%= f.hidden_field :tour_id %> -->
     <%= f.hidden_field :status, value: 'no' %>
     <% if tour_stop.status === 'no' %>
       <%= f.button type: :submit, disabled: true, class: 'borderless-button' do %>
