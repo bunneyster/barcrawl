@@ -14,6 +14,11 @@ class VotesController < ApplicationController
       return
     end
     
+    if @tour_stop.tour.status == 'finalized'
+      redirect_to @tour_stop.tour, notice: "Voting for this tour has ended."
+      return
+    end
+    
     if @tour_stop.votes_from(@current_user).first
       previous = @tour_stop.votes_from(@current_user).first
       sum = previous.score + vote_params[:score].to_i

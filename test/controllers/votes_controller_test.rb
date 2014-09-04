@@ -72,5 +72,18 @@ class VotesControllerTest < ActionController::TestCase
     assert_match(/Stop/, flash[:notice].inspect)
     assert_redirected_to tour_path(assigns(:tour_stop).tour)
   end
+  
+  test "cannot vote on finalized tours" do
+    finalized_tour = tours(:anniversary)
+    tour_stop = tour_stops(:finalized)
+    
+    assert @user.invited_to?(finalized_tour)
+    assert_no_difference ['tour_stop.votes_from(@user).count', 'tour_stop.reload.total_score'] do
+      post :tally, tour_stop_id: tour_stop, score: 1
+    end
+    
+    assert_match(/Voting for this tour has ended/, flash[:notice].inspect)
+    assert_redirected_to tour_path(assigns(:tour_stop).tour)
+  end
 
 end

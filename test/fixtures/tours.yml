@@ -23,3 +23,4 @@ anniversary:
   starting_at: <%= 1.year.from_now.to_s(:db) %>
   image: "wine.jpg"
   description: "We found love in a hopeless place."
+  status: 1

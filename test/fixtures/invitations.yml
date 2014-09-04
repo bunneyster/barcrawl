@@ -9,3 +9,7 @@ a2birthday:
 s2birthday:
   user: sam
   tour: birthday
+
+s2anniversary:
+  user: sam
+  tour: anniversary

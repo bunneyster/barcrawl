@@ -7,3 +7,7 @@ first:
 second:
   tour: birthday 
   venue: restaurant
+  
+finalized:
+  tour: anniversary
+  venue: restaurant

@@ -5,7 +5,7 @@ class InvitationTest < ActiveSupport::TestCase
   setup do
     @tour = Tour.new name: "Valid Tour",
                      organizer: users(:sam),
-                     city: tours(:newyear).city,
+                     city: cities(:paris),
                      starting_at: 1.week.from_now
                      
     @invitation = Invitation.new user: users(:peridot),
