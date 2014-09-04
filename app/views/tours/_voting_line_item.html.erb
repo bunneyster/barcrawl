@@ -1,6 +1,6 @@
 <li>
-  <section class="main row" data-equalizer>
-    <div class="controls large-1 columns" data-equalizer-watch>
+  <section class="proposal-header row" data-equalizer>
+    <div class="voting-controls large-1 columns" data-equalizer-watch>
       <div>
         <% if tour_stop.upvoted_by(@current_user) %>
           <%= button_to votes_tally_path(tour_stop_id: tour_stop.to_param, score: 1), class: 'red borderless-button' do %>
@@ -26,7 +26,7 @@
       </div>
     </div><!-- End of voting controls -->
     
-    <div class="post large-11 columns" data-equalizer-watch>
+    <div class="organizer-controls large-11 columns" data-equalizer-watch>
       <h3>
         <span><%= tour_stop.venue.name %></span>
         <% if @tour.organized_by?(@current_user) && @tour.status === "pending" %>
@@ -36,7 +36,7 @@
     </div><!-- End of venue description -->
   </section><!-- End of main proposal section -->
   
-  <section class="comments row">
+  <section class="proposal-comments row">
     <div class="large-11 large-offset-1 columns">
       <%= render partial: "comment", collection: tour_stop.comments, as: :comment %>
       <% if @tour.status === "pending" %>
