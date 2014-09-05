@@ -2,12 +2,12 @@
   <% if @tour.status === "pending" %>
     <%= f.hidden_field :status, value: 'finalized' %>
     <%= f.button type: :submit, class: 'borderless-button' do %>
-      <%= fa_icon :'lock 2x fw' %>
+      <%= fa_icon :'lock fw' %>
     <% end %>
   <% else %>
     <%= f.hidden_field :status, value: 'pending' %>
     <%= f.button type: :submit, class: 'borderless-button' do %>
-      <%= fa_icon :'unlock 2x fw' %>
+      <%= fa_icon :'unlock fw' %>
     <% end %>
   <% end %>    
 <% end %>

@@ -4,15 +4,17 @@
   <div class="row">
     <div class="large-9 columns">
       <h1>
-        <%= @tour.name%>
-        <% if @tour.organized_by?(@current_user) %>
-            <%= link_to edit_tour_path(@tour), class: 'borderless-button' do %>
-              <%= fa_icon :'pencil' %>
-            <% end %>
-            <%= render partial: "finalization_button" %>
-        <% else %>
-            <%= render partial: "rsvp_button" %>
-        <% end %> 
+        <%= @tour.name %>
+        <span class="tour-controls">
+          <% if @tour.organized_by?(@current_user) %>
+              <%= link_to edit_tour_path(@tour), class: 'borderless-button' do %>
+                <%= fa_icon :'pencil fw' %>
+              <% end %>
+              <%= render partial: "finalization_button" %>
+          <% else %>
+              <%= render partial: "rsvp_button" %>
+          <% end %> 
+        </span>
       </h1>
     </div>
     <div class="large-3 columns">

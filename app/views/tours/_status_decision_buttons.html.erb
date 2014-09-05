@@ -3,11 +3,11 @@
     <%= f.hidden_field :status, value: 'yes' %>
     <% if tour_stop.status === 'yes' %>
       <%= f.button type: :submit, disabled: true, class: 'borderless-button' do %>
-        <%= fa_icon :'check 2x fw' %>
+        <%= fa_icon :'check fw' %>
       <% end %>
     <% else %>
       <%= f.button type: :submit, class: 'borderless-button' do %>
-        <%= fa_icon :'check 2x fw' %>
+        <%= fa_icon :'check fw' %>
       <% end %>
     <% end %>
   <% end %>
@@ -15,11 +15,11 @@
     <%= f.hidden_field :status, value: 'no' %>
     <% if tour_stop.status === 'no' %>
       <%= f.button type: :submit, disabled: true, class: 'borderless-button' do %>
-        <%= fa_icon :'times 2x fw' %>
+        <%= fa_icon :'times fw' %>
       <% end %>
     <% else %>
       <%= f.button type: :submit, class: 'borderless-button' do %>
-        <%= fa_icon :'times 2x fw' %>
+        <%= fa_icon :'times fw' %>
       <% end %>
     <% end %>
   <% end %>

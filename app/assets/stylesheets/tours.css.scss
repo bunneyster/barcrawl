@@ -4,10 +4,14 @@
   }
 }
 
-hgroup form {
-  display: inline;
+hgroup {
+  span.tour-controls {
+    margin-left: 1rem;
+  }
+  form {
+    display: inline;
+  }
 }
-
 
 [data-magellan-expedition] dl.sub-nav {
   padding: 10px 10px 10px 0;
