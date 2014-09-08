@@ -23,7 +23,7 @@ function onGoogleMapsLoad() {
   for (var color in colors) {
     if (colors.hasOwnProperty(color)) {
       code = colors[color];
-      pinIcons[color] = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + code,
+      pinIcons[color] = new google.maps.MarkerImage("//chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + code,
                           new google.maps.Size(21, 34),
                           new google.maps.Point(0,0),
                           new google.maps.Point(10, 34));
