@@ -28,15 +28,25 @@
   </div>
   <div class="row">
     <div class="large-9 columns">
-      <p id="description"><%= @tour.description %></p>
+      <%= content_tag :p, id: "description", data: { tour_city_name: @tour.city.name, tour_city_lat: @tour.city.latitude, tour_city_lng: @tour.city.longitude } do %>
+        <%= @tour.description %>
+      <% end %>
     </div>
   </div>
 </hgroup>
 
 
+<div class="guests row">
+  <div class="large-12 columns avatar-list">
+    <% Invitation.where(tour_id: @tour.id).each do |invitation| %>
+      <%= avatar_tag invitation.user, "small" %>
+    <% end %>
+  </div>
+</div>
 
-<div class="row">
-  <div class="large-9 columns">
+
+<div class="venue-navbar row">
+  <div class="large-12 columns">
     <div data-magellan-expedition="fixed">
       <dl class="sub-nav">
         <dt>Venues:</dt>
@@ -51,6 +61,12 @@
         <% end %>
       </dl>
     </div>
+  </div>
+</div>
+
+
+<div class="proposals row">
+  <div class="large-6 columns">
     <hr />
     <section id="proposed">
       <h4 data-magellan-destination="proposed">Proposed venues:</h4>
@@ -78,16 +94,12 @@
                    as: :tour_stop %>
       </ol>
     </section>
-  </div>
+  </div><!-- End of written proposals -->
   
-  <div class="large-3 columns">
-    <h4>Guests:</h4>
-    <ul>
-      <% Invitation.where(tour_id: @tour.id).each do |invitation| %>
-        <li><%= avatar_and_name_tag invitation.user, "medium" %></li>
-      <% end %>
-    </ul>
-  </div>
+  <div class="large-6 columns">
+    <div id="proposals-map"></div>
+  </div><!-- End of map -->
 </div>
+
 
 

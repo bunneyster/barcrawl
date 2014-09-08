@@ -13,6 +13,10 @@ hgroup {
   }
 }
 
+div.guests.row div.avatar-list {
+  padding-bottom: 1rem;
+}
+
 [data-magellan-expedition] dl.sub-nav {
   padding: 10px 10px 10px 0;
   margin-left: 0;
@@ -35,56 +39,65 @@ hgroup {
   }
 }
 
-section.proposal-header {
-  margin-bottom: 0.5rem;
+div.proposals ol {
+  margin: 0;
   
-  div.voting-controls {
-    text-align: center;
+  li section.proposal-header.row {
+    margin: 0.5rem;
     
-    h3 {
-      margin: 0;
-    }  
-    button {
-      margin: 0 auto;
-    }
-  }
-  
-  div.organizer-controls {
-    span {
-      display: inline-block;
-      vertical-align: middle;
-      margin-right: 1rem;
+    div.voting-controls {
+      text-align: center;
       
-      .fa-check {
-        color: #43AC6A;
-      }      
-      .fa-times {
-        color: #f04124;
+      h3 {
+        margin: 0;
+      }  
+      button {
+        margin: 0 auto;
       }
     }    
-    form {
-      display: inline;
+    div.organizer-controls {
+      span {
+        display: inline-block;
+        vertical-align: middle;
+        margin-right: 1rem;
+        
+        .fa-check {
+          color: #43AC6A;
+        }      
+        .fa-times {
+          color: #f04124;
+        }
+      }    
+      form {
+        display: inline;
+      }
     }
+  }
+  li section.proposal-comments.row {
+    margin: 0.5rem;
+    
+    article {
+      padding: 0.5rem;
+      
+      &:nth-child(odd) {
+        background-color: #f2f2f2;
+      }    
+      .comment-commenter {
+        color: #07c;
+        margin-right: 0.5rem;
+      }    
+      .comment-time {
+        color: #999;
+        margin-right: 0.2rem;
+      }
+    }  
+    form, form>div {
+      display: inline;
+    } 
   }
 }
 
-section.proposal-comments {
-  article {
-    padding: 0.5rem;
-    
-    &:nth-child(odd) {
-      background-color: #f2f2f2;
-    }    
-    .comment-commenter {
-      color: #07c;
-      margin-right: 0.5rem;
-    }    
-    .comment-time {
-      color: #999;
-      margin-right: 0.2rem;
-    }
-  }  
-  form, form>div {
-    display: inline;
-  }  
+div#proposals-map {
+  height: 500px;
+  margin-top: 40px;  
 }
