@@ -12,6 +12,7 @@ function onGoogleMapsLoad() {
   };
 
   var map = new google.maps.Map(document.getElementById('proposals-map'), mapOptions);
+  var bounds = new google.maps.LatLngBounds();
 
   var pinIcons = {};
   var states =  ['proposed', 'accepted', 'rejected'];
@@ -42,6 +43,9 @@ function onGoogleMapsLoad() {
       icon: pinIcons.proposed,
       opacity: 0.8
     });
+        
+    bounds.extend(venuePos);
+    map.fitBounds(bounds);
   }
   
   for (var li = 0; li < acceptedVenuesList.length; li++) {
@@ -58,6 +62,9 @@ function onGoogleMapsLoad() {
       icon: pinIcons.accepted,
       opacity: 0.8
     });
+            
+    bounds.extend(venuePos);
+    map.fitBounds(bounds);
   }
   
   for (var li = 0; li < rejectedVenuesList.length; li++) {
@@ -74,5 +81,8 @@ function onGoogleMapsLoad() {
       icon: pinIcons.rejected,
       opacity: 0.8
     });
+        
+    bounds.extend(venuePos);
+    map.fitBounds(bounds);
   }
 }
