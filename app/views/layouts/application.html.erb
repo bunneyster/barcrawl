@@ -24,6 +24,7 @@
       <% if @current_user %>
         <section class="top-bar-section">
           <ul class="left">
+            <li><%= link_to 'My Events', root_path %></li>
             <li><%= link_to "New Event", new_tour_path %></li>
           </ul>
           <ul class="right user-menu">
