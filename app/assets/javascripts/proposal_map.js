@@ -13,21 +13,15 @@ function onGoogleMapsLoad() {
 
   var map = new google.maps.Map(document.getElementById('proposals-map'), mapOptions);
 
-  var colors = {
-    red: "ff0040",
-    green: "a1ff00",
-    black: "35007a"
-  };
-  
-  var pinIcons = {};  
-  for (var color in colors) {
-    if (colors.hasOwnProperty(color)) {
-      code = colors[color];
-      pinIcons[color] = new google.maps.MarkerImage("//chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + code,
-                          new google.maps.Size(21, 34),
-                          new google.maps.Point(0,0),
-                          new google.maps.Point(10, 34));
-    }
+  var pinIcons = {};
+  var states =  ['proposed', 'accepted', 'rejected'];
+  for (var i = 0; i < states.length; ++i) {
+    state = states[i];
+    pinIcons[state] = new google.maps.MarkerImage(
+                        ImagePaths[state + "VenuePin"],
+                        new google.maps.Size(21, 34),
+                        new google.maps.Point(0,0),
+                        new google.maps.Point(10, 34));
   }
   
   var proposedVenuesList = document.querySelector('section#proposed ol').querySelectorAll('li');
@@ -45,7 +39,7 @@ function onGoogleMapsLoad() {
       position: venuePos,
       map: map,
       title: venueName,
-      icon: pinIcons.red,
+      icon: pinIcons.proposed,
       opacity: 0.8
     });
   }
@@ -61,7 +55,7 @@ function onGoogleMapsLoad() {
       position: venuePos,
       map: map,
       title: venueName,
-      icon: pinIcons.green,
+      icon: pinIcons.accepted,
       opacity: 0.8
     });
   }
@@ -77,7 +71,7 @@ function onGoogleMapsLoad() {
       position: venuePos,
       map: map,
       title: venueName,
-      icon: pinIcons.black,
+      icon: pinIcons.rejected,
       opacity: 0.8
     });
   }

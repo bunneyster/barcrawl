@@ -1,29 +1,18 @@
-<%= content_tag :li, data: { venue_name: tour_stop.venue.name, venue_lat: tour_stop.venue.latitude, venue_lng: tour_stop.venue.longitude } do %>
+<%= content_tag :li, class: voting_line_item_li_class(tour_stop), 
+      data: { venue_name: tour_stop.venue.name, venue_lat: tour_stop.venue.latitude, venue_lng: tour_stop.venue.longitude } do %>
 
   <section class="proposal-header row" data-equalizer>
     <div class="voting-controls large-2 columns" data-equalizer-watch>
       <div>
-        <% if tour_stop.upvoted_by(@current_user) %>
-          <%= button_to votes_tally_path(tour_stop_id: tour_stop.to_param, score: 1), class: 'red borderless-button' do %>
-            <%= fa_icon :'chevron-up lg fw' %>
-          <% end %>
-        <% else %>
-          <%= button_to votes_tally_path(tour_stop_id: tour_stop.to_param, score: 1), class: 'borderless-button' do %>
-            <%= fa_icon :'chevron-up lg fw' %>
-          <% end %>
-        <% end %>        
+        <%= button_to votes_tally_path(tour_stop_id: tour_stop.to_param, score: 1), class: 'upvote-button borderless-button' do %>
+          <%= fa_icon :'chevron-up lg fw' %>
+        <% end %>
       </div>
       <h3><%= tour_stop.total_score %></h3>
       <div>
-        <% if tour_stop.downvoted_by(@current_user) %>
-          <%= button_to votes_tally_path(tour_stop_id: tour_stop.to_param, score: -1), class: 'red borderless-button' do %>
-            <%= fa_icon :'chevron-down lg fw' %>
-          <% end %>
-        <% else %>
-          <%= button_to votes_tally_path(tour_stop_id: tour_stop.to_param, score: -1), class: 'borderless-button' do %>
-            <%= fa_icon :'chevron-down lg fw' %>
-          <% end %>
-        <% end %>        
+        <%= button_to votes_tally_path(tour_stop_id: tour_stop.to_param, score: -1), class: 'downvote-button borderless-button' do %>
+          <%= fa_icon :'chevron-down lg fw' %>
+        <% end %>
       </div>
     </div><!-- End of voting controls -->
     
