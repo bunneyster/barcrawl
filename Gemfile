@@ -9,8 +9,8 @@ gem 'pg', group: :production
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.3'
 # Use Foundation for components
-gem 'foundation-rails', '>= 5.3.1.0'
-gem 'font-awesome-rails', '>= 4.1.0.0'
+gem 'foundation-rails', '>= 5.4.3.0'
+gem 'font-awesome-rails', '>= 4.2.0.0'
 
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
@@ -21,8 +21,6 @@ gem 'therubyracer',  platforms: :ruby
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
-# Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
-gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
@@ -51,9 +49,7 @@ gem 'foreman', group: :tools
 gem 'mechanize', group: :tools
 
 # Complete validation of dates, times and datetimes for Rails 3.x and ActiveModel.
-gem 'validates_timeliness', '>= 3.0.14',
-    git: 'https://github.com/johncarney/validates_timeliness.git',
-    ref: 'remove-deprecated-setup-method'
+gem 'jc-validates_timeliness', '>= 3.1.1'
 
 # Paginator
 gem 'kaminari'
