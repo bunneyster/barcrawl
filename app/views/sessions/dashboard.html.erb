@@ -2,39 +2,43 @@
 
 
 <section class="events row">
-  <hgroup class="row">
+  <hgroup>
     <h2 class="large-6 columns">Tours I'm hosting:</h2>
     <h2 class="large-6 columns">Upcoming tours:</h2>
   </hgroup>
   <section class="large-6 columns">
     <% Tour.organized_by(@current_user).each do |tour| %>
-      <h3><%= tour.name %> | <%= tour.city.name %></h3>
-      <p>Starting at: <%= tour.starting_at %></p>
-      <%= link_to "Edit Tour", edit_tour_path(tour) %> |
-      <%= link_to "View Tour", tour_path(tour) %>
+      <h3>
+        <%= link_to tour.name, tour_path(tour)%>
+        <%= link_to edit_tour_path(tour), class: 'borderless-button' do %>
+          <%= fa_icon :'pencil fw' %>
+        <% end %>
+      </h3>
+      <p><%= tour.starting_at.strftime("%A, %d %B %Y @ %l:%M %p") %></p>
     <% end %>    
   </section>
   <section class="large-6 columns">
     <% Tour.open_to(@current_user).each do |tour| %>
-      <h3><%= tour.name %> | <%= tour.city.name %></h3>
-      <p>Starting at: <%= tour.starting_at %></p>
-      <%= link_to "View Tour", tour_path(tour)%>
+      <h3><%= link_to tour.name, tour_path(tour)%></h3>
+      <p><%= tour.starting_at.strftime("%A, %d %B %Y @ %l:%M %p") %></p>      
     <% end %>
   </section>   
 </section>
 
 <section class="friends row">
-  <hgroup class="row">
-    <h2 class="large-6 columns">
+  <hgroup class="large-12 columns">
+    <h2>
       <span>My friends:</span>
       <%= link_to users_path, class: 'borderless-button' do %>
         <%= fa_icon :'search' %>
       <% end %>
     </h2>
   </hgroup>
-  <ol>
-  <% Friendship.where(user_id: @current_user.id).each do |friendship| %>
-      <li><%= avatar_and_name_tag User.find(friendship.friend_id), "medium" %></li>
-  <% end %>
-  </ol>
+  <section class="large-12 columns">
+    <ol>
+    <% Friendship.where(user_id: @current_user.id).each do |friendship| %>
+        <li><%= avatar_and_name_tag User.find(friendship.friend_id), "medium" %></li>
+    <% end %>
+    </ol>
+  </section>
 </section>
