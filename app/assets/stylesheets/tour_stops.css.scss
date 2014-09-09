@@ -1,3 +1,37 @@
-// Place all the styles related to the TourStops controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+div.proposals ol {
+  margin: 0;
+  
+  li section.proposal-header.row {
+    margin: 0.5rem;
+    
+    div.voting-controls {
+      text-align: center;
+      
+      h3 {
+        margin: 0;
+      }  
+      button {
+        margin: 0 auto;
+      }
+    }
+    
+    div.organizer-controls {
+      span {
+        display: inline-block;
+        vertical-align: middle;
+        margin-right: 1rem;
+        
+        .fa-check {
+          color: #43AC6A;
+        }      
+        .fa-times {
+          color: #f04124;
+        }
+      }
+      
+      form {
+        display: inline;
+      }
+    }
+  }
+}

@@ -11,7 +11,7 @@ module UsersHelper
         "//gravatar.com/avatar/#{gravatar_id}?" +
         "s=#{gravatar_size}&d=#{default_style}"
     
-    image_tag(image_url, class: "avatar-#{size}")
+    image_tag(image_url, class: "avatar-#{size}", title: user.name)
   end
   
   def avatar_and_name_tag(user, size)    

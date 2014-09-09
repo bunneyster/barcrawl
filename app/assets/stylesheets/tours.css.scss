@@ -1,9 +1,3 @@
-// TODO: set color fade for font awesome icon buttons
-.fa {
-  &:hover {
-  }
-}
-
 hgroup {
   span.tour-controls {
     margin-left: 1rem;
@@ -37,67 +31,4 @@ div.guests.row div.avatar-list {
       font-weight: 300;
     }
   }
-}
-
-div.proposals ol {
-  margin: 0;
-  
-  li section.proposal-header.row {
-    margin: 0.5rem;
-    
-    div.voting-controls {
-      text-align: center;
-      
-      h3 {
-        margin: 0;
-      }  
-      button {
-        margin: 0 auto;
-      }
-    }    
-    div.organizer-controls {
-      span {
-        display: inline-block;
-        vertical-align: middle;
-        margin-right: 1rem;
-        
-        .fa-check {
-          color: #43AC6A;
-        }      
-        .fa-times {
-          color: #f04124;
-        }
-      }    
-      form {
-        display: inline;
-      }
-    }
-  }
-  li section.proposal-comments.row {
-    margin: 0.5rem;
-    
-    article {
-      padding: 0.5rem;
-      
-      &:nth-child(odd) {
-        background-color: #f2f2f2;
-      }    
-      .comment-commenter {
-        color: #07c;
-        margin-right: 0.5rem;
-      }    
-      .comment-time {
-        color: #999;
-        margin-right: 0.2rem;
-      }
-    }  
-    form, form>div {
-      display: inline;
-    } 
-  }
-}
-
-div#proposals-map {
-  height: 500px;
-  margin-top: 40px;  
 }

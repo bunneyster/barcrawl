@@ -1,0 +1,9 @@
+section {
+  &.events, &.friends {
+    margin-bottom: 2rem;
+  }
+}
+
+section.friends hgroup span {
+  margin-right: 0.5rem;
+}
