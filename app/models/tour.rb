@@ -55,7 +55,7 @@ class Tour < ActiveRecord::Base
   end
   
   def new_invitation
-    Invitation.new(tour: Tour.find(self[:id]))
+    Invitation.new(tour: self)
   end
       
   def to_param
@@ -71,6 +71,6 @@ class Tour < ActiveRecord::Base
     
     def invite_organizer_to_tour
       Invitation.create(user: User.find(organizer_id),
-                        tour: Tour.find(id))
+                        tour: self)
     end
 end
