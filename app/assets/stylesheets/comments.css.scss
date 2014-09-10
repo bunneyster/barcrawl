@@ -15,8 +15,16 @@ section.proposal-comments.row {
       color: #999;
       margin-right: 0.2rem;
     }
-  }  
-  form, form>div {
-    display: inline;
-  } 
+    textarea {
+      font-size: inherit;
+    }
+  }
+  
+  form {
+    margin-top: 0.5rem;
+    
+    textarea {
+      font-size: inherit;
+    }
+  }
 }

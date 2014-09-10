@@ -20,7 +20,7 @@
       <h4>
         <span><%= tour_stop.venue.name %></span>
         <% if @tour.organized_by?(@current_user) && @tour.status === "pending" %>
-          <%= render partial: "status_decision_buttons", locals: {tour_stop: tour_stop} %>
+          <%= render partial: "tours/status_decision_buttons", locals: {tour_stop: tour_stop} %>
         <% end %>
       </h4>
     </div><!-- End of venue description -->
@@ -28,13 +28,12 @@
   
   <section class="proposal-comments row">
     <div class="large-10 large-offset-2 columns">
-      <%= render partial: "comment", collection: tour_stop.comments, as: :comment %>
+      <%= render partial: "tours/comment", collection: tour_stop.comments, as: :comment %>
+      
       <% if @tour.status === "pending" %>
-        <article>
-          <%= link_to new_comment_path(tour_stop_id: tour_stop.to_param), class: 'borderless-button' do %>
-            <%= fa_icon :'comment-o' %>
-          <% end %>
-        </article>
+        <!-- <article> -->
+          <%= render partial: "comments/form", locals: {tour_stop: tour_stop} %>
+        <!-- </article> -->
       <% end %>
     </div>
   </section><!-- End of comments section -->

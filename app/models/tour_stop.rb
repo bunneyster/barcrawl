@@ -38,6 +38,10 @@ class TourStop < ActiveRecord::Base
     self.votes.inject(0) {|sum, vote| sum + vote.score }
   end
   
+  def new_comment
+    Comment.new(tour_stop: self)
+  end
+  
   private
   
     def does_not_already_exist

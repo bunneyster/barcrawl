@@ -1,24 +1,7 @@
-<% if flash[:alert] %>
-  <p id="notice"><%= flash[:alert] %></p>
-<% end %>
-
-<%= form_for @comment, builder: FoundationFormBuilder::Icons do |f| %>
+<%= form_for tour_stop.new_comment do |f| %>
   <%= f.hidden_field :tour_stop_id %>
   
-  <%= f.text_area :text,
-          placeholder: 'The curly fries here are AWESOME.', autofocus: true, required: true,
-          label: { icon: fa_icon('quote-left'), title: 'Comment' } %>
-          
-  <div class="form-submit-controls row">
-    <div class="large-6 columns">
-      <%= link_to tour_path(@comment.tour), class: 'large secondary button expand' do %>
-        <%= fa_icon :undo %> Cancel
-      <% end %>
-    </div>
-    <div class="large-6 columns">
-      <%= button_tag class: 'large button expand' do %>
-        <%= fa_icon :save %> Post Comment
-      <% end %>
-    </div>
-  </div>
+  <%= f.text_area :text, class: 'enter-submits-form',
+          placeholder: 'Add your own comment!',
+          autofocus: true, required: true %>
 <% end %>
