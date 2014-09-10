@@ -65,13 +65,13 @@
 </div>
 
 
-<div class="proposals row">
+<div class="tour-stops row">
   <div class="large-6 columns">
     <hr />
     <section id="proposed">
       <h4 data-magellan-destination="proposed">Proposed venues:</h4>
       <ol>
-        <%= render partial: "voting_line_item", 
+        <%= render partial: "tours/tour_stop", 
                    collection: @tour.tour_stops.where(status: 0).sort_by(&:total_score).reverse, 
                    as: :tour_stop %>
       </ol>
@@ -80,7 +80,7 @@
     <section id="accepted">
       <h4 data-magellan-destination="accepted">Accepted venues:</h4>
       <ol>
-        <%= render partial: "voting_line_item", 
+        <%= render partial: "tours/tour_stop", 
                    collection: @tour.tour_stops.where(status: 1).sort_by(&:total_score).reverse, 
                    as: :tour_stop %>
       </ol>
@@ -89,7 +89,7 @@
     <section id="rejected">
       <h4 data-magellan-destination="rejected">Rejected venues:</h4>
       <ol>
-        <%= render partial: "voting_line_item", 
+        <%= render partial: "tours/tour_stop", 
                    collection: @tour.tour_stops.where(status: 2).sort_by(&:total_score).reverse, 
                    as: :tour_stop %>
       </ol>
@@ -97,7 +97,7 @@
   </div><!-- End of written proposals -->
   
   <div class="large-6 columns">
-    <div id="proposals-map"></div>
+    <div id="tour-stops-map"></div>
   </div><!-- End of map -->
 </div>
 

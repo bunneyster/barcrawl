@@ -1,5 +1,5 @@
 function onGoogleMapsLoad() {
-  var mapElement = document.getElementById('proposals-map');
+  var mapElement = document.getElementById('tour-stops-map');
   if (!mapElement)
     return;
   
@@ -11,7 +11,7 @@ function onGoogleMapsLoad() {
     center: new google.maps.LatLng(cityLat, cityLng)
   };
 
-  var map = new google.maps.Map(document.getElementById('proposals-map'), mapOptions);
+  var map = new google.maps.Map(document.getElementById('tour-stops-map'), mapOptions);
   var bounds = new google.maps.LatLngBounds();
 
   var pinIcons = {};

@@ -1,4 +1,4 @@
-<%= content_tag :li, class: voting_line_item_li_class(tour_stop), 
+<%= content_tag :li, class: tour_stop_li_class(tour_stop), 
       data: { venue_name: tour_stop.venue.name, venue_lat: tour_stop.venue.latitude, venue_lng: tour_stop.venue.longitude } do %>
 
   <section class="proposal-header row" data-equalizer>
@@ -22,7 +22,7 @@
         <% if @tour.organized_by?(@current_user) && @tour.status === "pending" %>
           <%= render partial: "tours/status_decision_buttons", locals: {tour_stop: tour_stop} %>
         <% end %>
-      </h5>
+      </h5><!-- End of proposed venue name -->
       <section id="voting-histogram">
         <div>
           <%= fa_icon :'chevron-up fw', class: 'upvote-button' %>
@@ -36,7 +36,7 @@
             <%= avatar_tag vote.voter, "small" %>
           <% end %>
         </div>
-      </section>
+      </section><!-- End of voting histogram -->
     </div><!-- End of venue description -->
   </section><!-- End of main proposal section -->
   
@@ -45,9 +45,7 @@
       <%= render partial: "tours/comment", collection: tour_stop.comments, as: :comment %>
       
       <% if @tour.status === "pending" %>
-        <!-- <article> -->
-          <%= render partial: "comments/form", locals: {tour_stop: tour_stop} %>
-        <!-- </article> -->
+        <%= render partial: "comments/form", locals: {tour_stop: tour_stop} %>
       <% end %>
     </div>
   </section><!-- End of comments section -->
