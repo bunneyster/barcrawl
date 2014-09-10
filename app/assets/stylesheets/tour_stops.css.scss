@@ -32,6 +32,10 @@ div.proposals ol {
       form {
         display: inline;
       }
+      
+      section#voting-histogram div {
+        padding: 0.1rem;
+      }
     }
   }
 }

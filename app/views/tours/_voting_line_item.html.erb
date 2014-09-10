@@ -17,12 +17,26 @@
     </div><!-- End of voting controls -->
     
     <div class="organizer-controls large-10 columns" data-equalizer-watch>
-      <h4>
-        <span><%= tour_stop.venue.name %></span>
+      <h5>
+        <span><%= link_to tour_stop.venue.name, "//www.yelp.com/biz/#{tour_stop.venue.yelp_id}", target: "_blank" %></span>
         <% if @tour.organized_by?(@current_user) && @tour.status === "pending" %>
           <%= render partial: "tours/status_decision_buttons", locals: {tour_stop: tour_stop} %>
         <% end %>
-      </h4>
+      </h5>
+      <section id="voting-histogram">
+        <div>
+          <%= fa_icon :'chevron-up fw', class: 'upvote-button' %>
+          <% tour_stop.votes.where(score: 1).each do |vote| %>
+            <%= avatar_tag vote.voter, "small" %>
+          <% end %>
+        </div>
+        <div>
+          <%= fa_icon :'chevron-down fw', class: 'downvote-button' %>
+          <% tour_stop.votes.where(score: -1).each do |vote| %>
+            <%= avatar_tag vote.voter, "small" %>
+          <% end %>
+        </div>
+      </section>
     </div><!-- End of venue description -->
   </section><!-- End of main proposal section -->
   
