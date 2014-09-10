@@ -1,3 +1,8 @@
+$my-red: #ff0040;
+$my-green: #a1ff00;
+$my-purple: #35007a;
+$my-blue: #0000b3;
+
 section.proposal-comments.row {
   margin: 0.5rem;
   
@@ -8,7 +13,7 @@ section.proposal-comments.row {
       background-color: #f2f2f2;
     }    
     .comment-commenter {
-      color: #07c;
+      color: lighten( $my-purple, 10% );
       margin-right: 0.5rem;
     }    
     .comment-time {
