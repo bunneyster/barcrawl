@@ -21,16 +21,16 @@ div.tour-stops ol {
         vertical-align: middle;
         margin-right: 1rem;
         
-        .fa-check {
-          color: #43AC6A;
-        }      
-        .fa-times {
-          color: #f04124;
+        form {
+          display: inline;
+          
+          .fa-check {
+            color: #43AC6A;
+          }      
+          .fa-times {
+            color: #f04124;
+          }
         }
-      }
-      
-      form {
-        display: inline;
       }
       
       section#voting-histogram div {
@@ -38,4 +38,15 @@ div.tour-stops ol {
       }
     }
   }
+}
+
+div.note {
+  font-style: italic;
+  font-size: 0.7rem;
+  padding: 0 0.2rem;
+}
+
+
+div.avatar-label {
+  display: inline-block;
 }

@@ -1,5 +1,4 @@
-<%= content_tag :li, class: tour_stop_li_class(tour_stop), 
-      data: { venue_name: tour_stop.venue.name, venue_lat: tour_stop.venue.latitude, venue_lng: tour_stop.venue.longitude } do %>
+<%= content_tag :li, class: tour_stop_li_class(tour_stop), data: tour_stop_li_data(tour_stop) do %>
 
   <section class="proposal-header row" data-equalizer>
     <div class="voting-controls large-2 columns" data-equalizer-watch>
@@ -18,8 +17,16 @@
     
     <div class="organizer-controls large-10 columns" data-equalizer-watch>
       <h5>
-        <span><%= link_to tour_stop.venue.name, "//www.yelp.com/biz/#{tour_stop.venue.yelp_id}", target: "_blank" %></span>
-        <% if @tour.organized_by?(@current_user) && @tour.status === "pending" %>
+        <span><%= link_to tour_stop.venue.name, "//www.yelp.com/biz/#{tour_stop.venue.yelp_id}", target: "_blank", data: venue_name_data(tour_stop) %></span>
+        <div id=<%= tour_stop.venue.yelp_id %> class="small f-dropdown" data-dropdown-content>
+          <%= image_tag venue_thumbnail_url(tour_stop.venue) %>
+          <div class="avatar-label">
+            <%= venue_rating_stars(tour_stop.venue) %>
+            <div class="note">out of <%= tour_stop.venue.rating_count %> ratings</div>
+          </div>
+        </div>
+        
+        <% if @tour.organized_by?(@current_user) && @tour.status == "pending" %>
           <%= render partial: "tours/status_decision_buttons", locals: {tour_stop: tour_stop} %>
         <% end %>
       </h5><!-- End of proposed venue name -->
@@ -44,7 +51,7 @@
     <div class="large-10 large-offset-2 columns">
       <%= render partial: "tours/comment", collection: tour_stop.comments, as: :comment %>
       
-      <% if @tour.status === "pending" %>
+      <% if @tour.status == "pending" %>
         <%= render partial: "comments/form", locals: {tour_stop: tour_stop} %>
       <% end %>
     </div>

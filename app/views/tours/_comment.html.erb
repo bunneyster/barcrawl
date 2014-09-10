@@ -3,7 +3,7 @@
   <span class="comment-dash">&mdash;</span>
   <span class="comment-commenter"><%= comment.commenter.name %></span>
   <span class="comment-time"><%= comment.created_at.strftime("%A, %b.%e.%y @ %I:%M %p") %></span>
-  <% if @current_user === comment.commenter %>
+  <% if @current_user == comment.commenter %>
     <span class="comment-edit">
       <%= link_to edit_comment_path(comment, comment: {id: comment.to_param}, tour_stop_id: comment.tour_stop.to_param), class: 'borderless-button' do %>
         <%= fa_icon :'pencil' %>

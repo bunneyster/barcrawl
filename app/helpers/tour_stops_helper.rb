@@ -8,4 +8,15 @@ module TourStopsHelper
       'tour-stop-notvoted'
     end
   end
+  
+  def tour_stop_li_data(tour_stop)
+    { venue_name: tour_stop.venue.name,
+      venue_lat: tour_stop.venue.latitude,
+      venue_lng: tour_stop.venue.longitude }
+  end
+  
+  def venue_name_data(tour_stop)
+    { dropdown: tour_stop.venue.yelp_id,
+      options: "is_hover:true;align:top" }    
+  end
 end

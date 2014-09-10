@@ -47,7 +47,7 @@ class Tour < ActiveRecord::Base
   end
    
   def organized_by?(user)
-    user === self.organizer
+    user == self.organizer
   end
   
   def invitation_for(user)

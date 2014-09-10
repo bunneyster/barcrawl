@@ -1,5 +1,5 @@
 <%= form_for @tour do |f| %>
-  <% if @tour.status === "pending" %>
+  <% if @tour.status == "pending" %>
     <%= f.hidden_field :status, value: 'finalized' %>
     <%= f.button type: :submit, class: 'borderless-button' do %>
       <%= fa_icon :'lock fw' %>
