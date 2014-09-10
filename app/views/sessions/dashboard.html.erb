@@ -24,21 +24,3 @@
     <% end %>
   </section>   
 </section>
-
-<section class="friends row">
-  <hgroup class="large-12 columns">
-    <h2>
-      <span>My friends:</span>
-      <%= link_to users_path, class: 'borderless-button' do %>
-        <%= fa_icon :'search' %>
-      <% end %>
-    </h2>
-  </hgroup>
-  <section class="large-12 columns">
-    <ol>
-    <% Friendship.where(user_id: @current_user.id).each do |friendship| %>
-        <li><%= avatar_and_name_tag User.find(friendship.friend_id), "medium" %></li>
-    <% end %>
-    </ol>
-  </section>
-</section>
