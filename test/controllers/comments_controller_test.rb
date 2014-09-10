@@ -10,12 +10,6 @@ class CommentsControllerTest < ActionController::TestCase
     @any_user = users(:dan)
   end
 
-  test "should get new" do
-    login_as @any_user
-    get :new, tour_stop_id: @tour_stop.to_param
-    assert_response :success
-  end
-
   test "users can comment on tours they have joined" do
     login_as @commenter
     
@@ -129,7 +123,7 @@ class CommentsControllerTest < ActionController::TestCase
   
   test "must be logged in to post/edit comments" do
     logout
-    get :new, tour_stop_id: @tour_stop.to_param
+    get :edit, id: @comment
     assert_match(/log back in/, flash[:notice].inspect)
     assert_redirected_to root_url
   end

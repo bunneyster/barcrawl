@@ -1,7 +1,17 @@
-<%= form_for tour_stop.new_comment do |f| %>
-  <%= f.hidden_field :tour_stop_id %>
-  
-  <%= f.text_area :text, class: 'enter-submits-form',
-          placeholder: 'Add your own comment!',
-          autofocus: true, required: true %>
+<% if @comment %>
+  <%= form_for @comment do |f| %>
+    <%= f.hidden_field :tour_stop_id %>
+    
+    <%= f.text_area :text, class: 'enter-submits-form',
+            placeholder: 'Add your own comment!',
+            autofocus: true, required: true %>
+  <% end %>
+<% else %>
+  <%= form_for tour_stop.new_comment do |f| %>
+    <%= f.hidden_field :tour_stop_id %>
+    
+    <%= f.text_area :text, class: 'enter-submits-form',
+            placeholder: 'Add your own comment!',
+            autofocus: true, required: true %>
+  <% end %>
 <% end %>
