@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class VenuesControllerTest < ActionController::TestCase
-  fixtures :cities
     
   setup do
     @venue = venues(:cafe)
@@ -24,19 +23,48 @@ class VenuesControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  test "should create venue" do
+  test "if yelp id is not in database, create venue" do
+    yelp_id = 'pasta-palace'
+    
+    assert_not Venue.where(yelp_id: yelp_id).exists?
     assert_difference('Venue.count') do
       post :create, venue: { name: 'Pasta Palace',
                              city_id: @venue.city_id,
                              latitude: @venue.latitude,
                              longitude: @venue.longitude,
+                             address: @venue.address,
+                             phone_number: @venue.phone_number,
                              stars: @venue.stars,
                              rating_count: @venue.rating_count,
                              image_url: @venue.image_url,
-                             yelp_id: 'pasta-palace' }
+                             yelp_id: yelp_id }
     end
 
+    assert_match(/successfully created/, flash[:notice].inspect)
     assert_redirected_to venues_path
+  end
+  
+  test "if yelp id is in database, update venue" do
+    yelp_id = @venue.yelp_id
+    
+    assert Venue.where(yelp_id: yelp_id).exists?
+    assert_no_difference('Venue.count') do
+      post :create, venue: { name: 'Not the original name',
+                             city_id: @venue.city_id,
+                             latitude: @venue.latitude,
+                             longitude: @venue.longitude,
+                             address: @venue.address,
+                             phone_number: @venue.phone_number,
+                             stars: @venue.stars,
+                             rating_count: @venue.rating_count,
+                             image_url: @venue.image_url,
+                             yelp_id: yelp_id }
+    end
+    
+    updated_venue = Venue.where(yelp_id: yelp_id).first
+    assert_match(/Not the original name/, updated_venue.name)
+    assert_match(/successfully updated/, flash[:notice].inspect)
+    assert_redirected_to updated_venue
   end
 
   test "non-admin users can view venues" do

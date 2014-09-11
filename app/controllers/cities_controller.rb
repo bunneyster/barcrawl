@@ -25,6 +25,13 @@ class CitiesController < ApplicationController
   # POST /cities
   # POST /cities.json
   def create
+    name = city_params[:name]
+    if City.where(name: name).exists?
+      @city = City.where(name: name).first
+      update
+      return
+    end
+    
     @city = City.new(city_params)
 
     respond_to do |format|

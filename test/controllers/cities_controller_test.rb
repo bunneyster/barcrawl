@@ -18,11 +18,33 @@ class CitiesControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  test "should create city" do
+  test "if name is not in database, create city" do
+    name = 'New City'
+    
+    assert_not City.where(name: name).exists?
     assert_difference('City.count') do
-      post :create, city: { latitude: @city.latitude, longitude: @city.longitude, name: @city.name }
+      post :create, city: { name: name,
+                            latitude: @city.latitude,
+                            longitude: @city.longitude}
     end
 
+    assert_match(/successfully created/, flash[:notice].inspect)
+    assert_redirected_to city_path(assigns(:city))
+  end
+  
+  test "if name is in database, update city" do
+    name = @city.name
+    
+    assert City.where(name: name).exists?
+    assert_no_difference('City.count') do
+      post :create, city: { name: name,
+                            latitude: @city.latitude * -1,
+                            longitude: @city.longitude}
+    end
+    
+    updated_city = City.where(name: name).first
+    assert_equal @city.latitude * -1, updated_city.latitude
+    assert_match(/successfully updated/, flash[:notice].inspect)
     assert_redirected_to city_path(assigns(:city))
   end
 

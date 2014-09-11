@@ -7,6 +7,8 @@ class VenueTest < ActiveSupport::TestCase
                        city: cities(:paris),
                        latitude: cities(:paris).latitude,
                        longitude: cities(:paris).longitude,
+                       address: '123 Main Street',
+                       phone_number: '1234567890',
                        stars: 5.0,
                        rating_count: 1000,
                        image_url: 'http://venue.jpg',
@@ -43,6 +45,20 @@ class VenueTest < ActiveSupport::TestCase
     
     assert @venue.invalid?
     assert_match(/can't be blank/, @venue.errors[:longitude].inspect)
+  end
+  
+  test "venue must have an address" do
+    @venue.address = nil
+    
+    assert @venue.invalid?
+    assert_match(/can't be blank/, @venue.errors[:address].inspect)
+  end
+  
+  test "venue must have a phone number" do
+    @venue.phone_number = nil
+    
+    assert @venue.invalid?
+    assert_match(/can't be blank/, @venue.errors[:phone_number].inspect)
   end
   
   test "venue must have a star rating" do

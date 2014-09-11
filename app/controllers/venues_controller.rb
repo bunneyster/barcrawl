@@ -26,6 +26,13 @@ class VenuesController < ApplicationController
   # POST /venues
   # POST /venues.json
   def create
+    yelp_id = venue_params[:yelp_id]
+    if Venue.where(yelp_id: yelp_id).exists?
+      @venue = Venue.where(yelp_id: yelp_id).first
+      update
+      return
+    end
+    
     @venue = Venue.new(venue_params)
 
     respond_to do |format|
@@ -71,6 +78,6 @@ class VenuesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def venue_params
-      params.require(:venue).permit(:name, :city_id, :latitude, :longitude, :image_url, :stars, :rating_count, :yelp_id)
+      params.require(:venue).permit(:name, :city_id, :latitude, :longitude, :address, :phone_number, :image_url, :stars, :rating_count, :yelp_id)
     end
 end

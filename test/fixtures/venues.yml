@@ -5,6 +5,8 @@ cafe:
   city: paris
   latitude: 48.8588589
   longitude: 2.3470599
+  address: '123 Cat Street, Cats, USA'
+  phone_number: '1234567890'
   stars: 5.0
   rating_count: 257
   image_url: http://s3-media3.fl.yelpcdn.com/bphoto/DOzV324yi-p78Xd8KXO4Ww/90s.jpg
@@ -15,6 +17,8 @@ restaurant:
   city: paris
   latitude: 48.8588589
   longitude: 2.3470599
+  address: '123 Cat Avenue, Cats, USA'
+  phone_number: '1234567890'
   stars: 4.5
   rating_count: 300
   image_url: http://s3-media1.fl.yelpcdn.com/bphoto/dIixcGN7yYLyGVG39T0W8A/90s.jpg

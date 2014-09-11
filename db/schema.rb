@@ -95,6 +95,8 @@ ActiveRecord::Schema.define(version: 20140902221502) do
     t.integer  "city_id",                              null: false
     t.float    "latitude",                             null: false
     t.float    "longitude",                            null: false
+    t.string   "address",                              null: false
+    t.string   "phone_number",                         null: false
     t.decimal  "stars",        precision: 2, scale: 1, null: false
     t.integer  "rating_count",                         null: false
     t.string   "image_url",                            null: false
