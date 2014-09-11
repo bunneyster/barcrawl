@@ -8,8 +8,16 @@
         </div>
         <div class="venue-data">
           <span class="venue-name">
-            <%= venue.name %>
+            <%= link_to venue.name, "//www.yelp.com/biz/#{venue.yelp_id}", target: "_blank", data: venue_name_data(venue) %>
           </span>
+          <div id=<%= venue.yelp_id %> class="small f-dropdown" data-dropdown-content>
+            <%= image_tag venue_thumbnail_url(venue) %>
+            <div class="avatar-label">
+              <%= venue_rating_stars(venue) %>
+              <div class="note">out of <%= venue.rating_count %> ratings</div>
+              <%= venue.address %>
+            </div>
+          </div>
           <span class="venue-name">
             <%= venue_rating_stars(venue) %>
           </span>

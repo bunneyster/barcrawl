@@ -17,12 +17,14 @@
     
     <div class="organizer-controls large-10 columns" data-equalizer-watch>
       <h5>
-        <span><%= link_to tour_stop.venue.name, "//www.yelp.com/biz/#{tour_stop.venue.yelp_id}", target: "_blank", data: venue_name_data(tour_stop) %></span>
+        <span><%= link_to tour_stop.venue.name, "//www.yelp.com/biz/#{tour_stop.venue.yelp_id}", target: "_blank", data: venue_name_data(tour_stop.venue) %></span>
+        
         <div id=<%= tour_stop.venue.yelp_id %> class="small f-dropdown" data-dropdown-content>
           <%= image_tag venue_thumbnail_url(tour_stop.venue) %>
           <div class="avatar-label">
             <%= venue_rating_stars(tour_stop.venue) %>
             <div class="note">out of <%= tour_stop.venue.rating_count %> ratings</div>
+            <%= tour_stop.venue.address %>
           </div>
         </div>
         

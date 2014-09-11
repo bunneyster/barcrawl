@@ -15,8 +15,8 @@ module TourStopsHelper
       venue_lng: tour_stop.venue.longitude }
   end
   
-  def venue_name_data(tour_stop)
-    { dropdown: tour_stop.venue.yelp_id,
+  def venue_name_data(venue)
+    { dropdown: venue.yelp_id,
       options: "is_hover:true;align:top" }    
   end
 end
