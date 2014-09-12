@@ -1,0 +1,8 @@
+<div id=<%= "venue-#{venue.to_param}" %> class="small f-dropdown" data-dropdown-content>
+  <%= image_tag venue_thumbnail_url(venue) %>
+  <div class="avatar-label">
+    <%= venue_rating_stars(venue) %>
+    <div class="note">out of <%= venue.rating_count %> ratings</div>
+    <%= venue.address %>
+  </div>
+</div>

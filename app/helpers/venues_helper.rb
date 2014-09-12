@@ -34,4 +34,21 @@ module VenuesHelper
     return address unless /#{city}/i =~ address
 
   end
+  
+  # Data attributes for the link targeted by the venue dropdown.
+  def venue_name_data(venue)
+    { dropdown: "venue-#{venue.to_param}",
+      options: "is_hover:true;align:top" }    
+  end
+  
+  def venue_dropdown(venue)
+    content_tag :div, id: "venue-#{venue.to_param}", class: "small f-dropdown", data: {dropdown_content: ''} do
+      image_tag venue_thumbnail_url(venue)
+      content_tag :div, class: "avatar-label" do
+        venue_rating_stars(venue) + tag(:br) + 
+        content_tag(:div, "out of #{venue.rating_count} ratings", class: "note") + tag(:br) +
+        venue.address
+      end
+    end
+  end
 end
