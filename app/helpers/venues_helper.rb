@@ -27,12 +27,17 @@ module VenuesHelper
   
   # Div containing the venue's address.
   #
-  # This converts the address provided by the Yelp API into a more readable format.
+  # This converts the address provided by the Yelp API into a more readable
+  # format. This is a temporary solution until addresses are properly pulled.
   def venue_address(venue)
     city = venue.city.name
     address = venue.address
-    return address unless /#{city}/i =~ address
-
+    if /#{city}/i =~ address
+      split_point = /#{city}/i =~ address
+      output = [address[0..split_point-3], address[split_point..-1]]
+    else
+      output = [address, '']
+    end
   end
   
   # Data attributes for the link targeted by the venue dropdown.
@@ -41,14 +46,8 @@ module VenuesHelper
       options: "is_hover:true;align:top" }    
   end
   
-  def venue_dropdown(venue)
-    content_tag :div, id: "venue-#{venue.to_param}", class: "small f-dropdown", data: {dropdown_content: ''} do
-      image_tag venue_thumbnail_url(venue)
-      content_tag :div, class: "avatar-label" do
-        venue_rating_stars(venue) + tag(:br) + 
-        content_tag(:div, "out of #{venue.rating_count} ratings", class: "note") + tag(:br) +
-        venue.address
-      end
-    end
+  def venue_phone_number(venue)
+    number_to_phone(venue.phone_number, area_code: true)
   end
+
 end
