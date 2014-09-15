@@ -1,11 +1,16 @@
 <div id=<%= "venue-#{venue.to_param}" %> class="medium f-dropdown" data-dropdown-content>
   <%= image_tag venue_thumbnail_url(venue) %>
-  <div class="avatar-label">
-    <%= venue_rating_stars(venue) %>
-    <div class="note">out of <%= venue.rating_count %> ratings</div>
-    <div class="address">
-      <%= venue_address(venue)[0] %><br /><%= venue_address(venue)[1] %>
+  <div class="venue-avatar-label">
+    <div class="rating">
+      <%= venue_rating_stars(venue) %>
+      <span class="rating_count">out of <%= venue.rating_count %> ratings</span>
     </div>
-    <div class="phone_number"><%= venue_phone_number(venue) %></div>
+    <div class="address">
+      <span><%= venue_address(venue)[0] %><br /><%= venue_address(venue)[1] %></span>
+    </div>
+    <div class="phone_number">
+      <%= fa_icon 'phone'%>
+      <span><%= venue_phone_number(venue) %></span>
+    </div>
   </div>
 </div>

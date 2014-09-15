@@ -16,10 +16,10 @@ div.tour-stops ol {
     }
     
     div.organizer-controls {
-      span {
+      span.status-decision-buttons {
         display: inline-block;
         vertical-align: middle;
-        margin-right: 1rem;
+        margin: 0 1rem;
         
         form {
           display: inline;
@@ -40,19 +40,27 @@ div.tour-stops ol {
   }
 }
 
-div.avatar-label {
+div.venue-avatar-label {
   display: inline-block;
   vertical-align: middle;
   font-size: 1.5rem;
   
-  div.note {
-    font-size: 0.7rem;
-    font-style: italic;
-    padding: 0 0.2rem;
+  div.rating {
+    span {
+      display: table-cell;
+      
+      &.rating_count {
+        font-size: 0.7rem;
+        font-style: italic;
+        padding: 0 0.2rem;
+        vertical-align: middle;
+      }
+    }
   }
   
-  div.address, div.phone_number {
+  .address, .phone_number {
     font-size: 0.8rem;
-    padding: 0 0.2rem;
+    padding: 0.2rem;
+    line-height: initial;
   }
 }
