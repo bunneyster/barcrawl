@@ -3,7 +3,7 @@ module VenuesHelper
   #
   # This uses icons to visualize the star rating provided by the Yelp API.
   def venue_rating_stars(venue)
-    content_tag :div, title: "#{venue.stars} / 5 stars" do
+    content_tag :span, title: "#{venue.stars} / 5 stars" do
       (1..5).map { |star|
         if venue.stars > star - 1
           if venue.stars < star
@@ -34,7 +34,7 @@ module VenuesHelper
     address = venue.address
     if /#{city}/i =~ address
       split_point = /#{city}/i =~ address
-      output = [address[0..split_point-3], address[split_point..-1]]
+      output = [address[0..split_point-2], address[split_point..-1]]
     else
       output = [address, '']
     end

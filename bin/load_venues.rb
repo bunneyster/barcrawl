@@ -53,7 +53,7 @@ def add_boston_venues(agent, venues_datafile, root_url)
     end
     form.field(name: /lat/).value = business['location']['lat']
     form.field(name: /long/).value = business['location']['long']
-    form.field(name: /address/).value = business['address']
+    form.field(name: /address/).value = business['display_address'].join(' ')
     form.field(name: /phone_number/).value = business['phone']
     form.field(name: /image_url/).value = business['image_url']
     form.field(name: /stars/).value = business['rating']['stars']
