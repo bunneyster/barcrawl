@@ -13,10 +13,10 @@ Rails.application.routes.draw do
   end
     
   resources :tours, :concerns => :paginatable
-
   resources :users, :concerns => :paginatable
   
   resources :invitations
+  resources :e_invitations
 
   resources :cities
   
@@ -35,6 +35,9 @@ Rails.application.routes.draw do
   post 'votes/tally' => 'votes#tally'
   
   resources :friendships
+  
+  # Exception handling test.
+  get 'crash/crash'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
