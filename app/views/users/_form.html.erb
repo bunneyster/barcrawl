@@ -2,7 +2,7 @@
   <%= f.text_field :name, autofocus: true, required: true,
           placeholder: "John Doe", label: 'Username' %>
           
-  <%= f.text_field :email, required: true,
+  <%= f.email_field :email, required: true,
           placeholder: "johndoe@gmail.com", label: 'E-mail' %>
 
   <%= f.url_field :avatar_url,

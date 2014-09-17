@@ -30,6 +30,7 @@ class ToursControllerTest < ActionController::TestCase
                             starting_at: 1.week.from_now }
     end
     
+    assert_equal @organizer, assigns(:tour).organizer
     assert_match(/Tour successfully created!/, flash[:notice].inspect)
     assert_redirected_to tour_path(assigns(:tour))
   end

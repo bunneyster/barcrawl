@@ -2,20 +2,11 @@ require 'test_helper'
 
 class InvitationTest < ActiveSupport::TestCase
   
-  setup do
-    @tour = Tour.new name: "Valid Tour",
-                     organizer: users(:sam),
-                     city: cities(:paris),
-                     starting_at: 1.week.from_now
-                     
+  setup do                     
     @invitation = Invitation.new user: users(:peridot),
-                                 tour: @tour
+                                 tour: tours(:newyear)
   end
 
-  test "setup creates valid tour" do
-    assert @tour.valid?, @tour.errors.inspect
-  end
-  
   test "setup creates valid invitation" do
     assert @invitation.valid?, @invitation.errors.inspect
   end
@@ -35,7 +26,6 @@ class InvitationTest < ActiveSupport::TestCase
   end
   
   test "user can have at most 1 invitation to a tour" do
-    @tour.save!
     assert @invitation.send :ensure_user_has_not_already_joined_tour    
     @invitation.save!
     
@@ -43,7 +33,7 @@ class InvitationTest < ActiveSupport::TestCase
                                      tour: @invitation.tour                                       
     assert_not invitation_copy.send :ensure_user_has_not_already_joined_tour
     assert_not invitation_copy.save
-    
-    assert_equal 1, @tour.invitation_for(users(:peridot)).count
+
+    assert_equal 1, @invitation.tour.invitations_for(users(:peridot)).count
   end
 end

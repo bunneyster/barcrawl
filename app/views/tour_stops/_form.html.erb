@@ -18,11 +18,11 @@
         
         <div class="venue-add">
           <%= form_for @tour_stop do |f| %> 
+            <%= f.hidden_field :tour_id %>
+            <%= f.hidden_field :venue_id, value: venue.to_param %>
             <%= f.button type: :submit, class: "radius button" do %>
               <%= fa_icon :'plus' %>
             <% end %>
-            <%= f.hidden_field :tour_id %>
-            <%= f.hidden_field :venue_id, value: venue.to_param %>
           <% end %>
         </div>
       </li>

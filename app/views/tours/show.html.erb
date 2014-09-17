@@ -53,7 +53,7 @@
         <dd data-magellan-arrival="proposed"><a href="#proposed">Proposed</a></dd>
         <dd data-magellan-arrival="accepted"><a href="#accepted">Accepted</a></dd>
         <dd data-magellan-arrival="rejected"><a href="#rejected">Rejected</a></dd>
-        <% if @tour.status == 'pending' && @tour.invitation_for(@current_user).exists? %>
+        <% if @tour.status == 'pending' && @tour.invitations_for(@current_user).exists? %>
           <dd><%= link_to new_tour_stop_path(tour_id: @tour.to_param), class: 'success radius button' do %>
                 <%= fa_icon :'plus-circle' %> Add a tour stop
               <% end %>

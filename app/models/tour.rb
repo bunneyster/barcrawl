@@ -50,7 +50,7 @@ class Tour < ActiveRecord::Base
     user == self.organizer
   end
   
-  def invitation_for(user)
+  def invitations_for(user)
     self.invitations.where(user: user)
   end
   

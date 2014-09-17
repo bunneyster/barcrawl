@@ -11,7 +11,7 @@ class InvitationsControllerTest < ActionController::TestCase
   
   test "join a tour" do
     login_as @uninvited_user
-    assert_not @tour.invitation_for(@user).exists?
+    assert_not @tour.invitations_for(@user).exists?
     
     assert_difference('Invitation.count') do
       post :create, invitation: { tour_id: @tour.to_param }
@@ -25,7 +25,7 @@ class InvitationsControllerTest < ActionController::TestCase
   
   test "leave a tour" do
     login_as @invited_user
-    assert @tour.invitation_for(@invited_user).exists?
+    assert @tour.invitations_for(@invited_user).exists?
     
     assert_difference('Invitation.count', -1) do
       delete :destroy, id: @invitation, invitation: {tour_id: @tour.to_param}
@@ -38,7 +38,7 @@ class InvitationsControllerTest < ActionController::TestCase
   test "must be logged in to join tours" do
     login_as @uninvited_user
     logout
-    assert_not @tour.invitation_for(@user).exists?
+    assert_not @tour.invitations_for(@user).exists?
     post :create, invitation: { tour_id: @tour.to_param }
     assert_redirected_to root_url
   end
