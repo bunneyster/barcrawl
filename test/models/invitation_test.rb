@@ -31,9 +31,9 @@ class InvitationTest < ActiveSupport::TestCase
     
     invitation_copy = Invitation.new user: @invitation.user,
                                      tour: @invitation.tour                                       
-    assert_not invitation_copy.send :ensure_user_has_not_already_joined_tour
+    
     assert_not invitation_copy.save
-
+    assert_match(/has already joined/, invitation_copy.errors[:user].inspect)
     assert_equal 1, @invitation.tour.invitations_for(users(:peridot)).count
   end
 end

@@ -4,7 +4,7 @@ class FriendshipTest < ActiveSupport::TestCase
   
   setup do
     @friendship = Friendship.new user: users(:peridot),
-                                 friend: users(:allison)
+                                 friend: users(:sam)
   end
   
   test "setup creates valid friendship" do
@@ -23,5 +23,17 @@ class FriendshipTest < ActiveSupport::TestCase
     
     assert @friendship.invalid?
     assert_match(/can't be blank/, @friendship.errors[:friend].inspect)
+  end
+  
+  test "friendships can't be duplicated" do
+    assert @friendship.send :ensure_friendship_does_not_already_exist
+    @friendship.save!
+    
+    friendship_copy = Friendship.new user: @friendship.user,
+                                     friend: @friendship.friend
+    
+    assert_not friendship_copy.save
+    assert_match(/has already been established/, friendship_copy.errors.inspect)
+    assert_equal 1, Friendship.where(user: @friendship.user, friend: @friendship.friend).count
   end
 end
