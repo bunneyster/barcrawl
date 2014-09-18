@@ -27,6 +27,7 @@ class FriendshipTest < ActiveSupport::TestCase
   
   test "friendships can't be duplicated" do
     @friendship.save!
+    
     friendship_copy = Friendship.new user: @friendship.user,
                                      friend: @friendship.friend
     
