@@ -26,14 +26,13 @@ class InvitationTest < ActiveSupport::TestCase
   end
   
   test "user can have at most 1 invitation to a tour" do
-    assert @invitation.send :ensure_user_has_not_already_joined_tour    
     @invitation.save!
     
     invitation_copy = Invitation.new user: @invitation.user,
                                      tour: @invitation.tour                                       
     
-    assert_not invitation_copy.save
-    assert_match(/has already joined/, invitation_copy.errors[:user].inspect)
-    assert_equal 1, @invitation.tour.invitations_for(users(:peridot)).count
+    assert invitation_copy.invalid?
+    assert_match(/has already been taken/, invitation_copy.errors.inspect)
+    assert_equal 1, @invitation.tour.invitations_for(@invitation.user).count
   end
 end

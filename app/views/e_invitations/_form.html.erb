@@ -1,0 +1,12 @@
+<%= form_for @e_invitation, builder: FoundationFormBuilder, class: 'content' do |f| %>
+  <%= f.email_field :recipient, required: true,
+          placeholder: "mybestfriend@gmail.com", label: "E-mail"%>
+          
+  <%= f.hidden_field :tour_id %>
+  
+  <div class="form-submit-controls row">
+    <%= button_tag class: 'large button expand' do %>
+      <%= fa_icon :plus %> Send invitation
+    <% end %>
+  </div>
+<% end %>

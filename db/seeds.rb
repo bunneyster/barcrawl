@@ -1,8 +1,6 @@
 User.delete_all
-City.delete_all
 Tour.delete_all
 Invitation.delete_all
-Venue.delete_all
 TourStop.delete_all
 Vote.delete_all
 
@@ -18,102 +16,54 @@ text2 = "You truly love each other and so you might have been truly happy.
          books say. And so I think no man in a century will suffer as greatly 
          as you will."
 
-a = User.create!(name: 'Allison',
-                 email: 'a@asdf.com',
-                 password: 'asdf',
-                 password_confirmation: 'asdf')
-s = User.create!(name: 'Sam',
-                 email: 's@asdf.com',
-                 password: 'asdf',
-                 password_confirmation: 'asdf')
-d = User.create!(name: 'Dan',
-                 email: 'd@asdf.com',
-                 password: 'asdf',
-                 password_confirmation: 'asdf')
-f = User.create!(name: 'Firenze',
-                 email: 'f@asdf.com',
-                 password: 'asdf',
-                 password_confirmation: 'asdf')       
-q = User.create!(name: 'Quinn',
-                 email: 'q@asdf.com',
-                 password: 'asdf',
-                 password_confirmation: 'asdf')  
-w = User.create!(name: 'Westley',
-                 email: 'w@asdf.com',
-                 password: 'asdf',
-                 password_confirmation: 'asdf')   
-e = User.create!(name: 'Erik',
-                 email: 'e@asdf.com',
-                 password: 'asdf',
-                 password_confirmation: 'asdf')
-r = User.create!(name: 'Ryan',
-                 email: 'r@asdf.com',
-                 password: 'asdf',
-                 password_confirmation: 'asdf')
-z = User.create!(name: 'Zeinab',
-                 email: 'z@asdf.com',
-                 password: 'asdf',
-                 password_confirmation: 'asdf')
-x = User.create!(name: 'Xeno',
-                 email: 'x@asdf.com',
-                 password: 'asdf',
-                 password_confirmation: 'asdf')       
-c = User.create!(name: 'Cat',
-                 email: 'c@asdf.com',
-                 password: 'asdf',
-                 password_confirmation: 'asdf')  
-v = User.create!(name: 'Viola',
-                 email: 'v@asdf.com',
-                 password: 'asdf',
-                 password_confirmation: 'asdf')                      
-             
-bos = City.create!(name: 'Boston',
-                   latitude: 42.3133735,
-                   longitude: -71.0571571)
-nyc = City.create!(name: 'New York',
-                   latitude: 40.7056308,
-                   longitude: -73.9780035)
-sfo = City.create!(name: 'San Francisco',
-                   latitude: 37.7577,
-                   longitude: -122.4376)
-sel = City.create!(name: 'Seoul',
-                   latitude: 37.5651,
-                   longitude: 126.98955)             
+admin = User.create!(name: 'Admin',
+                     email: 'admin@puborbar.com',
+                     password: 'asdf',
+                     password_confirmation: 'asdf',
+                     admin: true)
 
-a_tour1 = Tour.create!(name: "Allison's Tour 1",
-                       city: bos,
-                       starting_at: 1.week.from_now,
-                       organizer: a,
-                       description: text1)
-a_tour2 = Tour.create!(name: "Allison's Tour 2",
-                       city: nyc,
-                       starting_at: 2.weeks.from_now,
-                       organizer: a,
-                       description: text2)
-a_tour3 = Tour.create!(name: "Allison's Tour 3",
-                       city: sfo,
-                       starting_at: 3.weeks.from_now,
-                       organizer: a) 
-s_tour1 = Tour.create!(name: "Sam's Tour 1",
-                       city: sfo,
-                       starting_at: 3.weeks.from_now,
-                       organizer: s)
-s_tour2 = Tour.create!(name: "Sam's Tour 2",
-                       city: sfo,
-                       starting_at: 3.weeks.from_now,
-                       organizer: s)
-d_tour1 = Tour.create!(name: "Dan's Tour 1",
-                       city: sel,
-                       starting_at: 3.weeks.from_now,
-                       organizer: d)    
-
-User.where.not(name: 'Allison').each do |user|
-  Invitation.create!(user: user,
-                     tour: a_tour1)
+50.times do |user|
+  User.create!(name: Faker::Name.name,
+               email: Faker::Internet.email,
+               password: 'asdf',
+               password_confirmation: 'asdf')
 end
-User.where.not(name: 'Sam').each do |user|
-  Invitation.create!(user: user,
-                     tour: s_tour1)
+
+10.times do |city|
+  lat, lng = Faker::Address.latitude, Faker::Address.longitude
+  _city = City.create!(name: Faker::Address.city,
+                       latitude: lat,
+                       longitude: lng)
+  
+  30.times do |venue|
+    address = [Faker::Address.street_address,
+               _city.name,
+               "#{Faker::Address.state} #{Faker::Address.zip}"].join(', ')
+    Venue.create!(name: Faker::Company.name,
+                  city: _city,
+                  latitude: lat + rand(-0.5..0.5),
+                  longitude: lng + rand(-0.5..0.5),
+                  address: address,
+                  phone_number: Faker::Number.number(10),
+                  stars: [1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0].sample,
+                  rating_count: rand(3000),
+                  image_url: )
+  end
+end
+
+30.times do |tour|
+  city_offset = rand(City.count)
+  user_offset = rand(User.count)
+  time = rand(2..20)
+  _tour = Tour.create!(name: Faker::Lorem.sentence(rand(1..4), false, 0),
+                       city: City.offset(city_offset).first!,
+                       starting_at: time.weeks.from_now,
+                       organizer: User.offset(user_offset).first!,
+                       description: Faker::Lorem.paragraph(rand(6), false, 0))
+                       
+  User.where.not(email: _tour.organizer.email).limit(user_offset).order("RAND()").each do |user|
+    Invitation.create!(user: user, tour: _tour)
+  end
 end
 
 

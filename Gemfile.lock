@@ -51,7 +51,12 @@ GEM
       dotenv-deployment (~> 0.0.2)
     dotenv-deployment (0.0.2)
     erubis (2.7.0)
+    exception_notification (4.0.1)
+      actionmailer (>= 3.0.4)
+      activesupport (>= 3.0.4)
     execjs (2.2.1)
+    faker (1.4.3)
+      i18n (~> 0.5)
     font-awesome-rails (4.2.0.0)
       railties (>= 3.2, < 5.0)
     foreman (0.75.0)
@@ -178,6 +183,8 @@ DEPENDENCIES
   better_errors
   binding_of_caller
   coffee-rails (~> 4.0.0)
+  exception_notification (>= 4.0.0)
+  faker
   font-awesome-rails (>= 4.2.0.0)
   foreman
   foundation-rails (>= 5.4.3.0)

@@ -102,9 +102,7 @@ class VenueTest < ActiveSupport::TestCase
     @venue.save!
     tour_stop.save!
     
-    assert_not @venue.destroy
-    assert_match(/Tour Stops referencing this venue/, @venue.errors.inspect)
-    
+    assert_not @venue.destroy    
     tour_stop.destroy
     assert @venue.destroy
   end

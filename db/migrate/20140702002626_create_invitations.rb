@@ -4,9 +4,10 @@ class CreateInvitations < ActiveRecord::Migration
       t.references :user, index: true, null: false
       t.string :tour_id, limit: 64, null: false
       
-      t.index :tour_id
-
       t.timestamps
+      
+      t.index :tour_id
+      t.index [:user_id, :tour_id], unique: true
     end
   end
 end

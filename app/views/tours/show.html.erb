@@ -38,6 +38,9 @@
 
 <div class="guests row">
   <div class="large-12 columns avatar-list">
+    <%= link_to new_e_invitation_path(tour_id: @tour.to_param), class: 'success button' do %>
+      <%= fa_icon :'plus' %> Invite!
+    <% end %>
     <% Invitation.where(tour_id: @tour.id).each do |invitation| %>
       <%= avatar_tag invitation.user, "small" %>
     <% end %>

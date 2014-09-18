@@ -14,7 +14,7 @@ Rails.application.routes.draw do
     
   resources :tours, :concerns => :paginatable
   resources :users, :concerns => :paginatable
-  
+
   resources :invitations
   resources :e_invitations
 
@@ -22,7 +22,7 @@ Rails.application.routes.draw do
   
   resources :tour_stops do
     collection do
-      post :search
+      get :search
       get '(search/page/:page)', :action => :search, :as => ''
     end
   end

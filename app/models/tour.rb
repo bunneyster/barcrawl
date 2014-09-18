@@ -27,6 +27,9 @@ class Tour < ActiveRecord::Base
   # Users invited to this tour.
   has_many :users, through: :invitations
   
+  # Email invitations extended for this tour.
+  has_many :e_invitations
+  
   before_validation :generate_id
   
   # After the tour record is first created, add the organizer to the tour.

@@ -18,11 +18,6 @@ class Venue < ActiveRecord::Base
   private
   
     def ensure_not_referenced_by_any_tour_stop
-      if TourStop.where(venue: self).empty?
-        return true
-      else
-        errors.add(:base, 'Tour Stops referencing this venue are present.')
-        return false
-      end
+      TourStop.where(venue: self).empty?
     end
 end

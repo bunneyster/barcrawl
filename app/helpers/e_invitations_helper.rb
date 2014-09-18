@@ -1,0 +1,2 @@
+module EInvitationsHelper
+end

@@ -54,7 +54,11 @@ gem 'jc-validates_timeliness', '>= 3.1.1'
 # Paginator
 gem 'kaminari'
 
+# Report production exceptions.
+gem 'exception_notification', '>= 4.0.0'
+
 group :development do
-  gem "better_errors"
-  gem "binding_of_caller"
+  gem 'better_errors'
+  gem 'binding_of_caller'
+  gem 'faker'
 end
