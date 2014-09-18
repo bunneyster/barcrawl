@@ -7,4 +7,6 @@ class Invitation < ActiveRecord::Base
   belongs_to :tour
   validates :tour, presence: true
   validates :tour_id, uniqueness: { scope: :user_id }
+  
+  
 end

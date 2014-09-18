@@ -60,6 +60,7 @@ ActiveRecord::Schema.define(version: 20140915232000) do
   end
 
   add_index "invitations", ["tour_id"], name: "index_invitations_on_tour_id"
+  add_index "invitations", ["user_id", "tour_id"], name: "index_invitations_on_user_id_and_tour_id", unique: true
   add_index "invitations", ["user_id"], name: "index_invitations_on_user_id"
 
   create_table "tour_stops", force: true do |t|
