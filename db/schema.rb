@@ -40,7 +40,7 @@ ActiveRecord::Schema.define(version: 20140915232000) do
     t.datetime "updated_at"
   end
 
-  add_index "e_invitations", ["recipient"], name: "index_e_invitations_on_recipient", unique: true
+  add_index "e_invitations", ["tour_id", "recipient"], name: "index_e_invitations_on_tour_id_and_recipient", unique: true
 
   create_table "friendships", force: true do |t|
     t.integer  "user_id",    null: false
@@ -59,9 +59,8 @@ ActiveRecord::Schema.define(version: 20140915232000) do
     t.datetime "updated_at"
   end
 
-  add_index "invitations", ["tour_id"], name: "index_invitations_on_tour_id"
+  add_index "invitations", ["tour_id", "user_id"], name: "index_invitations_on_tour_id_and_user_id", unique: true
   add_index "invitations", ["user_id", "tour_id"], name: "index_invitations_on_user_id_and_tour_id", unique: true
-  add_index "invitations", ["user_id"], name: "index_invitations_on_user_id"
 
   create_table "tour_stops", force: true do |t|
     t.string   "tour_id",    limit: 64,             null: false

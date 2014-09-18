@@ -5,7 +5,7 @@ class CreateEInvitations < ActiveRecord::Migration
       t.string :recipient, null: false
       t.string :tour_id, limit: 64, null: false
       
-      t.index :recipient, unique: true
+      t.index [:tour_id, :recipient], unique: true
 
       t.timestamps
     end
