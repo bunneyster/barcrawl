@@ -1,5 +1,5 @@
 if Rails.env.production?
-  Seven::Application.config.middleware.use ExceptionNotification::Rack,
+  Barcrawl::Application.config.middleware.use ExceptionNotification::Rack,
       email: {
         email_prefix: "[crash] ",
         sender_address: Rails.application.secrets.gmail_email,
