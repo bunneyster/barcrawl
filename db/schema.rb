@@ -60,7 +60,6 @@ ActiveRecord::Schema.define(version: 20140915232000) do
   end
 
   add_index "invitations", ["tour_id", "user_id"], name: "index_invitations_on_tour_id_and_user_id", unique: true
-  add_index "invitations", ["user_id", "tour_id"], name: "index_invitations_on_user_id_and_tour_id", unique: true
 
   create_table "tour_stops", force: true do |t|
     t.string   "tour_id",    limit: 64,             null: false
