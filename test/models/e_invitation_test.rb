@@ -3,7 +3,7 @@ require 'test_helper'
 class EInvitationTest < ActiveSupport::TestCase
   setup do
     @e_invitation = EInvitation.new sender: users(:peridot),
-                                    recipient: 'recipient@gmail.com',
+                                    recipient: users(:dan).email,
                                     tour: tours(:birthday)
   end
   
@@ -46,9 +46,26 @@ class EInvitationTest < ActiveSupport::TestCase
     assert_match(/too long/, @e_invitation.errors[:recipient].inspect)
   end
   
+  test "recipient can get multiple e invitations, each for a different tour" do
+    @recipient = @e_invitation.recipient
+    @different_tour = tours(:anniversary)
+    assert_not @different_tour.users.exists?(email: @recipient)
+                                          
+    @different_e_invitation = EInvitation.new sender: users(:peridot),
+                                            recipient: @recipient,
+                                            tour: @different_tour
+
+    assert_difference('EInvitation.where(recipient: @recipient).count', 2) do
+      @e_invitation.save!
+      @different_e_invitation.save!
+    end
+  end
+  
   test "recipient receives at most 1 e invitation per tour" do
-    e_invitation = EInvitation.new recipient: e_invitations(:one).recipient,
-                                   tour: e_invitations(:one).tour
+    existing = e_invitations(:peridot_birthday_mybestfriend_at_gmail)
+    e_invitation = EInvitation.new sender: users(:sam),
+                                   recipient: existing.recipient,
+                                   tour: existing.tour
     
     assert e_invitation.invalid?
     assert_match(/has already been invited/, e_invitation.errors[:recipient].inspect)
@@ -62,7 +79,6 @@ class EInvitationTest < ActiveSupport::TestCase
                                    recipient: recipient,
                                    tour: tour
 
-    # e_invitation.save!
     assert e_invitation.invalid?
     assert_match(/recipient has already joined/, e_invitation.errors.inspect)
     assert tour.e_invitations.where(recipient: recipient).empty?
