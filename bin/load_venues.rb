@@ -21,24 +21,25 @@ def login_as_admin(agent, admin_datafile, root_url)
   form.click_button
 end
 
-def add_boston(agent, root_url)
+def add_cities(cities, agent, root_url)
   new_city_url = URI.join(root_url, 'cities/new')
   
-  page = agent.get new_city_url
-  form = page.form(action: /\/cities$/)
+  cities.each do |city|
   
-  form.field(name: /name/).value = 'Boston'
-  form.field(name: /latitude/).value = '42.3133734'
-  form.field(name: /longitude/).value = '-71.057157'
-  form.click_button
+    page = agent.get new_city_url
+    form = page.form(action: /\/cities$/)  
+    form.field(name: /name/).value = city[:name]
+    form.field(name: /latitude/).value = city[:lat]
+    form.field(name: /longitude/).value = city[:lng]
+    form.click_button
+  end
 end
 
-def add_boston_venues(agent, venues_datafile, root_url)
+def add_venues(agent, venues_datafile, root_url)
   businesses = JSON.load File.read(venues_datafile)
   new_venue_url = URI.join(root_url, 'venues/new')
   
   businesses.each do |business|
-    next unless /boston/i =~ business['city']
     
     page = agent.get new_venue_url
     form = page.form(action: /\/venues$/)
@@ -71,8 +72,14 @@ end
 
 agent = Mechanize.new
 
+cities = [
+  { name: 'Boston', lat: '42.3133734', lng: '-71.057157' },
+  { name: 'New York', lat: '40.7056308', lng: '-73.9780035' },
+  { name: 'San Francisco', lat: '37.7577', lng: '-122.4376' }
+]
+
 login_as_admin(agent, ARGV[2], ARGV[1])
-add_boston(agent, ARGV[1])
-add_boston_venues(agent, ARGV[0], ARGV[1])
+add_cities(cities, agent, ARGV[1])
+add_venues(agent, ARGV[0], ARGV[1])
 
 
