@@ -2,7 +2,7 @@ require 'test_helper'
 
 class EInvitationsControllerTest < ActionController::TestCase
   setup do
-    @e_invitation = e_invitations(:one)
+    @e_invitation = e_invitations(:peridot_birthday_mybestfriend_at_gmail)
     @any_user = users(:sam)
     @admin = users(:admin)
   end

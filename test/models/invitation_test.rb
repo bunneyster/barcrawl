@@ -32,7 +32,7 @@ class InvitationTest < ActiveSupport::TestCase
                                      tour: @invitation.tour                                       
     
     assert invitation_copy.invalid?
-    assert_match(/has already been taken/, invitation_copy.errors.inspect)
+    assert_match(/has already been invited/, invitation_copy.errors[:user].inspect)
     assert_equal 1, @invitation.tour.invitations_for(@invitation.user).count
   end
 end

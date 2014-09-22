@@ -68,7 +68,7 @@ class EInvitationTest < ActiveSupport::TestCase
                                    tour: existing.tour
     
     assert e_invitation.invalid?
-    assert_match(/has already been invited/, e_invitation.errors[:recipient].inspect)
+    assert_match(/has already been e-invited/, e_invitation.errors[:recipient].inspect)
   end
   
   test "tour participants do not receive e invitations for that tour" do

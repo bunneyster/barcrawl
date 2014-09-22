@@ -11,7 +11,7 @@ class EInvitation < ActiveRecord::Base
   #
   # To avoid receiving many email invitations for the same tour, a recipient
   # can have at most 1 email invitation per tour. 
-  validates :recipient, uniqueness: { scope: :tour_id, message: 'has already been invited to this tour' }
+  validates :recipient, uniqueness: { scope: :tour_id, message: 'has already been e-invited to this tour' }
   validates :recipient, length: 1..38
   
   # To avoid sending email invitations to users who already joined the tour,
