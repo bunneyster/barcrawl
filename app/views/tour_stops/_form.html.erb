@@ -1,33 +1,38 @@
-<!-- Show 20 venues located in the tour's city, which haven't already been proposed. -->
+<!-- Show 25 venues located in the tour's city, which haven't already been proposed. -->
 <div class="content row">
-  <ul class="venue-list large-12 columns">
-    <% @venue_search_results.each do |venue| %>
-      <li>
-        <div class="venue-image">
-          <%= image_tag venue_thumbnail_url(venue) %>
-        </div>
-        <div class="venue-data">
-          <span class="venue-name">
-            <%= link_to venue.name, "//www.yelp.com/biz/#{venue.yelp_id}", target: "_blank", data: venue_name_data(venue) %>
-          </span>
-          <%= render partial: "venues/venue_dropdown", locals: {venue: venue} %>
-          <span class="venue-name">
-            <%= venue_rating_stars(venue) %>
-          </span>
-        </div>
-        
-        <div class="venue-add">
-          <%= form_for @tour_stop do |f| %> 
-            <%= f.hidden_field :tour_id %>
-            <%= f.hidden_field :venue_id, value: venue.to_param %>
-            <%= f.button type: :submit, class: "radius button" do %>
-              <%= fa_icon :'plus' %>
+  <div class="large-12 columns">
+    <ul class="venue-list">
+      <% @venue_search_results.each do |venue| %>
+        <li>
+          <div class="venue-image">
+            <%= image_tag venue_thumbnail_url(venue) %>
+          </div>
+          <div class="venue-data">
+            <span class="venue-name">
+              <%= link_to venue.name, "//www.yelp.com/biz/#{venue.yelp_id}", target: "_blank", data: venue_name_data(venue) %>
+            </span>
+            <%= render partial: "venues/venue_dropdown", locals: {venue: venue} %>
+            <span class="venue-name">
+              <%= venue_rating_stars(venue) %>
+            </span>
+          </div>
+          
+          <div class="venue-add">
+            <%= form_for @tour_stop do |f| %> 
+              <%= f.hidden_field :tour_id %>
+              <%= f.hidden_field :venue_id, value: venue.to_param %>
+              <%= f.button type: :submit, class: "radius button" do %>
+                <%= fa_icon :'plus' %>
+              <% end %>
             <% end %>
-          <% end %>
-        </div>
-      </li>
+          </div>
+        </li>
+      <% end %>
+    </ul>
+    <% if @venue_search_results.empty? %>
+      <p class="text-center">No matching search results</p>
     <% end %>
-  </ul>
+  </div>
 </div>
   
 <div class="row">
