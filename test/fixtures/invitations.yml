@@ -1,15 +1,19 @@
 p2birthday:
-  user: peridot
+  sender: peridot
+  recipient: peridot
   tour: birthday
 
 a2birthday:
-  user: allison
+  sender: peridot
+  recipient: allison
   tour: birthday
 
 s2birthday:
-  user: sam
+  sender: peridot
+  recipient: sam
   tour: birthday
 
 s2anniversary:
-  user: sam
+  sender: sam
+  recipient: sam
   tour: anniversary

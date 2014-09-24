@@ -2,7 +2,7 @@ require 'test_helper'
 
 class EInvitationsControllerTest < ActionController::TestCase
   setup do
-    @e_invitation = e_invitations(:birthday_mybestfriend_at_gmail)
+    @e_invitation = e_invitations(:peridot_to_x_for_birthday)
     @any_user = users(:sam)
     @admin = users(:admin)
   end
@@ -20,6 +20,7 @@ class EInvitationsControllerTest < ActionController::TestCase
                                     tour_id: @e_invitation.tour_id }
     end
     
+    assert_equal @any_user, assigns(:e_invitation).sender
     assert_redirected_to tour_path(assigns(:e_invitation).tour)
   end
 

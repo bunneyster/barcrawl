@@ -3,7 +3,8 @@ require 'test_helper'
 class InvitationTest < ActiveSupport::TestCase
   
   setup do                     
-    @invitation = Invitation.new user: users(:peridot),
+    @invitation = Invitation.new sender: users(:peridot),
+                                 recipient: users(:dan),
                                  tour: tours(:newyear)
   end
 
@@ -12,10 +13,10 @@ class InvitationTest < ActiveSupport::TestCase
   end
   
   test "invitation must belong to a user" do
-    @invitation.user = nil
+    @invitation.recipient = nil
     
     assert @invitation.invalid?
-    assert_match(/can't be blank/, @invitation.errors[:user].inspect)
+    assert_match(/can't be blank/, @invitation.errors[:recipient].inspect)
   end
   
   test "invitation must belong to a tour" do
@@ -28,10 +29,11 @@ class InvitationTest < ActiveSupport::TestCase
   test "users can't receive duplicate invitations" do
     @invitation.save!
     
-    invitation_copy = Invitation.new user: @invitation.user,
+    invitation_copy = Invitation.new sender: users(:sam),
+                                     recipient: @invitation.recipient,
                                      tour: @invitation.tour                                       
     
     assert invitation_copy.invalid?
-    assert_match(/has already been invited/, invitation_copy.errors[:user].inspect)
+    assert_match(/has already been invited/, invitation_copy.errors[:recipient].inspect)
   end
 end

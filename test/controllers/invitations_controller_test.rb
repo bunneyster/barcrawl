@@ -7,7 +7,7 @@ class InvitationsControllerTest < ActionController::TestCase
     @participant = @tour.organizer
     
     @invitation = invitations(:a2birthday)
-    @invited_user = @invitation.user
+    @invited_user = @invitation.recipient
     
     @uninvited_user = users(:dan)
   end
@@ -17,7 +17,8 @@ class InvitationsControllerTest < ActionController::TestCase
     
     assert_not @tour.invitation_for(@uninvited_user)    
     assert_difference('Invitation.count') do
-      post :create, invitation: { user_id: @uninvited_user.to_param,
+      post :create, invitation: { sender_id: @participant.to_param,
+                                  recipient_id: @uninvited_user.to_param,
                                   tour_id: @tour.to_param }
     end
     assert_equal 'pending', assigns(:invitation).status
@@ -42,7 +43,8 @@ class InvitationsControllerTest < ActionController::TestCase
     login_as @participant
     logout
     assert_not @tour.invitation_for(@uninvited_user)
-    post :create, invitation: { user_id: @uninvited_user.to_param,
+    post :create, invitation: { sender_id: @participant.to_param,
+                                recipient_id: @uninvited_user.to_param,
                                 tour_id: @tour.to_param }
     assert_redirected_to root_url
   end

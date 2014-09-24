@@ -23,7 +23,7 @@ class User < ActiveRecord::Base
   end
   
   def invited_to?(tour)
-    tour.users.exists?(id: id)
+    tour.invitees.exists?(id: id)
   end
   
   def attending?(tour)

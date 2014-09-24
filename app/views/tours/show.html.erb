@@ -42,7 +42,7 @@
       <%= fa_icon :'plus' %> Invite!
     <% end %>
     <% Invitation.where(tour_id: @tour.id).each do |invitation| %>
-      <%= avatar_tag invitation.user, "small" %>
+      <%= avatar_tag invitation.recipient, "small" %>
     <% end %>
   </div>
 </div>

@@ -33,6 +33,7 @@ ActiveRecord::Schema.define(version: 20140915232000) do
   add_index "comments", ["tour_stop_id"], name: "index_comments_on_tour_stop_id"
 
   create_table "e_invitations", force: true do |t|
+    t.integer  "sender_id",             null: false
     t.string   "recipient",             null: false
     t.string   "tour_id",    limit: 64, null: false
     t.datetime "created_at"
@@ -52,14 +53,15 @@ ActiveRecord::Schema.define(version: 20140915232000) do
   add_index "friendships", ["user_id", "friend_id"], name: "index_friendships_on_user_id_and_friend_id", unique: true
 
   create_table "invitations", force: true do |t|
-    t.integer  "user_id",                           null: false
-    t.string   "tour_id",    limit: 64,             null: false
-    t.integer  "status",                default: 0, null: false
+    t.integer  "sender_id",                           null: false
+    t.integer  "recipient_id",                        null: false
+    t.string   "tour_id",      limit: 64,             null: false
+    t.integer  "status",                  default: 0, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "invitations", ["tour_id", "user_id"], name: "index_invitations_on_tour_id_and_user_id", unique: true
+  add_index "invitations", ["tour_id", "recipient_id"], name: "index_invitations_on_tour_id_and_recipient_id", unique: true
 
   create_table "tour_stops", force: true do |t|
     t.string   "tour_id",    limit: 64,             null: false

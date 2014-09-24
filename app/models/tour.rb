@@ -25,7 +25,7 @@ class Tour < ActiveRecord::Base
   has_many :invitations
   
   # Users invited to this tour.
-  has_many :users, through: :invitations
+  has_many :invitees, through: :invitations, source: :recipient
   
   # Email invitations extended for this tour.
   has_many :e_invitations
@@ -41,7 +41,7 @@ class Tour < ActiveRecord::Base
   # Tours that the user has joined, excluding those organized by the user.
   def self.open_to(user)
     includes(:invitations).references(:invitations)
-      .where("invitations.user_id = ?", user.to_param)
+      .where("invitations.recipient_id = ?", user.to_param)
       .where.not(organizer: user)
   end
   
@@ -50,15 +50,15 @@ class Tour < ActiveRecord::Base
   end
    
   def organized_by?(user)
-    user == self.organizer
+    user == organizer
   end
   
   def invitation_for(user)
-    self.invitations.where(user: user).first
+    self.invitations.where(recipient: user).first
   end
   
   def new_invitation_for(user)
-    Invitation.new(tour: self, user: user)
+    Invitation.new(recipient: user, tour: self)
   end
       
   def to_param
@@ -73,8 +73,9 @@ class Tour < ActiveRecord::Base
 
     
     def invite_organizer_to_tour
-      Invitation.create(user: User.find(organizer_id),
-                        tour: self,
-                        status: "accepted")
+      Invitation.create! sender: organizer,
+                         recipient: organizer,
+                         tour: self,
+                         status: "accepted"
     end
 end

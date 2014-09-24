@@ -3,9 +3,11 @@ require 'test_helper'
 class EInvitationTest < ActiveSupport::TestCase
   setup do
     @recipient = 'non.existing.user@test.com'
-    @e_invitation_for_x_to_birthday = EInvitation.new recipient: @recipient,
+    @e_invitation_for_x_to_birthday = EInvitation.new sender: users(:peridot),
+                                                      recipient: @recipient,
                                                       tour: tours(:birthday)
-    @e_invitation_for_x_to_newyear = EInvitation.new recipient: @recipient,
+    @e_invitation_for_x_to_newyear = EInvitation.new sender: users(:sam),
+                                                     recipient: @recipient,
                                                      tour: tours(:newyear)
   end
   
@@ -56,7 +58,7 @@ class EInvitationTest < ActiveSupport::TestCase
   end
   
   test "users can't receive duplicate e invitations" do
-    existing = e_invitations(:birthday_mybestfriend_at_gmail)
+    existing = e_invitations(:peridot_to_x_for_birthday)
     duplicate = EInvitation.new recipient: existing.recipient,
                                 tour: existing.tour
     
@@ -65,8 +67,9 @@ class EInvitationTest < ActiveSupport::TestCase
   end
   
   test "users with invitations don't receive equivalent e invitations" do
-    invitation = invitations(:p2birthday)   
-    e_invitation = EInvitation.new recipient: invitation.user.email,
+    invitation = invitations(:a2birthday)   
+    e_invitation = EInvitation.new sender: users(:peridot),
+                                   recipient: invitation.recipient.email,
                                    tour: invitation.tour   
 
     assert e_invitation.invalid?
@@ -74,7 +77,8 @@ class EInvitationTest < ActiveSupport::TestCase
   end
   
   test "users with existing accounts don't receive e invitations" do
-    e_invitation = EInvitation.new recipient: users(:dan).email,
+    e_invitation = EInvitation.new sender: users(:peridot),
+                                   recipient: users(:dan).email,
                                    tour: tours(:birthday)
     
     assert e_invitation.invalid?

@@ -56,10 +56,17 @@ class TourTest < ActiveSupport::TestCase
   end
   
   test "organizer must be invited to tour" do
-    assert_equal 0, @tour.users.count
-    @tour.save!
-    assert_equal 1, @tour.users.count
-    assert_equal users(:peridot), @tour.users.first!
+    @organizer = @tour.organizer
+    
+    assert_not @tour.invitees.where(id: @organizer.to_param).present?
+    assert_difference('@tour.invitees.count') do
+      @tour.save!
+    end
+    assert @tour.invitees.where(id: @organizer.to_param).present?
+    # p @tour.invitees.where(id: @organizer.to_param).exists?   T
+    # p @tour.invitees.find(@organizer.to_param).present?   T
+    # p @tour.invitees.exists?(@organizer.to_param)   F
+    # p @tour.invitations.exists?(recipient_id: @organizer.to_param)   F
   end
   
   test "tour id is longer than 60 characters" do

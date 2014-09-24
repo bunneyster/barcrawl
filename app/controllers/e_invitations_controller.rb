@@ -16,11 +16,13 @@ class EInvitationsController < ApplicationController
     @tour = Tour.find(e_invitation_params[:tour_id])
     if @guest
       # Submit email of someone with an existing user account
-      @invitation = Invitation.new user: @guest,
+      @invitation = Invitation.new sender: @current_user,
+                                   recipient: @guest,
                                    tour: @tour
     else
       # Submit email of someone without an existing user account
       @e_invitation = EInvitation.new(e_invitation_params)
+      @e_invitation.sender = @current_user
     end
 
 
