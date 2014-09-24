@@ -53,12 +53,12 @@ class Tour < ActiveRecord::Base
     user == self.organizer
   end
   
-  def invitations_for(user)
-    self.invitations.where(user: user)
+  def invitation_for(user)
+    self.invitations.where(user: user).first
   end
   
-  def new_invitation
-    Invitation.new(tour: self)
+  def new_invitation_for(user)
+    Invitation.new(tour: self, user: user)
   end
       
   def to_param
@@ -74,6 +74,7 @@ class Tour < ActiveRecord::Base
     
     def invite_organizer_to_tour
       Invitation.create(user: User.find(organizer_id),
-                        tour: self)
+                        tour: self,
+                        status: "accepted")
     end
 end

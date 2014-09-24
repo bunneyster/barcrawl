@@ -1,30 +1,33 @@
+# Invitations that are addressed to email addresses, rather than User instances.
 class EInvitation < ActiveRecord::Base
-  # The user sending the email invitation.
-  belongs_to :sender, class_name: :User
-  validates :sender, presence: true
-  
   # The tour for which the invitation is being sent.
   belongs_to :tour
   validates :tour, presence: true
   
   # The email address of the invitation's recipient.
-  #
-  # To avoid receiving many email invitations for the same tour, a recipient
-  # can have at most 1 email invitation per tour. 
-  validates :recipient, uniqueness: { scope: :tour_id, message: 'has already been e-invited to this tour' }
   validates :recipient, length: 1..38
+
+  # Users don't receive duplicate EInvitations.
+  validates :recipient, uniqueness: { scope: :tour_id, message: 'has already been e-invited to this tour' }
   
-  # To avoid sending email invitations to users who already joined the tour,
-  # the recipient/tour of an EInvitation should not match the user/tour of an
-  # existing Invitation.
+  # Users with Invitations don't receive equivalent EInvitations.
   validate :ensure_recipient_has_not_already_joined_tour
+  
+  # Users with existing accounts don't receive EInvitations.
+  validate :recipient_does_not_correspond_to_existing_user
   
   private
   
     def ensure_recipient_has_not_already_joined_tour
       return if !tour
-      unless tour.users.where(email: recipient).empty?
+      unless !tour.users.exists?(email: recipient)
         errors.add(:base, 'The recipient has already joined this tour')
+      end
+    end
+    
+    def recipient_does_not_correspond_to_existing_user
+      unless !User.exists?(email: recipient)
+        errors.add(:recipient, 'The recipient already has a user account')
       end
     end
 end

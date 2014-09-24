@@ -10,3 +10,21 @@
     <% end %>
   </div>
 <% end %>
+
+<div class="row">
+  <div class="large-12 columns">
+    <% @current_user.friends.each do |friend| %>
+      <% if !@tour.users.exists?(id: friend.to_param) %>
+        <%= form_for @tour.new_invitation_for(friend) do |f| %>
+          <%= f.hidden_field :tour_id %>
+          <%= f.hidden_field :user_id %>
+          <%= f.button type: :submit, class: 'borderless-button' do %>
+            <%= avatar_tag friend, "medium" %>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
+  </div>
+</div>
+
+  

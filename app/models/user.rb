@@ -23,6 +23,14 @@ class User < ActiveRecord::Base
   end
   
   def invited_to?(tour)
-    tour.users.where(id: id).exists?
+    tour.users.exists?(id: id)
+  end
+  
+  def attending?(tour)
+    if tour.invitation_for(self)
+      tour.invitation_for(self).status == 'accepted'
+    else
+      return false
+    end
   end
 end

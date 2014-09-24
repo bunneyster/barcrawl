@@ -25,7 +25,7 @@ class InvitationTest < ActiveSupport::TestCase
     assert_match(/can't be blank/, @invitation.errors[:tour].inspect)
   end
   
-  test "user can have at most 1 invitation to a tour" do
+  test "users can't receive duplicate invitations" do
     @invitation.save!
     
     invitation_copy = Invitation.new user: @invitation.user,
@@ -33,6 +33,5 @@ class InvitationTest < ActiveSupport::TestCase
     
     assert invitation_copy.invalid?
     assert_match(/has already been invited/, invitation_copy.errors[:user].inspect)
-    assert_equal 1, @invitation.tour.invitations_for(@invitation.user).count
   end
 end
