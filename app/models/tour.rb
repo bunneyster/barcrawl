@@ -73,9 +73,7 @@ class Tour < ActiveRecord::Base
 
     
     def invite_organizer_to_tour
-      Invitation.create! sender: organizer,
-                         recipient: organizer,
-                         tour: self,
-                         status: "accepted"
+      invitations.create! sender: organizer, recipient: organizer,
+                          status: :accepted
     end
 end

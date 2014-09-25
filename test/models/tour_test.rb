@@ -58,15 +58,11 @@ class TourTest < ActiveSupport::TestCase
   test "organizer must be invited to tour" do
     @organizer = @tour.organizer
     
-    assert_not @tour.invitees.where(id: @organizer.to_param).present?
-    assert_difference('@tour.invitees.count') do
+    refute_includes @tour.invitees, @organizer
+    assert_difference('Invitation.count') do
       @tour.save!
     end
-    assert @tour.invitees.where(id: @organizer.to_param).present?
-    # p @tour.invitees.where(id: @organizer.to_param).exists?   T
-    # p @tour.invitees.find(@organizer.to_param).present?   T
-    # p @tour.invitees.exists?(@organizer.to_param)   F
-    # p @tour.invitations.exists?(recipient_id: @organizer.to_param)   F
+    assert_includes @tour.invitees, @organizer
   end
   
   test "tour id is longer than 60 characters" do
