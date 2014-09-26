@@ -66,16 +66,6 @@ class EInvitationTest < ActiveSupport::TestCase
     assert_match(/has already been e-invited/, duplicate.errors[:recipient].inspect)
   end
   
-  test "users with invitations don't receive equivalent e invitations" do
-    invitation = invitations(:a2birthday)   
-    e_invitation = EInvitation.new sender: users(:peridot),
-                                   recipient: invitation.recipient.email,
-                                   tour: invitation.tour   
-
-    assert e_invitation.invalid?
-    assert_match(/recipient has already joined/, e_invitation.errors.inspect)
-  end
-  
   test "users with existing accounts don't receive e invitations" do
     e_invitation = EInvitation.new sender: users(:peridot),
                                    recipient: users(:dan).email,

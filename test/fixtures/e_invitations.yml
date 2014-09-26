@@ -2,3 +2,13 @@ peridot_to_x_for_birthday:
   sender: peridot
   recipient: x@test.com
   tour: birthday
+  
+peridot_to_x_for_newyear:
+  sender: peridot
+  recipient: x@test.com
+  tour: newyear
+  
+peridot_to_x_for_anniversary:
+  sender: peridot
+  recipient: x@test.com
+  tour: anniversary

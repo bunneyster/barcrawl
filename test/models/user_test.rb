@@ -3,11 +3,11 @@ require 'test_helper'
 class UserTest < ActiveSupport::TestCase
   
   setup do
-    @user = User.new email: 'newuser@gmail.com',
+    @user = User.new email: 'valid.user@gmail.com',
                      avatar_url: 'lolcat.png',
                      password: 'sekret',
                      password_confirmation: 'sekret',
-                     name: 'newuser'
+                     name: 'Valid User'
   end
   
   test "setup creates valid user" do
@@ -69,5 +69,20 @@ class UserTest < ActiveSupport::TestCase
     
     assert_match(/doesn't match Password/,
                  @user.errors[:password_confirmation].inspect)
+  end
+  
+  test "e invitations convert to invitations upon user account creation" do
+    non_user_email = e_invitations(:peridot_to_x_for_birthday).recipient
+    e_invitation_count = EInvitation.where(recipient: non_user_email).count
+    
+    assert_difference 'EInvitation.count', -e_invitation_count do
+      assert_difference 'Invitation.count', e_invitation_count do
+        User.create! email: non_user_email,
+                     password: 'sekret',
+                     password_confirmation: 'sekret',
+                     name: 'Person making an account'
+      end
+    end
+    assert_empty EInvitation.where(recipient: non_user_email)
   end
 end

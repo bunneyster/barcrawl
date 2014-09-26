@@ -40,9 +40,9 @@ class Tour < ActiveRecord::Base
   
   # Tours that the user has joined, excluding those organized by the user.
   def self.open_to(user)
-    includes(:invitations).references(:invitations)
-      .where("invitations.recipient_id = ?", user.to_param)
-      .where.not(organizer: user)
+    includes(:invitations).references(:invitations).
+        where("invitations.recipient_id = ?", user.to_param).
+        where.not(organizer: user)
   end
   
   def self.organized_by(user)
@@ -65,7 +65,7 @@ class Tour < ActiveRecord::Base
     id
   end
   
-  # private
+  private
   
     def generate_id
       self.id ||= SecureRandom.urlsafe_base64 48

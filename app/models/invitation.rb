@@ -7,7 +7,7 @@ class Invitation < ActiveRecord::Base
   belongs_to :recipient, class_name: :User
   validates :recipient, presence: true
   
-  # Users don't receive duplicate Invitations.
+  # Users don't receive duplicate Invitations for the same tour.
   validates :recipient, uniqueness: { scope: :tour_id, message: 'has already been invited to this tour' }
   
   # The tour to which the user is being invited.
