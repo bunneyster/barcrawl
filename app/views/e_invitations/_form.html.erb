@@ -1,5 +1,5 @@
 <%= form_for @e_invitation, builder: FoundationFormBuilder, class: 'content' do |f| %>
-  <%= f.email_field :recipient, required: true,
+  <%= f.email_field :email, required: true,
           placeholder: "mybestfriend@gmail.com", label: "E-mail"%>
           
   <%= f.hidden_field :tour_id %>

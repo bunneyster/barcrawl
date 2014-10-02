@@ -5,23 +5,23 @@ class EInvitation < ActiveRecord::Base
   validates :sender, presence: true
   
   # The email address receiving the email invitation.
-  validates :recipient, length: 1..38
+  validates :email, length: 1..38
   
   # Recipients don't receive duplicate EInvitations for the same tour.
-  validates :recipient, uniqueness: { scope: :tour_id, message: 'has already been e-invited to this tour' }  
+  validates :email, uniqueness: { scope: :tour_id, message: 'has already been e-invited to this tour' }  
   
   # Users with existing accounts don't receive EInvitations.
   # (Normal Invitation should be created.)
-  validate :recipient_does_not_correspond_to_existing_user
+  validate :email_does_not_correspond_to_existing_user
   
   # The tour to which the recipient is being invited.
   belongs_to :tour
   validates :tour, presence: true
   
   private
-    def recipient_does_not_correspond_to_existing_user
-      if User.exists?(email: recipient)
-        errors.add(:recipient, 'The recipient already has a user account')
+    def email_does_not_correspond_to_existing_user
+      if User.exists?(email: email)
+        errors.add(:email, 'already has a user account')
       end
     end
 end

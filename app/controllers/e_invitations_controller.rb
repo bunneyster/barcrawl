@@ -12,7 +12,7 @@ class EInvitationsController < ApplicationController
   # POST /e_invitations
   # POST /e_invitations.json
   def create
-    @guest = User.where(email: e_invitation_params[:recipient]).first
+    @guest = User.where(email: e_invitation_params[:email]).first
     @tour = Tour.find(e_invitation_params[:tour_id])
     if @guest
       # Submit email of someone with an existing user account
@@ -29,7 +29,7 @@ class EInvitationsController < ApplicationController
     respond_to do |format|
       if @e_invitation.save || @invitation.save
         UserMailer.invitation_email(@current_user.name,
-                                    e_invitation_params[:recipient],
+                                    e_invitation_params[:email],
                                     @tour,
                                     root_url).deliver
         format.html { redirect_to @tour, notice: 'An invitation was successfully created.' }
@@ -56,6 +56,6 @@ class EInvitationsController < ApplicationController
     end
 
     def e_invitation_params
-      params.require(:e_invitation).permit(:recipient, :tour_id)
+      params.require(:e_invitation).permit(:email, :tour_id)
     end
 end

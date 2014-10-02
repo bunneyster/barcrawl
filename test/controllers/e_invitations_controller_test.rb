@@ -16,7 +16,7 @@ class EInvitationsControllerTest < ActionController::TestCase
   test "should create e_invitation" do
     login_as @any_user
     assert_difference('EInvitation.count') do
-      post :create, e_invitation: { recipient: 'new_recipient@gmail.com',
+      post :create, e_invitation: { email: 'new_recipient@gmail.com',
                                     tour_id: @e_invitation.tour_id }
     end
     

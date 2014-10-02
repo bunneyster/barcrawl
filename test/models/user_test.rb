@@ -72,8 +72,8 @@ class UserTest < ActiveSupport::TestCase
   end
   
   test "e invitations convert to invitations upon user account creation" do
-    non_user_email = e_invitations(:peridot_to_x_for_birthday).recipient
-    e_invitation_count = EInvitation.where(recipient: non_user_email).count
+    non_user_email = e_invitations(:peridot_to_x_for_birthday).email
+    e_invitation_count = EInvitation.where(email: non_user_email).count
     
     assert_difference 'EInvitation.count', -e_invitation_count do
       assert_difference 'Invitation.count', e_invitation_count do
@@ -83,6 +83,6 @@ class UserTest < ActiveSupport::TestCase
                      name: 'Person making an account'
       end
     end
-    assert_empty EInvitation.where(recipient: non_user_email)
+    assert_empty EInvitation.where(email: non_user_email)
   end
 end

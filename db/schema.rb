@@ -34,13 +34,13 @@ ActiveRecord::Schema.define(version: 20140915232000) do
 
   create_table "e_invitations", force: true do |t|
     t.integer  "sender_id",             null: false
-    t.string   "recipient",             null: false
+    t.string   "email",                 null: false
     t.string   "tour_id",    limit: 64, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "e_invitations", ["tour_id", "recipient"], name: "index_e_invitations_on_tour_id_and_recipient", unique: true
+  add_index "e_invitations", ["tour_id", "email"], name: "index_e_invitations_on_tour_id_and_email", unique: true
 
   create_table "friendships", force: true do |t|
     t.integer  "user_id",    null: false

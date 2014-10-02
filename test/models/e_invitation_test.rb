@@ -2,12 +2,12 @@ require 'test_helper'
 
 class EInvitationTest < ActiveSupport::TestCase
   setup do
-    @recipient = 'non.existing.user@test.com'
+    @email = 'non.existing.user@test.com'
     @e_invitation_for_x_to_birthday = EInvitation.new sender: users(:peridot),
-                                                      recipient: @recipient,
+                                                      email: @email,
                                                       tour: tours(:birthday)
     @e_invitation_for_x_to_newyear = EInvitation.new sender: users(:sam),
-                                                     recipient: @recipient,
+                                                     email: @email,
                                                      tour: tours(:newyear)
   end
   
@@ -26,32 +26,32 @@ class EInvitationTest < ActiveSupport::TestCase
                  @e_invitation_for_x_to_birthday.errors[:tour].inspect)
   end
   
-  test "e invitation must have a recipient" do
-    @e_invitation_for_x_to_birthday.recipient = nil
+  test "e invitation must have a email" do
+    @e_invitation_for_x_to_birthday.email = nil
     
     assert @e_invitation_for_x_to_birthday.invalid?
     assert_match(/too short/, 
-                 @e_invitation_for_x_to_birthday.errors[:recipient].inspect)
+                 @e_invitation_for_x_to_birthday.errors[:email].inspect)
   end
   
-  test "recipient must have more than 1 character" do
-    @e_invitation_for_x_to_birthday.recipient = ""
+  test "email must have more than 1 character" do
+    @e_invitation_for_x_to_birthday.email = ""
     
     assert @e_invitation_for_x_to_birthday.invalid?
     assert_match(/too short/, 
-                 @e_invitation_for_x_to_birthday.errors[:recipient].inspect)
+                 @e_invitation_for_x_to_birthday.errors[:email].inspect)
   end
   
-  test "recipient must not have more than 38 characters" do
-    @e_invitation_for_x_to_birthday.recipient = "anna" * 8 + "@test.com"
+  test "email must not have more than 38 characters" do
+    @e_invitation_for_x_to_birthday.email = "anna" * 8 + "@test.com"
     
     assert @e_invitation_for_x_to_birthday.invalid?
     assert_match(/too long/, 
-                 @e_invitation_for_x_to_birthday.errors[:recipient].inspect)
+                 @e_invitation_for_x_to_birthday.errors[:email].inspect)
   end
   
-  test "recipient can get multiple e invitations, each for a different tour" do
-    assert_difference('EInvitation.where(recipient: @recipient).count', 2) do
+  test "email can get multiple e invitations, each for a different tour" do
+    assert_difference('EInvitation.where(email: @email).count', 2) do
       @e_invitation_for_x_to_birthday.save!
       @e_invitation_for_x_to_newyear.save!
     end
@@ -59,19 +59,19 @@ class EInvitationTest < ActiveSupport::TestCase
   
   test "users can't receive duplicate e invitations" do
     existing = e_invitations(:peridot_to_x_for_birthday)
-    duplicate = EInvitation.new recipient: existing.recipient,
+    duplicate = EInvitation.new email: existing.email,
                                 tour: existing.tour
     
     assert duplicate.invalid?
-    assert_match(/has already been e-invited/, duplicate.errors[:recipient].inspect)
+    assert_match(/has already been e-invited/, duplicate.errors[:email].inspect)
   end
   
   test "users with existing accounts don't receive e invitations" do
     e_invitation = EInvitation.new sender: users(:peridot),
-                                   recipient: users(:dan).email,
+                                   email: users(:dan).email,
                                    tour: tours(:birthday)
     
     assert e_invitation.invalid?
-    assert_match(/recipient already has a user account/, e_invitation.errors[:recipient].inspect)
+    assert_match(/already has a user account/, e_invitation.errors[:email].inspect)
   end
 end

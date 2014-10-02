@@ -39,7 +39,7 @@ class User < ActiveRecord::Base
   private
   
     def convert_existing_e_invitations
-      EInvitation.where(recipient: email).each do |e_invitation|
+      EInvitation.where(email: email).each do |e_invitation|
         invitations.create! sender: e_invitation.sender, recipient: self, 
                             tour: e_invitation.tour
         e_invitation.destroy!
