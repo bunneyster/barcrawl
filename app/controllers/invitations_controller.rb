@@ -5,18 +5,18 @@ class InvitationsController < ApplicationController
   # POST /invitations (Invite a user from friends list)
   def create
     @invitation = Invitation.new(invitation_params)
-    @recipient_email = User.find(invitation_params[:recipient_id]).email
+    @recipient = User.find(invitation_params[:recipient_id])
     @tour = Tour.find(invitation_params[:tour_id])
     
     @invitation.sender = @current_user
     
     respond_to do |format|
       if @invitation.save
-        UserMailer.invitation_email(@invitation.sender.name,
-                                    @recipient_email,
-                                    @tour,
-                                    root_url).deliver
-        format.html { redirect_to @tour, notice: 'Successfully joined the tour!' }
+        UserMailer.user_invitation_email(@invitation.sender,
+                                         @recipient,
+                                         @tour,
+                                         root_url).deliver
+        format.html { redirect_to @tour, notice: 'Successfully sent invitation!' }
       else
         format.html { redirect_to @tour, notice: 'Oh no! Could not join the tour.' }
       end

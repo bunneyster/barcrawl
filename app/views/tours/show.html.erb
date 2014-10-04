@@ -41,7 +41,7 @@
     <%= link_to new_e_invitation_path(tour_id: @tour.to_param), class: 'success button' do %>
       <%= fa_icon :'plus' %> Invite!
     <% end %>
-    <% Invitation.where(tour_id: @tour.id).each do |invitation| %>
+    <% Invitation.where(tour_id: @tour.to_param, status: 1).each do |invitation| %>
       <%= avatar_tag invitation.recipient, "small" %>
     <% end %>
   </div>

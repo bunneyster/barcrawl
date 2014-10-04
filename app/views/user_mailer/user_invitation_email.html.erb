@@ -4,20 +4,14 @@
     
   </head>
   <body>
-    <h1>Lucky you!</h1>
+    <h1>Hey, <%= @recipient.name %>!</h1>
     
-    <h3><%= @sender_name %> invited you to <%= @tour.name %></h3>
+    <h3><%= @sender.name %> invited you to <%= @tour.name %></h3>
     
     <p>
       <%= link_to "Log in", root_url(host: @host, protocol: @protocol) %> to
       your Puborbar account to start voting on where this event should take
       place!
-    </p>
-      
-    <p>
-      Don't have an account yet?
-      <%= link_to "Let's fix that.",
-                  new_user_url(host: @host, protocol: @protocol) %>
     </p>
     
     <p>

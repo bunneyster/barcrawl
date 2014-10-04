@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    
+  </head>
+  <body>
+    <h1>Lucky you!</h1>
+    
+    <h3><%= @sender_name %> invited you to <%= @tour.name %></h3>
+    
+    <p>
+      <%= link_to "Make a Puborbar account",
+                  new_user_url(host: @host, protocol: @protocol) %> to start 
+      voting on where this event should take place!        
+    </p>    
+    
+    <p>
+      Not sure why you're getting this email? We're not sure either. Oh well.
+    </p>
+  </body>
+</html>

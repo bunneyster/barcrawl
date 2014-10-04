@@ -22,7 +22,7 @@ class InvitationsControllerTest < ActionController::TestCase
                                   tour_id: @tour.to_param }
     end
     assert_equal 'pending', assigns(:invitation).status
-    assert_match(/joined the tour/, flash[:notice].inspect)
+    assert_match(/sent invitation/, flash[:notice].inspect)
     assert_redirected_to @tour
   end
   

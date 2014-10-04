@@ -27,11 +27,11 @@ class EInvitationsController < ApplicationController
 
 
     respond_to do |format|
-      if @e_invitation.save || @invitation.save
-        UserMailer.invitation_email(@current_user.name,
-                                    e_invitation_params[:email],
-                                    @tour,
-                                    root_url).deliver
+      if (@e_invitation && @e_invitation.save) || (@invitation && @invitation.save)
+        UserMailer.non_user_invitation_email(@current_user.name,
+                                             e_invitation_params[:email],
+                                             @tour,
+                                             root_url).deliver
         format.html { redirect_to @tour, notice: 'An invitation was successfully created.' }
       else
         format.html { render :new }
