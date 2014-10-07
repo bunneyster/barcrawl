@@ -5,7 +5,7 @@ class EInvitationsControllerTest < ActionController::TestCase
     ActionMailer::Base.deliveries.clear
     @tour = tours(:birthday)
     
-    @attending = @tour.attendees.first!
+    @attending = users(:accepted_invitation_to_birthday)
     @not_invited = users(:not_invited_to_birthday)
     @undecided = users(:pending_invitation_to_birthday)
     @admin = users(:admin)
@@ -36,7 +36,7 @@ class EInvitationsControllerTest < ActionController::TestCase
     assert_redirected_to root_url
   end
   
-  test "inviting a user via email generates a pending Invitation" do
+  test "inviting an uninvited user via email generates a pending Invitation" do
     login_as @attending
     assert_difference 'Invitation.count' do
       post :create, e_invitation: { email: @not_invited.email,
@@ -49,6 +49,15 @@ class EInvitationsControllerTest < ActionController::TestCase
     assert_nil assigns(:e_invitation)
     refute_empty ActionMailer::Base.deliveries
     assert_redirected_to tour_path(assigns(:tour))
+  end
+  
+  test "inviting an invited user via email generates a validation error" do
+    login_as @attending
+    assert_no_difference 'Invitation.count' do
+      post :create, e_invitation: { email: @undecided.email, tour_id: @tour }
+    end
+    assert_match(/has already been invited/, assigns(:invitation).errors[:recipient].inspect)
+    assert_template :new
   end
   
   test "inviting a non-user via email generates an EInvitation" do

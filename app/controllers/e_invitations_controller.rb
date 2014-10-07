@@ -13,29 +13,38 @@ class EInvitationsController < ApplicationController
   # POST /e_invitations
   # POST /e_invitations.json
   def create
-    @guest = User.where(email: e_invitation_params[:email]).first
-    @tour = Tour.find(e_invitation_params[:tour_id])
-    return bounce_if_not_attending unless @current_user.attending?(@tour)
+    @e_invitation = EInvitation.new(e_invitation_params)
+    @e_invitation.sender = @current_user
+    unless @current_user.attending? @e_invitation.tour
+      return bounce_if_not_attending
+    end 
     
-    if @guest
+    guest = User.where(email: @e_invitation.email).first
+    if guest
       # Submit email of someone with an existing user account
-      @invitation = Invitation.new sender: @current_user, recipient: @guest,
-                                   tour: @tour
-    else
-      # Submit email of someone without an existing user account
-      @e_invitation = EInvitation.new(e_invitation_params)
-      @e_invitation.sender = @current_user
+      @invitation = Invitation.new sender: @e_invitation.sender,
+          tour: @e_invitation.tour, recipient: guest
+      unless @invitation.valid?
+        @e_invitation.errors.add :email, 'already invited'
+        @invitation = nil
+      end
     end
 
     respond_to do |format|
       if @invitation && @invitation.save
-        UserMailer.user_invitation_email(@current_user, @guest, @tour,
-            root_url).deliver
-        format.html { redirect_to @tour, notice: 'An invitation was successfully created.' }
-      elsif @e_invitation && @e_invitation.save
-        UserMailer.non_user_invitation_email(@current_user.name,
-            e_invitation_params[:email], @tour, root_url).deliver
-        format.html { redirect_to @tour, notice: 'An invitation was successfully created.' }
+        UserMailer.user_invitation_email(@invitation.sender,
+            @invitation.recipient, @invitation.tour, root_url).deliver
+        format.html do
+          redirect_to @invitation.tour,
+                      notice: 'An invitation was successfully created.'
+        end
+      elsif !guest && @e_invitation.save
+        UserMailer.non_user_invitation_email(@e_invitation.sender.name,
+            @e_invitation.email, @e_invitation.tour, root_url).deliver
+        format.html do
+          redirect_to @e_invitation.tour,
+                      notice: 'An invitation was successfully created.'
+        end
       else
         format.html { render :new }
         format.json { render json: @e_invitation.errors, status: :unprocessable_entity }

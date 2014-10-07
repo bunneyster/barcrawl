@@ -3,10 +3,10 @@ require 'test_helper'
 class UserMailerTest < ActionMailer::TestCase
   setup do
     @sender = users(:peridot)
+    @tour = tours(:birthday)
     @mailer = Rails.application.secrets.gmail_email
     @user_recipient = users(:not_invited_to_birthday)
     @non_user_email = 'non.user@gmail.com'
-    @tour = tours(:birthday)
     @root_url = 'hxxp://test.host:8808'
   end
   
@@ -15,7 +15,7 @@ class UserMailerTest < ActionMailer::TestCase
                                                  @non_user_email,
                                                  @tour,
                                                  @root_url).deliver
-    assert !ActionMailer::Base.deliveries.empty?
+    assert !ActionMailer::Base.deliveries.empty?    
     assert_equal "#{@sender.name} wants to invite you!", email.subject
     assert_equal [@mailer], email.from
     assert_equal [@non_user_email], email.to
