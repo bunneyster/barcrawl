@@ -5,9 +5,9 @@ class EInvitationsController < ApplicationController
 
   # GET /e_invitations/new
   def new
-    @tour = Tour.find(params[:tour_id])
-    @e_invitation = EInvitation.new(tour: @tour)
-    return bounce_if_not_attending unless @current_user.attending?(@tour)
+    tour = Tour.find(params[:tour_id])
+    @e_invitation = EInvitation.new(tour: tour)
+    return bounce_if_not_attending unless @current_user.attending?(tour)
   end
 
   # POST /e_invitations
@@ -25,7 +25,7 @@ class EInvitationsController < ApplicationController
       @invitation = Invitation.new sender: @e_invitation.sender,
           tour: @e_invitation.tour, recipient: guest
       unless @invitation.valid?
-        @e_invitation.errors.add :email, 'already invited'
+        @e_invitation.errors.add :email, 'has already been invited'
         @invitation = nil
       end
     end

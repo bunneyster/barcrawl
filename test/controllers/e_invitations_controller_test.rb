@@ -30,8 +30,6 @@ class EInvitationsControllerTest < ActionController::TestCase
       post :create, e_invitation: { email: @not_invited.email,
                                     tour_id: @tour }
     end
-    assert_nil assigns(:invitation)
-    assert_nil assigns(:e_invitation)
     assert_empty ActionMailer::Base.deliveries
     assert_redirected_to root_url
   end
@@ -46,9 +44,8 @@ class EInvitationsControllerTest < ActionController::TestCase
     assert_equal @attending, assigns(:invitation).sender
     assert_equal @not_invited, assigns(:invitation).recipient
     assert_equal @tour, assigns(:invitation).tour
-    assert_nil assigns(:e_invitation)
     refute_empty ActionMailer::Base.deliveries
-    assert_redirected_to tour_path(assigns(:tour))
+    assert_redirected_to tour_path(@tour)
   end
   
   test "inviting an invited user via email generates a validation error" do
@@ -56,7 +53,7 @@ class EInvitationsControllerTest < ActionController::TestCase
     assert_no_difference 'Invitation.count' do
       post :create, e_invitation: { email: @undecided.email, tour_id: @tour }
     end
-    assert_match(/has already been invited/, assigns(:invitation).errors[:recipient].inspect)
+    assert_match(/has already been invited/, assigns(:e_invitation).errors[:email].inspect)
     assert_template :new
   end
   
@@ -69,9 +66,8 @@ class EInvitationsControllerTest < ActionController::TestCase
     assert_equal @attending, assigns(:e_invitation).sender
     assert_equal 'no_user_account@asdf.com', assigns(:e_invitation).email
     assert_equal @tour, assigns(:e_invitation).tour
-    assert_nil assigns(:invitation)
     refute_empty ActionMailer::Base.deliveries
-    assert_redirected_to tour_path(assigns(:tour))
+    assert_redirected_to tour_path(@tour)
   end
 
   test "should destroy e_invitation" do
