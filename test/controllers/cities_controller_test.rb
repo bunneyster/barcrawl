@@ -72,7 +72,7 @@ class CitiesControllerTest < ActionController::TestCase
   end
   
   test "non-admins cannot access or modify city data" do
-    not_admin = users(:sam)
+    not_admin = users(:peridot)
     logout
     login_as not_admin
     

@@ -10,7 +10,7 @@ birthday:
   
 newyear:
   name: "New Year's"
-  organizer: sam
+  organizer: newyear_organizer
   city: boston
   starting_at: <%= 1.month.from_now.to_s(:db) %>
   image: "party.jpg"
@@ -18,7 +18,7 @@ newyear:
 
 anniversary:
   name: "Bean Bag Celebrations"
-  organizer: allison
+  organizer: anniversary_organizer
   city: boston
   starting_at: <%= 1.year.from_now.to_s(:db) %>
   image: "wine.jpg"

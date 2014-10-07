@@ -4,11 +4,10 @@ class EInvitationTest < ActiveSupport::TestCase
   setup do
     @email = 'non.existing.user@test.com'
     @e_invitation_for_x_to_birthday = EInvitation.new sender: users(:peridot),
-                                                      email: @email,
-                                                      tour: tours(:birthday)
-    @e_invitation_for_x_to_newyear = EInvitation.new sender: users(:sam),
-                                                     email: @email,
-                                                     tour: tours(:newyear)
+        email: @email, tour: tours(:birthday)
+    @e_invitation_for_x_to_newyear = 
+        EInvitation.new sender: users(:newyear_organizer), email: @email, 
+        tour: tours(:newyear)
   end
   
   test "setup creates valid e invitations" do
@@ -68,7 +67,7 @@ class EInvitationTest < ActiveSupport::TestCase
   
   test "users with existing accounts don't receive e invitations" do
     e_invitation = EInvitation.new sender: users(:peridot),
-                                   email: users(:dan).email,
+                                   email: users(:not_invited_to_birthday).email,
                                    tour: tours(:birthday)
     
     assert e_invitation.invalid?

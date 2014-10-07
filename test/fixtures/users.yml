@@ -2,31 +2,62 @@
 
 peridot:
   name: Peridot P
-  email: peridot@test.com
+  email: peridot@asdf.com
   avatar_url: peridot.jpg
   password_digest: <%= BCrypt::Password.create('peridot') %>
 
-allison:
-  name: Allison A
-  email: a@asdf.com
-  avatar_url: allison.jpg
+not_peridot:
+  name: Not Peridot
+  email: not_peridot@asdf.com
+  avatar_url: nil
+  password_digest: <%= BCrypt::Password.create('notperidot') %>
+
+accepted_invitation_to_birthday:
+  name: Attending Birthday
+  email: attending_birthday@asdf.com
+  avatar_url: hyper.jpg
   password_digest: <%= BCrypt::Password.create('asdf') %>
   
-sam:
-  name: Sam S
-  email: s@asdf.com
-  avatar_url: sam.jpg
+pending_invitation_to_birthday:
+  name: Undecided
+  email: undecided@asdf.com
+  avatar_url: procrastination.jpg
   password_digest: <%= BCrypt::Password.create('asdf') %>
   
-dan:
-  name: Dan D
-  email: d@asdf.com
-  avatar_url: dan.jpg
+not_invited_to_birthday:
+  name: Not Invited
+  email: not_invited@asdf.com
+  avatar_url: lonely.jpg
+  password_digest: <%= BCrypt::Password.create('asdf') %>
+
+newyear_organizer:
+  name: New Year Organizer
+  email: newyear@asdf.com
+  avatar_url: nil
   password_digest: <%= BCrypt::Password.create('asdf') %>
   
+anniversary_organizer:
+  name: Anniversary Organizer
+  email: anniversary@asdf.com
+  avatar_url: nil
+  password_digest: <%= BCrypt::Password.create('asdf') %>
+  
+accepted_invitation_to_anniversary:
+  name: Attending Anniversary
+  email: attending_anniversary@asdf.com
+  avatar_url: nil
+  password_digest: <%= BCrypt::Password.create('asdf') %>
+
 admin:
   name: Admin
   email: admin@asdf.com
   avatar_url: nil
   password_digest: <%= BCrypt::Password.create('asdf') %>
   admin: true
+  
+friendless_user:
+  name: No Friends
+  email: no_friends@asdf.com
+  avatar_url: nil
+  password_digest: <%= BCrypt::Password.create('asdf') %>
+  

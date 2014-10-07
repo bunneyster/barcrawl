@@ -1,19 +1,29 @@
-p2birthday:
+organizer2birthday:
   sender: peridot
   recipient: peridot
   tour: birthday
+  status: 1
 
-a2birthday:
+accepted2birthday:
   sender: peridot
-  recipient: allison
+  recipient: accepted_invitation_to_birthday
   tour: birthday
+  status: 1
 
-s2birthday:
+pending2birthday:
   sender: peridot
-  recipient: sam
+  recipient: pending_invitation_to_birthday
   tour: birthday
+  status: 0
 
-s2anniversary:
-  sender: sam
-  recipient: sam
+organizer2anniversary:
+  sender: anniversary_organizer
+  recipient: anniversary_organizer
   tour: anniversary
+  status: 1
+  
+accepted2anniversary:
+  sender: anniversary_organizer
+  recipient: accepted_invitation_to_anniversary
+  tour: anniversary
+  status: 1

@@ -6,7 +6,7 @@ class ToursControllerTest < ActionController::TestCase
     @tour = tours(:birthday)
     @organizer = @tour.organizer
     @admin = users(:admin)
-    @any_user = users(:dan)
+    @any_user = users(:not_invited_to_birthday)
   end
 
   test "should get index" do

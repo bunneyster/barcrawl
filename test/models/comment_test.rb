@@ -4,7 +4,7 @@ class CommentTest < ActiveSupport::TestCase
   
   setup do
     @comment = Comment.new commenter: users(:peridot),
-                           tour_stop: tour_stops(:first),
+                           tour_stop: tour_stops(:cafe_on_birthday),
                            text: "I am a valid comment.",
                            created_at: Time.now
   end

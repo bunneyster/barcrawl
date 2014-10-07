@@ -1,9 +1,7 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
 p2a:
   user: peridot
-  friend: allison
+  friend: accepted_invitation_to_birthday
 
 s2d:
-  user: sam
-  friend: dan
+  user: accepted_invitation_to_birthday
+  friend: not_invited_to_birthday

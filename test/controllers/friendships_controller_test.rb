@@ -4,21 +4,22 @@ class FriendshipsControllerTest < ActionController::TestCase
   setup do
     @friendship = friendships(:s2d)
     @user = users(:peridot)
+    @friendless = users(:friendless_user)
     login_as @user
   end
 
   test "should only create friendship if not already friends" do
-    assert_not Friendship.where(user: @user, friend: users(:sam)).exists?
+    assert_not Friendship.where(user: @user, friend: @friendless).exists?
         
     assert_difference('Friendship.count') do
-      post :create, friend_id: users(:sam).id
+      post :create, friend_id: @friendless.id
     end
 
     assert_match(/successfully created/, flash[:notice].inspect)
     assert_redirected_to root_url
     
     assert_no_difference('Friendship.count') do
-      post :create, friend_id: users(:sam).id
+      post :create, friend_id: @friendless.id
     end
   end
 
@@ -35,7 +36,7 @@ class FriendshipsControllerTest < ActionController::TestCase
     logout
     
     assert_no_difference('Friendship.count') do
-      post :create, friend_id: users(:sam).id
+      post :create, friend_id: @friendless.id
     end
     
     assert_redirected_to root_url

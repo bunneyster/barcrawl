@@ -6,7 +6,7 @@ class TourStopsController < ApplicationController
   def new
     @tour = Tour.find(params[:tour_id])
     @venue_search = VenueSearch.new(tour: @tour)
-    return bounce_if_uninvited unless @current_user.invited_to? @tour
+    return bounce_if_not_attending unless @current_user.attending?(@tour)
   end
   
   # POST /tours_stops/search
@@ -21,7 +21,7 @@ class TourStopsController < ApplicationController
   # POST /tour_stops.json
   def create
     @tour_stop = TourStop.new(tour_stop_params)
-    return bounce_if_uninvited unless @current_user.invited_to? @tour_stop.tour
+    return bounce_if_not_attending unless @current_user.attending?(@tour_stop.tour)
     
     @vote = Vote.new(voter: @current_user,
                      tour_stop: @tour_stop,

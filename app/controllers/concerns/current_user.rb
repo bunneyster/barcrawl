@@ -22,8 +22,8 @@ module CurrentUser
       end
     end
     
-    def bounce_if_uninvited
-      redirect_to root_url, notice: 'Join the tour to propose venues and leave comment!'
+    def bounce_if_not_attending
+      redirect_to root_url, notice: 'Join the tour to propose venues and leave comments!'
     end
     
 end

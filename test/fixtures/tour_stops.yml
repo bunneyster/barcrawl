@@ -1,10 +1,8 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
-first:
+cafe_on_birthday:
   tour: birthday 
   venue: cafe
 
-second:
+restaurant_on_birthday:
   tour: birthday 
   venue: restaurant
   

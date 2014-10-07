@@ -1,13 +1,13 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-hello:
+hello_from_birthday_organizer:
   commenter: peridot
-  tour_stop: first
+  tour_stop: cafe_on_birthday
   text: "Hello."
   created_at: <%= 10.minutes.ago.to_s(:db) %>
 
 goodbye:
-  commenter: allison
-  tour_stop: first
+  commenter: accepted_invitation_to_birthday
+  tour_stop: cafe_on_birthday
   text: "Goodbye."
   created_at: <%= 20.minutes.ago.to_s(:db) %>

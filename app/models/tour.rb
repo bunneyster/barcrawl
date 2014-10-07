@@ -27,6 +27,11 @@ class Tour < ActiveRecord::Base
   # Users invited to this tour.
   has_many :invitees, through: :invitations, source: :recipient
   
+  # Users who have accepted invitations to this tour.
+  has_many :attendees, 
+      -> { where "invitations.status = ?", Invitation.statuses[:accepted] }, 
+      through: :invitations, source: :recipient
+  
   # Email invitations extended for this tour.
   has_many :e_invitations
   

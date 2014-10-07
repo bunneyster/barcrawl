@@ -4,8 +4,8 @@ class InvitationTest < ActiveSupport::TestCase
   
   setup do                     
     @invitation = Invitation.new sender: users(:peridot),
-                                 recipient: users(:dan),
-                                 tour: tours(:newyear)
+                                 recipient: users(:not_invited_to_birthday),
+                                 tour: tours(:birthday)
   end
 
   test "setup creates valid invitation" do
@@ -29,7 +29,7 @@ class InvitationTest < ActiveSupport::TestCase
   test "users can't receive duplicate invitations" do
     @invitation.save!
     
-    invitation_copy = Invitation.new sender: users(:sam),
+    invitation_copy = Invitation.new sender: users(:not_peridot),
                                      recipient: @invitation.recipient,
                                      tour: @invitation.tour                                       
     

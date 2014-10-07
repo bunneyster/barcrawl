@@ -3,56 +3,57 @@ require 'test_helper'
 class CommentsControllerTest < ActionController::TestCase
   
   setup do
-    @comment = comments(:hello)
+    @comment = comments(:hello_from_birthday_organizer)
     @tour_stop = @comment.tour_stop
     @commenter = @comment.commenter
+    
+    @attending = users(:accepted_invitation_to_birthday)
+    @not_invited = users(:not_invited_to_birthday)
+    @undecided = users(:pending_invitation_to_birthday)
     @admin = users(:admin)
-    @any_user = users(:dan)
   end
 
-  test "users can comment on tours they have joined" do
-    login_as @commenter
-    
-    assert @commenter.invited_to?(@tour_stop.tour)
+  test "users with accepted invitations can comment on tours" do
+    login_as @attending
     assert_difference('Comment.count') do
-      post :create, comment: { tour_stop_id: @tour_stop.to_param,
-                               text: 'yay' }
+      post :create, comment: { tour_stop_id: @tour_stop, text: 'yay' }
     end
-
     assert_match(/Comment successfully posted/, flash[:notice].inspect)
     assert_redirected_to tour_path(assigns(:comment).tour)
   end
   
-  test "users cannot comment on tours they have not joined" do
-    login_as @any_user
-    
-    assert_not @any_user.invited_to?(@tour_stop.tour)
+  test "users with pending invitations cannot comment on tours" do
+    login_as @undecided
     assert_no_difference('Comment.count') do
-      post :create, comment: { tour_stop_id: @tour_stop.to_param,
-                               text: 'yay' }
+      post :create, comment: { tour_stop_id: @tour_stop, text: 'yay' }
     end
-
+    assert_match(/Join the tour/, flash[:notice].inspect)
+    assert_redirected_to root_url
+  end
+  
+  test "users without invitations cannot comment on tours" do
+    login_as @not_invited
+    assert_no_difference('Comment.count') do
+      post :create, comment: { tour_stop_id: @tour_stop, text: 'yay' }
+    end
     assert_match(/Join the tour/, flash[:notice].inspect)
     assert_redirected_to root_url
   end
 
   test "user can get her own comment edit page" do
     login_as @commenter
-    
     get :edit, id: @comment
     assert_response :success
   end
   
   test "admin can get any user's comment edit page" do
     login_as @admin
-    
     get :edit, id: @comment
     assert_response :success
   end
   
   test "non-admins cannot get anyone else's comment edit page" do
-    login_as @any_user
-    
+    login_as @attending
     get :edit, id: @comment
     assert_match(/not your comment/, flash[:notice].inspect)
     assert_redirected_to root_url
@@ -60,9 +61,8 @@ class CommentsControllerTest < ActionController::TestCase
   
   test "user can edit her own comment" do
     login_as @commenter
-    
     assert_match(/Hello./, @comment.text)
-    patch :update, id: @comment, comment: { tour_stop_id: @tour_stop.to_param,
+    patch :update, id: @comment, comment: { tour_stop_id: @tour_stop,
                                             text: 'Hello World.' }
     assert_match(/World./, assigns(:comment).text)
     assert_match(/successfully updated/, flash[:notice].inspect)
@@ -73,7 +73,7 @@ class CommentsControllerTest < ActionController::TestCase
     login_as @admin
     
     assert_match(/Hello./, @comment.text)
-    patch :update, id: @comment, comment: { tour_stop_id: @tour_stop.to_param,
+    patch :update, id: @comment, comment: { tour_stop_id: @tour_stop,
                                             text: 'Hello World.' }
     assert_match(/World./, assigns(:comment).text)
     assert_match(/successfully updated/, flash[:notice].inspect)
@@ -81,10 +81,10 @@ class CommentsControllerTest < ActionController::TestCase
   end
   
   test "non-admins cannot edit anyone else's comment" do
-    login_as @any_user
+    login_as @attending
     
     assert_match(/Hello./, @comment.text)
-    patch :update, id: @comment, comment: { tour_stop_id: @tour_stop.to_param,
+    patch :update, id: @comment, comment: { tour_stop_id: @tour_stop,
                                             text: 'Hello World.' }
     assert_match(/Hello./, assigns(:comment).text)
     assert_match(/not your comment/, flash[:notice].inspect)
@@ -95,7 +95,7 @@ class CommentsControllerTest < ActionController::TestCase
     login_as @commenter
     
     assert_difference('Comment.count', -1) do
-      delete :destroy, id: @comment, tour_stop_id: @tour_stop.to_param
+      delete :destroy, id: @comment, tour_stop_id: @tour_stop
     end
     assert_match(/Comment successfully deleted/, flash[:notice].inspect)
     assert_redirected_to tour_path(assigns(:comment).tour)
@@ -105,17 +105,17 @@ class CommentsControllerTest < ActionController::TestCase
     login_as @admin
     
     assert_difference('Comment.count', -1) do
-      delete :destroy, id: @comment, tour_stop_id: @tour_stop.to_param
+      delete :destroy, id: @comment, tour_stop_id: @tour_stop
     end
     assert_match(/Comment successfully deleted/, flash[:notice].inspect)
     assert_redirected_to tour_path(assigns(:comment).tour)
   end
   
   test "non-admins cannot destroy anyone else's comment" do
-    login_as @any_user
+    login_as @attending
     
     assert_no_difference('Comment.count', -1) do
-      delete :destroy, id: @comment, tour_stop_id: @tour_stop.to_param
+      delete :destroy, id: @comment, tour_stop_id: @tour_stop
     end
     assert_match(/not your comment/, flash[:notice].inspect)
     assert_redirected_to root_url
@@ -127,5 +127,4 @@ class CommentsControllerTest < ActionController::TestCase
     assert_match(/log back in/, flash[:notice].inspect)
     assert_redirected_to root_url
   end
-
 end

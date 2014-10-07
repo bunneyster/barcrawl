@@ -4,7 +4,7 @@ class VoteTest < ActiveSupport::TestCase
   
   setup do
     @vote = Vote.new voter: users(:peridot),
-                     tour_stop: tour_stops(:first),
+                     tour_stop: tour_stops(:cafe_on_birthday),
                      score: 1
   end
   

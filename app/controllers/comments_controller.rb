@@ -14,7 +14,7 @@ class CommentsController < ApplicationController
     @comment = Comment.new(comment_params)
     @comment.commenter = @current_user
     
-    return bounce_if_uninvited unless @current_user.invited_to? @comment.tour
+    return bounce_if_not_attending unless @current_user.attending?(@comment.tour)
          
     respond_to do |format|
       if @comment.save

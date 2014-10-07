@@ -3,7 +3,7 @@ require 'test_helper'
 class UsersControllerTest < ActionController::TestCase
   setup do
     @me = users(:peridot)
-    @not_me = users(:sam)
+    @not_me = users(:not_peridot)
     @admin = users(:admin)
   end
 

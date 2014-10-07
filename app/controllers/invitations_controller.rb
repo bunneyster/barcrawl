@@ -4,10 +4,11 @@ class InvitationsController < ApplicationController
   
   # POST /invitations (Invite a user from friends list)
   def create
-    @invitation = Invitation.new(invitation_params)
     @recipient = User.find(invitation_params[:recipient_id])
     @tour = Tour.find(invitation_params[:tour_id])
+    return bounce_if_not_attending unless @current_user.attending?(@tour)
     
+    @invitation = Invitation.new(invitation_params)
     @invitation.sender = @current_user
     
     respond_to do |format|

@@ -3,50 +3,48 @@ require 'test_helper'
 class InvitationsControllerTest < ActionController::TestCase
   
   setup do
+    ActionMailer::Base.deliveries.clear
     @tour = tours(:birthday)
-    @participant = @tour.organizer
     
-    @invitation = invitations(:a2birthday)
-    @invited_user = @invitation.recipient
+    @attending = users(:accepted_invitation_to_birthday)
+    @not_invited = users(:not_invited_to_birthday)
+    @undecided = users(:pending_invitation_to_birthday)
     
-    @uninvited_user = users(:dan)
   end
   
-  test "existing users without invitations receive pending invitations" do
-    login_as @participant
-    
-    assert_not @tour.invitation_for(@uninvited_user)    
-    assert_difference('Invitation.count') do
-      post :create, invitation: { sender_id: @participant.to_param,
-                                  recipient_id: @uninvited_user.to_param,
-                                  tour_id: @tour.to_param }
+  test "must accept invitation to send invitations via friendship" do
+    login_as @undecided
+    assert_no_difference ['Invitation.count', 'EInvitation.count'] do
+      post :create, invitation: { recipient_id: @not_invited, tour_id: @tour }
+    end
+    assert_empty ActionMailer::Base.deliveries
+    assert_redirected_to root_url
+  end
+  
+  test "inviting a user via friendship generates a pending Invitation" do
+    login_as @attending 
+    assert_difference ['Invitation.count', 'ActionMailer::Base.deliveries.count'] do
+      post :create, invitation: { recipient_id: @not_invited, tour_id: @tour }
     end
     assert_equal 'pending', assigns(:invitation).status
-    assert_match(/sent invitation/, flash[:notice].inspect)
-    assert_redirected_to @tour
+    assert_equal @attending, assigns(:invitation).sender
+    assert_equal @not_invited, assigns(:invitation).recipient
+    assert_equal @tour, assigns(:invitation).tour
+    assert_redirected_to tour_path(assigns(:tour))
   end
-  
-  # test "failure to save redirects to tour page"
-  
-  test "existing users with pending invitations can join the tour" do
-    login_as @invited_user
     
-    assert @tour.invitation_for(@invited_user)    
-    
-    patch :update, id: @invitation, invitation: { status: 'accepted' }
-    
+  test "users with pending invitations can join the tour" do
+    login_as @undecided
+    @invitation = invitations(:pending2birthday)
+    patch :update, id: @invitation, invitation: { status: 'accepted' }    
     assert_match(/accepted/, flash[:notice].inspect)
-    assert_redirected_to @tour
+    assert_redirected_to tour_path(assigns(:invitation).tour)
   end
   
   test "must be logged in to send/accept/reject invitations" do
-    login_as @participant
+    login_as @attending
     logout
-    assert_not @tour.invitation_for(@uninvited_user)
-    post :create, invitation: { sender_id: @participant.to_param,
-                                recipient_id: @uninvited_user.to_param,
-                                tour_id: @tour.to_param }
+    post :create, invitation: { recipient_id: @not_invited, tour_id: @tour }
     assert_redirected_to root_url
   end
-
 end

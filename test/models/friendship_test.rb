@@ -4,7 +4,7 @@ class FriendshipTest < ActiveSupport::TestCase
   
   setup do
     @friendship = Friendship.new user: users(:peridot),
-                                 friend: users(:sam)
+                                 friend: users(:not_peridot)
   end
   
   test "setup creates valid friendship" do

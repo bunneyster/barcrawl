@@ -38,8 +38,10 @@
 
 <div class="guests row">
   <div class="large-12 columns avatar-list">
-    <%= link_to new_e_invitation_path(tour_id: @tour.to_param), class: 'success button' do %>
-      <%= fa_icon :'plus' %> Invite!
+    <% if @current_user.attending? @tour %>
+      <%= link_to new_e_invitation_path(tour_id: @tour.to_param), class: 'success button' do %>
+        <%= fa_icon :'plus' %> Invite!
+      <% end %>
     <% end %>
     <% Invitation.where(tour_id: @tour.to_param, status: 1).each do |invitation| %>
       <%= avatar_tag invitation.recipient, "small" %>
@@ -56,7 +58,7 @@
         <dd data-magellan-arrival="proposed"><a href="#proposed">Proposed</a></dd>
         <dd data-magellan-arrival="accepted"><a href="#accepted">Accepted</a></dd>
         <dd data-magellan-arrival="rejected"><a href="#rejected">Rejected</a></dd>
-        <% if @tour.status == 'pending' && @tour.invitation_for(@current_user) %>
+        <% if @tour.status == 'pending' && @current_user.attending?(@tour) %>
           <dd><%= link_to new_tour_stop_path(tour_id: @tour.to_param), class: 'success radius button' do %>
                 <%= fa_icon :'plus-circle' %> Add a tour stop
               <% end %>

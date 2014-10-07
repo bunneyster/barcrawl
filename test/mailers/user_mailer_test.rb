@@ -4,7 +4,7 @@ class UserMailerTest < ActionMailer::TestCase
   setup do
     @sender = users(:peridot)
     @mailer = Rails.application.secrets.gmail_email
-    @user_recipient = users(:sam)
+    @user_recipient = users(:not_invited_to_birthday)
     @non_user_email = 'non.user@gmail.com'
     @tour = tours(:birthday)
     @root_url = 'hxxp://test.host:8808'
