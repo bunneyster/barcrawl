@@ -37,27 +37,13 @@ class EInvitationsControllerTest < ActionController::TestCase
   test "inviting an uninvited user via email generates a pending Invitation" do
     login_as @attending
     assert_difference 'Invitation.count' do
-      post :create, e_invitation: { email: @not_invited.email,
-                                    tour_id: @tour }
+      post :create, e_invitation: { email: @not_invited.email, tour_id: @tour }
     end
-    assert_equal 'pending', assigns(:invitation).status
-    assert_equal @attending, assigns(:invitation).sender
-    assert_equal @not_invited, assigns(:invitation).recipient
-    assert_equal @tour, assigns(:invitation).tour
     refute_empty ActionMailer::Base.deliveries
     assert_redirected_to tour_path(@tour)
   end
   
-  test "inviting an invited user via email generates a validation error" do
-    login_as @attending
-    assert_no_difference 'Invitation.count' do
-      post :create, e_invitation: { email: @undecided.email, tour_id: @tour }
-    end
-    assert_match(/has already been invited/, assigns(:e_invitation).errors[:email].inspect)
-    assert_template :new
-  end
-  
-  test "inviting a non-user via email generates an EInvitation" do
+  test "inviting an uninvited non-user via email generates an EInvitation" do
     login_as @attending
     assert_difference 'EInvitation.count' do
       post :create, e_invitation: { email: 'no_user_account@asdf.com',
@@ -67,7 +53,28 @@ class EInvitationsControllerTest < ActionController::TestCase
     assert_equal 'no_user_account@asdf.com', assigns(:e_invitation).email
     assert_equal @tour, assigns(:e_invitation).tour
     refute_empty ActionMailer::Base.deliveries
-    assert_redirected_to tour_path(@tour)
+    assert_redirected_to @tour
+  end
+  
+  test "inviting an invited user via email generates a validation error" do
+    login_as @attending
+    assert_no_difference ['Invitation.count', 'EInvitation.count'] do
+      post :create, e_invitation: { email: @undecided.email, tour_id: @tour }
+    end 
+    assert_match(/already has a user account/, assigns(:e_invitation).errors[:email].inspect)
+    assert_match(/has already been invited/, assigns(:e_invitation).errors[:email].inspect)
+    assert_template :new
+  end
+  
+  test "inviting an invited non-user via email generates a validation error" do
+    login_as @attending
+    invited_non_user_email = e_invitations(:peridot_to_x_for_birthday).email
+    assert_no_difference ['Invitation.count', 'EInvitation.count'] do
+      post :create, e_invitation: { email: invited_non_user_email,
+                                    tour_id: tours(:birthday) }
+    end
+    assert_match(/has already been e-invited/, assigns(:e_invitation).errors[:email].inspect)
+    assert_template :new
   end
 
   test "should destroy e_invitation" do

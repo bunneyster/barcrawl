@@ -56,21 +56,50 @@ class EInvitationTest < ActiveSupport::TestCase
     end
   end
   
-  test "users can't receive duplicate e invitations" do
+  test "e invitations for (uninvited) users are invalid" do
+    e_invitation = EInvitation.new sender: users(:peridot), 
+        email: users(:not_invited_to_birthday).email, tour: tours(:birthday)
+        
+    assert e_invitation.invalid?
+    assert_match(/already has a user account/, e_invitation.errors[:email].inspect)
+  end
+  
+  test "e invitations for (invited) users are invalid" do
+    e_invitation = EInvitation.new sender: users(:peridot),
+        email: users(:accepted_invitation_to_birthday).email, tour: tours(:birthday)
+        
+    assert e_invitation.invalid?
+    assert_match(/already has a user account/, e_invitation.errors[:email].inspect)
+    assert_match(/already been invited/, e_invitation.errors[:email].inspect)
+  end
+  
+  test "e invitations for (uninvited) users are converted to valid invitations" do
+    e_invitation = EInvitation.new sender: users(:peridot), 
+        email: users(:not_invited_to_birthday).email, tour: tours(:birthday)
+    invitation = e_invitation.to_invitation
+    invitation.save!
+    
+    assert_equal 'pending', invitation.status
+    assert_equal e_invitation.sender, invitation.sender
+    assert_equal e_invitation.email, invitation.recipient.email
+    assert_equal e_invitation.tour, invitation.tour
+  end
+  
+  test "e invitations for (invited) users are converted to invalid invitations" do
+    e_invitation = EInvitation.new sender: users(:peridot), 
+        email: users(:pending_invitation_to_birthday).email, 
+        tour: tours(:birthday)
+    invitation = e_invitation.to_invitation
+    
+    assert invitation.invalid?
+  end
+  
+  test "can't send duplicate e invitations" do
     existing = e_invitations(:peridot_to_x_for_birthday)
-    duplicate = EInvitation.new email: existing.email,
-                                tour: existing.tour
+    duplicate = EInvitation.new sender: users(:not_peridot),
+        email: existing.email, tour: existing.tour
     
     assert duplicate.invalid?
     assert_match(/has already been e-invited/, duplicate.errors[:email].inspect)
-  end
-  
-  test "users with existing accounts don't receive e invitations" do
-    e_invitation = EInvitation.new sender: users(:peridot),
-                                   email: users(:not_invited_to_birthday).email,
-                                   tour: tours(:birthday)
-    
-    assert e_invitation.invalid?
-    assert_match(/already has a user account/, e_invitation.errors[:email].inspect)
   end
 end

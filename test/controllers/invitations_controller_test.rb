@@ -30,7 +30,7 @@ class InvitationsControllerTest < ActionController::TestCase
     assert_equal @attending, assigns(:invitation).sender
     assert_equal @not_invited, assigns(:invitation).recipient
     assert_equal @tour, assigns(:invitation).tour
-    assert_redirected_to tour_path(assigns(:tour))
+    assert_redirected_to @tour
   end
     
   test "users with pending invitations can join the tour" do
@@ -38,7 +38,7 @@ class InvitationsControllerTest < ActionController::TestCase
     @invitation = invitations(:pending2birthday)
     patch :update, id: @invitation, invitation: { status: 'accepted' }    
     assert_match(/accepted/, flash[:notice].inspect)
-    assert_redirected_to tour_path(assigns(:invitation).tour)
+    assert_redirected_to @tour
   end
   
   test "must be logged in to send/accept/reject invitations" do

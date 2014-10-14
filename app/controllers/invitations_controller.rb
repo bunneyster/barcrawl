@@ -4,22 +4,17 @@ class InvitationsController < ApplicationController
   
   # POST /invitations (Invite a user from friends list)
   def create
-    @recipient = User.find(invitation_params[:recipient_id])
-    @tour = Tour.find(invitation_params[:tour_id])
-    return bounce_if_not_attending unless @current_user.attending?(@tour)
-    
     @invitation = Invitation.new(invitation_params)
     @invitation.sender = @current_user
+    tour = @invitation.tour
+    return bounce_if_not_attending unless @current_user.attending? tour
     
     respond_to do |format|
       if @invitation.save
-        UserMailer.user_invitation_email(@invitation.sender,
-                                         @recipient,
-                                         @tour,
-                                         root_url).deliver
-        format.html { redirect_to @tour, notice: 'Successfully sent invitation!' }
+        UserMailer.user_invitation_email(@invitation, root_url).deliver
+        format.html { redirect_to tour, notice: 'Successfully sent invitation!' }
       else
-        format.html { redirect_to @tour, notice: 'Oh no! Could not join the tour.' }
+        format.html { redirect_to tour, notice: 'Oh no! Could not join the tour.' }
       end
     end
   end
