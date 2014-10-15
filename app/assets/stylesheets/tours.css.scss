@@ -7,28 +7,20 @@ hgroup {
   }
 }
 
-div.guests.row div.avatar-list {
-  padding-bottom: 1rem;
-}
-
 [data-magellan-expedition] dl.sub-nav {
   padding: 10px 10px 10px 0;
   margin-left: 0;
   
   dt, dd {
     margin-left: 0.9rem;
-    margin-bottom: 0;
     font-weight: 300;
     
     &:not(.active):hover a {
       border-radius: 3px;
-      background-color: inherit;
     }    
     .button {
       margin: 0;
-      // position: fixed;
-      // right: 10px;
-      font-weight: 300;
+      line-height: initial;
     }
   }
 }
