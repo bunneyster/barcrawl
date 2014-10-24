@@ -73,13 +73,17 @@ end
 agent = Mechanize.new
 
 cities = [
+  { name: 'Berkeley', lat: '37.8706976', lng: '-122.30098' },
   { name: 'Boston', lat: '42.3133734', lng: '-71.057157' },
   { name: 'New York', lat: '40.7056308', lng: '-73.9780035' },
-  { name: 'San Francisco', lat: '37.7577', lng: '-122.4376' }
+  { name: 'Oakland', lat: '37.7584754', lng: '-122.2354022' },
+  { name: 'Sacramento', lat: '38.5615405', lng: '-121.4429125' },
+  { name: 'San Francisco', lat: '37.7577', lng: '-122.4376' },
+  { name: 'San Jose', lat: '37.2970155', lng: '-121.8174129' }
 ]
 
 login_as_admin(agent, ARGV[2], ARGV[1])
 add_cities(cities, agent, ARGV[1])
 add_venues(agent, ARGV[0], ARGV[1])
 
-
+# egrep -o '"city".{0,20}' businesses.json | sort | uniq -c
